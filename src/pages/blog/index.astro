@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+const publishedPosts = posts
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+---
+
+<BaseLayout title="Blog | jhle0" description="Blog posts">
+  <h1>Blog</h1>
+
+  {publishedPosts.length === 0 ? (
+    <p>No posts found.</p>
+  ) : (
+    <ul>
+      {publishedPosts.map((post) => (
+        <li>
+          <a href={`/blog/${post.data.slug}`}>{post.data.title}</a>
+          <p>{post.data.description}</p>
+          <small>{post.data.pubDate.toISOString().slice(0, 10)}</small>
+        </li>
+      ))}
+    </ul>
+  )}
+</BaseLayout>

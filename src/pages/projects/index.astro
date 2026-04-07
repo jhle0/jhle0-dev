@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const projects = await getCollection("projects");
+const publishedProjects = projects
+  .filter((project) => !project.data.draft)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+---
+
+<BaseLayout title="Projects | jhle0" description="Projects">
+  <h1>Projects</h1>
+
+  {publishedProjects.length === 0 ? (
+    <p>No projects found.</p>
+  ) : (
+    <ul>
+      {publishedProjects.map((project) => (
+        <li>
+          <a href={`/projects/${project.data.slug}`}>{project.data.title}</a>
+          <p>{project.data.description}</p>
+          <small>{project.data.pubDate.toISOString().slice(0, 10)}</small>
+        </li>
+      ))}
+    </ul>
+  )}
+</BaseLayout>
