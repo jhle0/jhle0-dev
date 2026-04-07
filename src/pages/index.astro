@@ -1,8 +1,75 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 3);
+
+const projects = (await getCollection("projects"))
+  .filter((project) => !project.data.draft)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 3);
 ---
 
 <BaseLayout title="Home | jhle0" description="Personal developer blog and portfolio">
-  <h1>jhle0</h1>
-  <p>Personal developer blog for study notes, projects, and logs.</p>
+  <section>
+    <h1>jhle0</h1>
+    <p>
+      Personal developer blog for study notes, projects, and logs.
+    </p>
+    <p>
+      I document what I study, build, and think about.
+    </p>
+  </section>
+
+  <hr />
+
+  <section>
+    <h2>Recent Posts</h2>
+    {posts.length === 0 ? (
+      <p>No posts yet.</p>
+    ) : (
+      <ul>
+        {posts.map((post) => (
+          <li>
+            <a href={`/blog/${post.data.slug}`}>{post.data.title}</a>
+            <p>{post.data.description}</p>
+          </li>
+        ))}
+      </ul>
+    )}
+    <p><a href="/blog">View all posts →</a></p>
+  </section>
+
+  <hr />
+
+  <section>
+    <h2>Projects</h2>
+    {projects.length === 0 ? (
+      <p>No projects yet.</p>
+    ) : (
+      <ul>
+        {projects.map((project) => (
+          <li>
+            <a href={`/projects/${project.data.slug}`}>{project.data.title}</a>
+            <p>{project.data.description}</p>
+          </li>
+        ))}
+      </ul>
+    )}
+    <p><a href="/projects">View all projects →</a></p>
+  </section>
+
+  <hr />
+
+  <section>
+    <h2>Explore</h2>
+    <ul>
+      <li><a href="/about">About</a></li>
+      <li><a href="/now">Now</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </section>
 </BaseLayout>
