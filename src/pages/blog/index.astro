@@ -6,22 +6,75 @@ const posts = await getCollection("blog");
 const publishedPosts = posts
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+const allTags = [
+  ...new Set(publishedPosts.flatMap((post) => post.data.tags)),
+].sort();
 ---
 
-<BaseLayout title="Blog | jhle0" description="Blog posts">
-  <h1>Blog</h1>
+<BaseLayout
+  title="Blog | jhle0"
+  description="Study notes, project logs, and learning records."
+>
+  <section>
+    <h1>Blog</h1>
+    <p>Study notes, project logs, and records of what I am learning.</p>
+  </section>
 
-  {publishedPosts.length === 0 ? (
-    <p>No posts found.</p>
-  ) : (
-    <ul>
-      {publishedPosts.map((post) => (
-        <li>
-          <a href={`/blog/${post.data.slug}`}>{post.data.title}</a>
-          <p>{post.data.description}</p>
-          <small>{post.data.pubDate.toISOString().slice(0, 10)}</small>
-        </li>
-      ))}
-    </ul>
-  )}
+  <hr />
+
+  <section>
+    <h2>Tags</h2>
+    {
+      allTags.length === 0 ? (
+        <p>No tags yet.</p>
+      ) : (
+        <ul>
+          {allTags.map((tag) => (
+            <li>
+              <a href={`/tags/${tag}`}>{tag}</a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+
+  <hr />
+
+  <section>
+    <h2>Posts</h2>
+
+    {
+      publishedPosts.length === 0 ? (
+        <p>No posts found.</p>
+      ) : (
+        <ul>
+          {publishedPosts.map((post) => (
+            <li>
+              <article>
+                <h3>
+                  <a href={`/blog/${post.data.slug}`}>{post.data.title}</a>
+                </h3>
+
+                <p>{post.data.description}</p>
+
+                <p>
+                  <small>{post.data.pubDate.toISOString().slice(0, 10)}</small>
+                </p>
+
+                <ul>
+                  {post.data.tags.map((tag) => (
+                    <li>
+                      <a href={`/tags/${tag}`}>{tag}</a>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
 </BaseLayout>

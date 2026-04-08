@@ -1,0 +1,76 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+    const posts = await getCollection("blog");
+    const publishedPosts = posts.filter((post) => !post.data.draft);
+
+    const allTags = [
+        ...new Set(publishedPosts.flatMap((post) => post.data.tags)),
+    ].sort();
+
+    return allTags.map((tag) => ({
+        params: { tag },
+        props: {
+            tag,
+            posts: publishedPosts
+                .filter((post) => post.data.tags.includes(tag))
+                .sort(
+                    (a, b) =>
+                        b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+                ),
+        },
+    }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout
+    title={`Tag: ${tag} | jhle0`}
+    description={`Posts tagged with ${tag}`}
+>
+    <section>
+        <h1>Tag: {tag}</h1>
+        <p>
+            Posts related to <strong>{tag}</strong>.
+        </p>
+    </section>
+
+    <hr />
+
+    <section>
+        {
+            posts.length === 0 ? (
+                <p>No posts found for this tag.</p>
+            ) : (
+                <ul>
+                    {posts.map((post) => (
+                        <li>
+                            <article>
+                                <h2>
+                                    <a href={`/blog/${post.data.slug}`}>
+                                        {post.data.title}
+                                    </a>
+                                </h2>
+                                <p>{post.data.description}</p>
+                                <p>
+                                    <small>
+                                        {post.data.pubDate
+                                            .toISOString()
+                                            .slice(0, 10)}
+                                    </small>
+                                </p>
+                            </article>
+                        </li>
+                    ))}
+                </ul>
+            )
+        }
+    </section>
+
+    <hr />
+
+    <p><a href="/blog">← Back to blog</a></p>
+</BaseLayout>

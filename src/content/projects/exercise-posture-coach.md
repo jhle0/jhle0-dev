@@ -8,7 +8,7 @@ tags: ["project", "computer-vision", "deep-learning", "cloud"]
 draft: false
 heroImage: ""
 status: "completed"
-githubUrl: ""
+githubUrl: "https://github.com/jhle0"
 demoUrl: ""
 ---
 
