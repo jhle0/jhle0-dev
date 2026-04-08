@@ -16,61 +16,190 @@ const allTags = [
   title="Blog | jhle0"
   description="Study notes, project logs, and learning records."
 >
-  <section>
-    <h1>Blog</h1>
-    <p>Study notes, project logs, and records of what I am learning.</p>
-  </section>
+  <section class="blog-archive-page">
+    <header class="blog-archive-header">
+      <h1>Blog</h1>
+      <p>Writing on topics I am passionate about.</p>
+    </header>
 
-  <section>
-    <h2>Tags</h2>
-    {
-      allTags.length === 0 ? (
-        <p>No tags yet.</p>
-      ) : (
-        <ul class="tag-list">
-          {allTags.map((tag) => (
-            <li>
-              <a href={`/tags/${tag}`}>{tag}</a>
-            </li>
-          ))}
+    <div class="blog-archive-layout">
+      <aside class="blog-sidebar">
+        <div class="blog-search-box">
+          <input
+            id="blog-search"
+            type="text"
+            placeholder="Search posts"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="blog-filter-header">
+          <h2>TAGS</h2>
+          <button id="clear-filters" type="button">Clear</button>
+        </div>
+
+        <ul class="blog-filter-list">
+          {
+            allTags.map((tag) => (
+              <li>
+                <label class="blog-filter-item">
+                  <input
+                    type="checkbox"
+                    value={tag}
+                    class="blog-tag-checkbox"
+                  />
+                  <span>{tag}</span>
+                </label>
+              </li>
+            ))
+          }
         </ul>
-      )
-    }
-  </section>
+      </aside>
 
-  <section>
-    <h2>Posts</h2>
+      <div class="blog-content-area">
+        <div class="blog-toolbar">
+          <p id="blog-results-count">
+            SHOWING {publishedPosts.length} OF {publishedPosts.length} POSTS
+          </p>
 
-    {
-      publishedPosts.length === 0 ? (
-        <p>No posts found.</p>
-      ) : (
-        <ul class="card-list">
-          {publishedPosts.map((post) => (
-            <li>
-              <article>
-                <h3>
-                  <a href={`/blog/${post.data.slug}`}>{post.data.title}</a>
-                </h3>
+          <button
+            id="sort-toggle"
+            type="button"
+            class="blog-sort-button"
+            data-order="desc"
+          >
+            DESCENDING
+          </button>
+        </div>
 
-                <p>{post.data.description}</p>
+        <ul id="blog-post-list" class="blog-post-card-list">
+          {
+            publishedPosts.map((post) => (
+              <li
+                class="blog-post-card"
+                data-title={post.data.title.toLowerCase()}
+                data-description={post.data.description.toLowerCase()}
+                data-tags={post.data.tags.join(" ").toLowerCase()}
+                data-date={post.data.pubDate.toISOString()}
+              >
+                <article>
+                  <p class="blog-post-date">
+                    {post.data.pubDate.toISOString().slice(0, 10)}
+                  </p>
 
-                <p class="meta">
-                  {post.data.pubDate.toISOString().slice(0, 10)}
-                </p>
+                  <div class="blog-post-main">
+                    <div class="blog-post-text">
+                      <h3>
+                        <a href={`/blog/${post.data.slug}`}>
+                          {post.data.title}
+                        </a>
+                      </h3>
+                      <p>{post.data.description}</p>
 
-                <ul class="tag-list">
-                  {post.data.tags.map((tag) => (
-                    <li>
-                      <a href={`/tags/${tag}`}>{tag}</a>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            </li>
-          ))}
+                      <ul class="tag-list">
+                        {post.data.tags.map((tag) => (
+                          <li>
+                            <a href={`/tags/${tag}`}>{tag}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div class="blog-post-arrow" aria-hidden="true">
+                      ›
+                    </div>
+                  </div>
+                </article>
+              </li>
+            ))
+          }
         </ul>
-      )
-    }
+      </div>
+    </div>
   </section>
+
+  <script is:inline>
+    const searchInput = document.getElementById("blog-search");
+    const clearButton = document.getElementById("clear-filters");
+    const sortToggle = document.getElementById("sort-toggle");
+    const resultsCount = document.getElementById("blog-results-count");
+    const postList = document.getElementById("blog-post-list");
+    const checkboxes = Array.from(
+      document.querySelectorAll(".blog-tag-checkbox"),
+    );
+    const allCards = Array.from(document.querySelectorAll(".blog-post-card"));
+    const totalCount = allCards.length;
+
+    let sortOrder = "desc";
+
+    function getSelectedTags() {
+      return checkboxes
+        .filter((checkbox) => checkbox.checked)
+        .map((checkbox) => checkbox.value.toLowerCase());
+    }
+
+    function matchesSearch(card, query) {
+      const haystack = [
+        card.dataset.title || "",
+        card.dataset.description || "",
+        card.dataset.tags || "",
+      ].join(" ");
+
+      return haystack.includes(query);
+    }
+
+    function matchesTags(card, selectedTags) {
+      if (selectedTags.length === 0) return true;
+      const cardTags = (card.dataset.tags || "").split(" ").filter(Boolean);
+      return selectedTags.every((tag) => cardTags.includes(tag));
+    }
+
+    function sortCards(cards) {
+      return cards.sort((a, b) => {
+        const aDate = new Date(a.dataset.date).getTime();
+        const bDate = new Date(b.dataset.date).getTime();
+        return sortOrder === "desc" ? bDate - aDate : aDate - bDate;
+      });
+    }
+
+    function render() {
+      const query = (searchInput.value || "").trim().toLowerCase();
+      const selectedTags = getSelectedTags();
+
+      const filtered = allCards.filter((card) => {
+        return matchesSearch(card, query) && matchesTags(card, selectedTags);
+      });
+
+      const sorted = sortCards([...filtered]);
+
+      postList.innerHTML = "";
+      sorted.forEach((card) => postList.appendChild(card));
+
+      resultsCount.textContent = `SHOWING ${sorted.length} OF ${totalCount} POSTS`;
+      sortToggle.textContent =
+        sortOrder === "desc" ? "DESCENDING" : "ASCENDING";
+    }
+
+    searchInput?.addEventListener("input", render);
+
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", render);
+    });
+
+    clearButton?.addEventListener("click", () => {
+      searchInput.value = "";
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+      });
+      sortOrder = "desc";
+      render();
+    });
+
+    sortToggle?.addEventListener("click", () => {
+      sortOrder = sortOrder === "desc" ? "asc" : "desc";
+      render();
+    });
+
+    render();
+  </script>
 </BaseLayout>
