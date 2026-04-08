@@ -3,81 +3,178 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="About | jhle0" description="About jhle0">
-  <section>
-    <h1>About</h1>
-    <p>안녕하세요. 공부한 것과 만든 것을 기록하는 개발자 jhle0이다.</p>
-    <p>
-      이 사이트는 공부 노트, 프로젝트 기록, 그리고 회고를 한 곳에 정리하기 위해
-      만들었다.
-    </p>
-  </section>
+  <section class="about-page">
+    <aside class="about-sidebar">
+      <img
+        class="about-profile-image"
+        src="/images/profile/profile.jpg"
+        alt="Profile photo of jhle0"
+      />
 
-  <hr />
+      <div class="about-sidebar-block">
+        <h3>Current</h3>
+        <p>Military service · Building a developer blog · Studying CS and AI</p>
+      </div>
 
-  <section>
-    <h2>Current Focus</h2>
-    <p>
-      현재는 컴퓨터사이언스 기초를 탄탄하게 다지고, AI 관련 개념과 프로젝트
-      경험을 함께 쌓는 데 집중하고 있다.
-    </p>
-    <p>
-      특히 개념을 이해하는 데서 끝내지 않고, 직접 구현하고 기록으로 남기는
-      방식으로 공부하려고 한다.
-    </p>
-  </section>
+      <div class="about-sidebar-block">
+        <h3>Focus</h3>
+        <p>
+          CS fundamentals, AI/ML/DL, projects, and long-term portfolio building
+        </p>
+      </div>
 
-  <hr />
+      <div class="about-sidebar-block">
+        <h3>Direction</h3>
+        <p>
+          Embodied AI / Physical AI, LLM/VLM, Cloud, and real product building
+        </p>
+      </div>
 
-  <section>
-    <h2>Interests</h2>
-    <ul>
-      <li>Computer Science fundamentals</li>
-      <li>AI / ML / Deep Learning</li>
-      <li>Embodied AI / Physical AI</li>
-      <li>Cloud / Deployment</li>
-      <li>Developer workflows and tooling</li>
-    </ul>
-  </section>
+      <div class="about-sidebar-block">
+        <h3>Areas</h3>
+        <ul class="tag-list">
+          <li><span class="tag">CS</span></li>
+          <li><span class="tag">AI/ML</span></li>
+          <li><span class="tag">Deep Learning</span></li>
+          <li><span class="tag">LLM</span></li>
+          <li><span class="tag">Physical AI</span></li>
+          <li><span class="tag">Cloud</span></li>
+          <li><span class="tag">Astro</span></li>
+          <li><span class="tag">Portfolio</span></li>
+        </ul>
+      </div>
+    </aside>
 
-  <hr />
+    <div class="about-main">
+      <section>
+        <h1>About</h1>
+        <p>
+          안녕하세요. 공부한 것과 만든 것을 기록하는 개발자 jhle0이다. 현재는 군
+          복무 중이며, 컴퓨터사이언스 기초와 AI 관련 개념을 체계적으로 공부하고
+          있다.
+        </p>
+        <p>
+          단순히 개념을 읽고 넘어가는 방식보다, 직접 정리하고 구현하고 기록으로
+          남기는 방식을 선호한다. 그래서 이 사이트도 공부 노트, 프로젝트 기록,
+          회고를 한 곳에 모으기 위해 만들었다.
+        </p>
+        <p>
+          장기적으로는 CS 기초 위에 AI/ML/DL, LLM/VLM, 그리고 Physical AI
+          방향까지 연결해서 실제로 의미 있는 제품과 시스템을 만들 수 있는
+          개발자가 되는 것이 목표다.
+        </p>
+      </section>
 
-  <section>
-    <h2>Learning Areas</h2>
-    <ul>
-      <li>자료구조와 알고리즘</li>
-      <li>운영체제, 네트워크, 데이터베이스</li>
-      <li>Machine Learning / Deep Learning fundamentals</li>
-      <li>LLM / Multimodal / Physical AI related topics</li>
-      <li>실제 프로젝트 구현과 배포 경험</li>
-    </ul>
-  </section>
+      <section>
+        <h2>Values & Philosophy</h2>
+        <div class="info-card-grid">
+          <article class="info-card">
+            <h3>Build from fundamentals</h3>
+            <p>
+              겉핥기식으로 넓게 아는 것보다,
+              운영체제·네트워크·데이터베이스·알고리즘 같은 기초를 단단하게 쌓는
+              것을 우선한다.
+            </p>
+          </article>
 
-  <hr />
+          <article class="info-card">
+            <h3>Learn by building</h3>
+            <p>
+              공부한 개념은 실제 프로젝트, 구현, 기록으로 연결해야 오래 남는다고
+              본다. 이해와 실전은 같이 가야 한다.
+            </p>
+          </article>
 
-  <section>
-    <h2>This Site</h2>
-    <p>이 사이트에는 주로 아래 내용을 정리한다.</p>
-    <ul>
-      <li>CS / AI 공부 정리</li>
-      <li>프로젝트 개발 기록</li>
-      <li>회고와 방향성 정리</li>
-    </ul>
-  </section>
+          <article class="info-card">
+            <h3>Think long-term</h3>
+            <p>
+              단기 성과보다 장기적으로 쌓이는 자산을 중요하게 본다. 블로그,
+              프로젝트, 포트폴리오도 그 기준으로 만든다.
+            </p>
+          </article>
 
-  <hr />
+          <article class="info-card">
+            <h3>Stay honest</h3>
+            <p>
+              아는 것과 모르는 것을 구분하고, 부족한 부분은 인정한 뒤 보완하는
+              방식으로 성장하려고 한다.
+            </p>
+          </article>
+        </div>
+      </section>
 
-  <section>
-    <h2>Links</h2>
-    <ul>
-      <li>
-        <a href="https://github.com/jhle0" target="_blank" rel="noreferrer">
-          GitHub
-        </a>
-      </li>
-      <li><a href="/blog">Blog</a></li>
-      <li><a href="/projects">Projects</a></li>
-      <li><a href="/now">Now</a></li>
-      <li><a href="/contact">Contact</a></li>
-    </ul>
+      <section>
+        <h2>What I am working on</h2>
+        <div class="info-card-grid">
+          <article class="info-card">
+            <h3>Study Notes</h3>
+            <p>
+              CS fundamentals, AI core concepts, machine learning, deep learning
+              관련 정리를 블로그 글로 체계화하고 있다.
+            </p>
+          </article>
+
+          <article class="info-card">
+            <h3>Projects Archive</h3>
+            <p>
+              프로젝트 결과만 남기는 것이 아니라, 어떤 문제를 어떻게 구현했고
+              무엇을 배웠는지까지 기록하려고 한다.
+            </p>
+          </article>
+
+          <article class="info-card">
+            <h3>Developer Workflow</h3>
+            <p>
+              Astro 기반 개인 사이트, 콘텐츠 구조, 배포 흐름, 장기적인 기록
+              시스템을 실전적으로 다듬고 있다.
+            </p>
+          </article>
+
+          <article class="info-card">
+            <h3>Future Direction</h3>
+            <p>
+              AI/ML/DL 기반 위에서 Embodied AI, Physical AI, LLM/VLM과 같은
+              분야로 자연스럽게 확장하는 방향을 보고 있다.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>Personal Interests</h2>
+        <div class="interest-grid">
+          <article class="interest-card">
+            <h3>Writing & Organizing</h3>
+            <p>
+              배운 것을 구조화해서 정리하고, 다시 설명 가능한 형태로 만드는 과정
+              자체를 중요하게 생각한다.
+            </p>
+          </article>
+
+          <article class="interest-card">
+            <h3>Technology & Systems</h3>
+            <p>
+              단순 기능 구현보다 시스템이 왜 그렇게 설계되는지, 어떤 trade-off가
+              있는지 이해하는 데 관심이 많다.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>Links</h2>
+        <ul class="inline-list">
+          <li>
+            <a href="https://github.com/jhle0" target="_blank" rel="noreferrer">
+              GitHub
+            </a>
+          </li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/projects">Projects</a></li>
+          <li><a href="/now">Now</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </section>
+    </div>
   </section>
 </BaseLayout>

@@ -1,8 +1,27 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { nowUpdates } from "../data/now";
 ---
 
-<BaseLayout title="Now | jhle0" description="What I am focused on now">
-  <h1>Now</h1>
-  <p>This is the now page.</p>
+<BaseLayout title="Now | jhle0" description="What I am up to now">
+  <section class="hero">
+    <h1>NOW</h1>
+    <p>What I am up to now.</p>
+  </section>
+
+  <section class="timeline">
+    <ul class="timeline-list">
+      {
+        nowUpdates.map((item) => (
+          <li class="timeline-item">
+            <div class="timeline-marker" />
+            <div class="timeline-content">
+              <p class="timeline-date">{item.date}</p>
+              <p>{item.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
 </BaseLayout>
