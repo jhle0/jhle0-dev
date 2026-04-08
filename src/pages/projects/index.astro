@@ -6,23 +6,37 @@ const projects = await getCollection("projects");
 const publishedProjects = projects
   .filter((project) => !project.data.draft)
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+const formatStatus = (status?: string) =>
+  !status ? null : status.replace("-", " ");
 ---
 
 <BaseLayout title="Projects | jhle0" description="Projects archive">
-  <section>
+  <section class="page-intro">
+    <p class="eyebrow">Portfolio archive</p>
     <h1>Projects</h1>
-    <p>A collection of projects, experiments, and things I have built.</p>
+    <p class="intro-copy">
+      구현 결과뿐 아니라 어떤 문제를 풀었고 무엇을 배웠는지까지 남기는
+      프로젝트 아카이브.
+    </p>
   </section>
 
-  <section>
+  <section class="section-block">
     {
       publishedProjects.length === 0 ? (
-        <p>No projects found.</p>
+        <p class="empty-copy">아직 공개된 프로젝트가 없습니다.</p>
       ) : (
-        <ul class="card-list">
+        <ul class="projects-grid">
           {publishedProjects.map((project) => (
-            <li>
-              <article>
+            <li class="project-card surface-card">
+              <article class="stack-sm">
+                <div class="project-card-top">
+                  <p class="meta">{project.data.pubDate.toISOString().slice(0, 10)}</p>
+                  {project.data.status && (
+                    <span class="status-pill">{formatStatus(project.data.status)}</span>
+                  )}
+                </div>
+
                 <h2>
                   <a href={`/projects/${project.data.slug}`}>
                     {project.data.title}
@@ -30,16 +44,6 @@ const publishedProjects = projects
                 </h2>
 
                 <p>{project.data.description}</p>
-
-                <p class="meta">
-                  {project.data.pubDate.toISOString().slice(0, 10)}
-                  {project.data.status && (
-                    <>
-                      {" "}
-                      · <strong>{project.data.status}</strong>
-                    </>
-                  )}
-                </p>
 
                 {project.data.tags.length > 0 && (
                   <ul class="tag-list">

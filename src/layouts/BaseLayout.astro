@@ -3,10 +3,20 @@ import "../styles/global.css";
 
 const { title = "jhle0", description = "Personal developer blog" } =
   Astro.props;
+const currentPath = Astro.url.pathname;
+
+const navItems = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/now", label: "Now" },
+  { href: "/blog", label: "Blog" },
+  { href: "/projects", label: "Projects" },
+  { href: "/contact", label: "Contact" },
+];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,23 +24,46 @@ const { title = "jhle0", description = "Personal developer blog" } =
     <meta name="description" content={description} />
   </head>
   <body>
-    <header>
-      <nav>
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/now">Now</a>
-        <a href="/blog">Blog</a>
-        <a href="/projects">Projects</a>
-        <a href="/contact">Contact</a>
-      </nav>
+    <header class="site-header">
+      <div class="site-shell">
+        <nav class="site-nav" aria-label="Primary">
+          <a class="site-brand" href="/">jhle0</a>
+
+          <div class="site-nav-links">
+            {
+              navItems.map((item) => {
+                const isActive =
+                  item.href === "/"
+                    ? currentPath === "/"
+                    : currentPath === item.href ||
+                      currentPath.startsWith(`${item.href}/`);
+
+                return (
+                  <a
+                    href={item.href}
+                    class:list={[
+                      "site-nav-link",
+                      isActive && "is-active",
+                    ]}
+                    aria-current={isActive ? "page" : undefined}
+                  >
+                    {item.label}
+                  </a>
+                );
+              })
+            }
+          </div>
+        </nav>
+      </div>
     </header>
 
-    <main>
+    <main class="site-main site-shell">
       <slot />
     </main>
 
-    <footer>
-      <p>jhle0 — study notes, projects, and logs.</p>
+    <footer class="site-footer site-shell">
+      <p>jhle0</p>
+      <p>study notes, projects, and now logs.</p>
     </footer>
   </body>
 </html>

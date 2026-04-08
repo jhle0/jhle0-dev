@@ -11,26 +11,26 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         alt="Profile photo of jhle0"
       />
 
-      <div class="about-sidebar-block">
+      <div class="about-sidebar-block surface-card">
         <h3>Current</h3>
         <p>Military service · Building a developer blog · Studying CS and AI</p>
       </div>
 
-      <div class="about-sidebar-block">
+      <div class="about-sidebar-block surface-card">
         <h3>Focus</h3>
         <p>
           CS fundamentals, AI/ML/DL, projects, and long-term portfolio building
         </p>
       </div>
 
-      <div class="about-sidebar-block">
+      <div class="about-sidebar-block surface-card">
         <h3>Direction</h3>
         <p>
           Embodied AI / Physical AI, LLM/VLM, Cloud, and real product building
         </p>
       </div>
 
-      <div class="about-sidebar-block">
+      <div class="about-sidebar-block surface-card">
         <h3>Areas</h3>
         <ul class="tag-list">
           <li><span class="tag">CS</span></li>
@@ -46,9 +46,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </aside>
 
     <div class="about-main">
-      <section>
+      <section class="page-intro">
+        <p class="eyebrow">About me</p>
         <h1>About</h1>
-        <p>
+        <p class="intro-copy">
           안녕하세요. 공부한 것과 만든 것을 기록하는 개발자 jhle0이다. 현재는 군
           복무 중이며, 컴퓨터사이언스 기초와 AI 관련 개념을 체계적으로 공부하고
           있다.
@@ -65,10 +66,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </p>
       </section>
 
-      <section>
+      <section class="section-block">
         <h2>Values & Philosophy</h2>
         <div class="info-card-grid">
-          <article class="info-card">
+          <article class="info-card surface-card">
             <h3>Build from fundamentals</h3>
             <p>
               겉핥기식으로 넓게 아는 것보다,
@@ -77,7 +78,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             </p>
           </article>
 
-          <article class="info-card">
+          <article class="info-card surface-card">
             <h3>Learn by building</h3>
             <p>
               공부한 개념은 실제 프로젝트, 구현, 기록으로 연결해야 오래 남는다고
@@ -85,7 +86,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             </p>
           </article>
 
-          <article class="info-card">
+          <article class="info-card surface-card">
             <h3>Think long-term</h3>
             <p>
               단기 성과보다 장기적으로 쌓이는 자산을 중요하게 본다. 블로그,
@@ -93,7 +94,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             </p>
           </article>
 
-          <article class="info-card">
+          <article class="info-card surface-card">
             <h3>Stay honest</h3>
             <p>
               아는 것과 모르는 것을 구분하고, 부족한 부분은 인정한 뒤 보완하는
@@ -103,10 +104,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </div>
       </section>
 
-      <section>
+      <section class="section-block">
         <h2>What I am working on</h2>
         <div class="info-card-grid">
-          <article class="info-card">
+          <article class="info-card surface-card">
             <h3>Study Notes</h3>
             <p>
               CS fundamentals, AI core concepts, machine learning, deep learning
@@ -114,7 +115,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             </p>
           </article>
 
-          <article class="info-card">
+          <article class="info-card surface-card">
             <h3>Projects Archive</h3>
             <p>
               프로젝트 결과만 남기는 것이 아니라, 어떤 문제를 어떻게 구현했고
@@ -122,7 +123,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             </p>
           </article>
 
-          <article class="info-card">
+          <article class="info-card surface-card">
             <h3>Developer Workflow</h3>
             <p>
               Astro 기반 개인 사이트, 콘텐츠 구조, 배포 흐름, 장기적인 기록
@@ -130,7 +131,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             </p>
           </article>
 
-          <article class="info-card">
+          <article class="info-card surface-card">
             <h3>Future Direction</h3>
             <p>
               AI/ML/DL 기반 위에서 Embodied AI, Physical AI, LLM/VLM과 같은
@@ -140,10 +141,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </div>
       </section>
 
-      <section>
+      <section class="section-block">
         <h2>Personal Interests</h2>
         <div class="interest-grid">
-          <article class="interest-card">
+          <article class="interest-card surface-card">
             <h3>Writing & Organizing</h3>
             <p>
               배운 것을 구조화해서 정리하고, 다시 설명 가능한 형태로 만드는 과정
@@ -151,7 +152,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             </p>
           </article>
 
-          <article class="interest-card">
+          <article class="interest-card surface-card">
             <h3>Technology & Systems</h3>
             <p>
               단순 기능 구현보다 시스템이 왜 그렇게 설계되는지, 어떤 trade-off가
@@ -161,7 +162,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </div>
       </section>
 
-      <section>
+      <section class="section-block">
         <h2>Links</h2>
         <ul class="inline-list">
           <li>

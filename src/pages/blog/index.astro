@@ -10,6 +10,13 @@ const publishedPosts = posts
 const allTags = [
   ...new Set(publishedPosts.flatMap((post) => post.data.tags)),
 ].sort();
+
+const formatCategory = (category: string) =>
+  ({
+    study: "Study",
+    build: "Build",
+    log: "Log",
+  })[category] ?? category;
 ---
 
 <BaseLayout
@@ -17,14 +24,19 @@ const allTags = [
   description="Study notes, project logs, and learning records."
 >
   <section class="blog-archive-page">
-    <header class="blog-archive-header">
+    <header class="blog-archive-header page-intro">
+      <p class="eyebrow">Archive</p>
       <h1>Blog</h1>
-      <p>Writing on topics I am passionate about.</p>
+      <p class="intro-copy">
+        공부한 개념, 만든 것의 기록, 그리고 중간 회고를 아카이브 형태로 모아둔
+        공간.
+      </p>
     </header>
 
     <div class="blog-archive-layout">
-      <aside class="blog-sidebar">
+      <aside class="blog-sidebar surface-card">
         <div class="blog-search-box">
+          <span class="blog-search-icon" aria-hidden="true">⌕</span>
           <input
             id="blog-search"
             type="text"
@@ -83,9 +95,14 @@ const allTags = [
                 data-date={post.data.pubDate.toISOString()}
               >
                 <article>
-                  <p class="blog-post-date">
-                    {post.data.pubDate.toISOString().slice(0, 10)}
-                  </p>
+                  <div class="blog-post-meta-row">
+                    <p class="blog-post-date">
+                      {post.data.pubDate.toISOString().slice(0, 10)}
+                    </p>
+                    <span class="post-kind">
+                      {formatCategory(post.data.category)}
+                    </span>
+                  </div>
 
                   <div class="blog-post-main">
                     <div class="blog-post-text">
@@ -114,6 +131,10 @@ const allTags = [
             ))
           }
         </ul>
+
+        <p id="blog-empty-state" class="blog-empty-state" hidden>
+          No posts match your current filters.
+        </p>
       </div>
     </div>
   </section>
@@ -124,6 +145,7 @@ const allTags = [
     const sortToggle = document.getElementById("sort-toggle");
     const resultsCount = document.getElementById("blog-results-count");
     const postList = document.getElementById("blog-post-list");
+    const emptyState = document.getElementById("blog-empty-state");
     const checkboxes = Array.from(
       document.querySelectorAll(".blog-tag-checkbox"),
     );
@@ -136,6 +158,19 @@ const allTags = [
       return checkboxes
         .filter((checkbox) => checkbox.checked)
         .map((checkbox) => checkbox.value.toLowerCase());
+    }
+
+    function updateActiveFilterStyles() {
+      checkboxes.forEach((checkbox) => {
+        const label = checkbox.closest(".blog-filter-item");
+        if (!label) return;
+
+        if (checkbox.checked) {
+          label.classList.add("is-active");
+        } else {
+          label.classList.remove("is-active");
+        }
+      });
     }
 
     function matchesSearch(card, query) {
@@ -178,6 +213,9 @@ const allTags = [
       resultsCount.textContent = `SHOWING ${sorted.length} OF ${totalCount} POSTS`;
       sortToggle.textContent =
         sortOrder === "desc" ? "DESCENDING" : "ASCENDING";
+      emptyState.hidden = sorted.length !== 0;
+
+      updateActiveFilterStyles();
     }
 
     searchInput?.addEventListener("input", render);
