@@ -14,14 +14,12 @@ const publishedProjects = projects
     <p>A collection of projects, experiments, and things I have built.</p>
   </section>
 
-  <hr />
-
   <section>
     {
       publishedProjects.length === 0 ? (
         <p>No projects found.</p>
       ) : (
-        <ul>
+        <ul class="card-list">
           {publishedProjects.map((project) => (
             <li>
               <article>
@@ -33,10 +31,8 @@ const publishedProjects = projects
 
                 <p>{project.data.description}</p>
 
-                <p>
-                  <small>
-                    {project.data.pubDate.toISOString().slice(0, 10)}
-                  </small>
+                <p class="meta">
+                  {project.data.pubDate.toISOString().slice(0, 10)}
                   {project.data.status && (
                     <>
                       {" "}
@@ -46,18 +42,21 @@ const publishedProjects = projects
                 </p>
 
                 {project.data.tags.length > 0 && (
-                  <ul>
+                  <ul class="tag-list">
                     {project.data.tags.map((tag) => (
-                      <li>{tag}</li>
+                      <li>
+                        <span class="tag">{tag}</span>
+                      </li>
                     ))}
                   </ul>
                 )}
 
-                <p>
-                  <a href={`/projects/${project.data.slug}`}>Details</a>
+                <ul class="card-links">
+                  <li>
+                    <a href={`/projects/${project.data.slug}`}>Details</a>
+                  </li>
                   {project.data.githubUrl && project.data.githubUrl !== "" && (
-                    <>
-                      {" · "}
+                    <li>
                       <a
                         href={project.data.githubUrl}
                         target="_blank"
@@ -65,11 +64,10 @@ const publishedProjects = projects
                       >
                         GitHub
                       </a>
-                    </>
+                    </li>
                   )}
                   {project.data.demoUrl && project.data.demoUrl !== "" && (
-                    <>
-                      {" · "}
+                    <li>
                       <a
                         href={project.data.demoUrl}
                         target="_blank"
@@ -77,11 +75,10 @@ const publishedProjects = projects
                       >
                         Demo
                       </a>
-                    </>
+                    </li>
                   )}
-                </p>
+                </ul>
               </article>
-              <hr />
             </li>
           ))}
         </ul>

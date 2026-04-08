@@ -24,12 +24,19 @@ const { Content } = await render(project);
   <article>
     <h1>{project.data.title}</h1>
     <p>{project.data.description}</p>
-    <small>{project.data.pubDate.toISOString().slice(0, 10)}</small>
-
-    {project.data.status && <p>Status: {project.data.status}</p>}
-
-    <hr />
-
-    <Content />
+    <p class="meta">
+      {project.data.pubDate.toISOString().slice(0, 10)}
+      {
+        project.data.status && (
+          <>
+            {" "}
+            · <strong>{project.data.status}</strong>
+          </>
+        )
+      }
+    </p>
+    <div class="article-content">
+      <Content />
+    </div>
   </article>
 </BaseLayout>

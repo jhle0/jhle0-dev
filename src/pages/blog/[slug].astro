@@ -17,12 +17,16 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<BaseLayout title={`${post.data.title} | jhle0`} description={post.data.description}>
+<BaseLayout
+  title={`${post.data.title} | jhle0`}
+  description={post.data.description}
+>
   <article>
     <h1>{post.data.title}</h1>
     <p>{post.data.description}</p>
-    <small>{post.data.pubDate.toISOString().slice(0, 10)}</small>
-    <hr />
-    <Content />
+    <p class="meta">{post.data.pubDate.toISOString().slice(0, 10)}</p>
+    <div class="article-content">
+      <Content />
+    </div>
   </article>
 </BaseLayout>

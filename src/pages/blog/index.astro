@@ -21,15 +21,13 @@ const allTags = [
     <p>Study notes, project logs, and records of what I am learning.</p>
   </section>
 
-  <hr />
-
   <section>
     <h2>Tags</h2>
     {
       allTags.length === 0 ? (
         <p>No tags yet.</p>
       ) : (
-        <ul>
+        <ul class="tag-list">
           {allTags.map((tag) => (
             <li>
               <a href={`/tags/${tag}`}>{tag}</a>
@@ -40,8 +38,6 @@ const allTags = [
     }
   </section>
 
-  <hr />
-
   <section>
     <h2>Posts</h2>
 
@@ -49,7 +45,7 @@ const allTags = [
       publishedPosts.length === 0 ? (
         <p>No posts found.</p>
       ) : (
-        <ul>
+        <ul class="card-list">
           {publishedPosts.map((post) => (
             <li>
               <article>
@@ -59,11 +55,11 @@ const allTags = [
 
                 <p>{post.data.description}</p>
 
-                <p>
-                  <small>{post.data.pubDate.toISOString().slice(0, 10)}</small>
+                <p class="meta">
+                  {post.data.pubDate.toISOString().slice(0, 10)}
                 </p>
 
-                <ul>
+                <ul class="tag-list">
                   {post.data.tags.map((tag) => (
                     <li>
                       <a href={`/tags/${tag}`}>{tag}</a>

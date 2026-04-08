@@ -1,5 +1,8 @@
 ---
-const { title = "jhle0", description = "Personal developer blog" } = Astro.props;
+import "../styles/global.css";
+
+const { title = "jhle0", description = "Personal developer blog" } =
+  Astro.props;
 ---
 
 <!doctype html>
@@ -25,5 +28,9 @@ const { title = "jhle0", description = "Personal developer blog" } = Astro.props
     <main>
       <slot />
     </main>
+
+    <footer>
+      <p>jhle0 — study notes, projects, and logs.</p>
+    </footer>
   </body>
 </html>
