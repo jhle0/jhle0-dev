@@ -13,53 +13,58 @@ const projects = (await getCollection("projects"))
   .slice(0, 3);
 ---
 
-<BaseLayout title="Home | jhle0" description="Personal developer blog and portfolio">
+<BaseLayout
+  title="Home | jhle0"
+  description="Study notes, projects, and logs in one place."
+>
   <section>
     <h1>jhle0</h1>
-    <p>
-      Personal developer blog for study notes, projects, and logs.
-    </p>
-    <p>
-      I document what I study, build, and think about.
-    </p>
+    <p>Study notes, projects, and logs in one place.</p>
+    <p>I write about computer science, AI, projects, and what I am learning.</p>
   </section>
 
   <hr />
 
   <section>
     <h2>Recent Posts</h2>
-    {posts.length === 0 ? (
-      <p>No posts yet.</p>
-    ) : (
-      <ul>
-        {posts.map((post) => (
-          <li>
-            <a href={`/blog/${post.data.slug}`}>{post.data.title}</a>
-            <p>{post.data.description}</p>
-          </li>
-        ))}
-      </ul>
-    )}
-    <p><a href="/blog">View all posts →</a></p>
+    {
+      posts.length === 0 ? (
+        <p>No posts yet.</p>
+      ) : (
+        <ul>
+          {posts.map((post) => (
+            <li>
+              <a href={`/blog/${post.data.slug}`}>{post.data.title}</a>
+              <p>{post.data.description}</p>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    <p><a href="/blog">See all posts →</a></p>
   </section>
 
   <hr />
 
   <section>
-    <h2>Projects</h2>
-    {projects.length === 0 ? (
-      <p>No projects yet.</p>
-    ) : (
-      <ul>
-        {projects.map((project) => (
-          <li>
-            <a href={`/projects/${project.data.slug}`}>{project.data.title}</a>
-            <p>{project.data.description}</p>
-          </li>
-        ))}
-      </ul>
-    )}
-    <p><a href="/projects">View all projects →</a></p>
+    <h2>Recent Projects</h2>
+    {
+      projects.length === 0 ? (
+        <p>No projects yet.</p>
+      ) : (
+        <ul>
+          {projects.map((project) => (
+            <li>
+              <a href={`/projects/${project.data.slug}`}>
+                {project.data.title}
+              </a>
+              <p>{project.data.description}</p>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    <p><a href="/projects">See all projects →</a></p>
   </section>
 
   <hr />
