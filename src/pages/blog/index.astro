@@ -10,13 +10,6 @@ const publishedPosts = posts
 const allTags = [
   ...new Set(publishedPosts.flatMap((post) => post.data.tags)),
 ].sort();
-
-const formatCategory = (category: string) =>
-  ({
-    study: "Study",
-    build: "Build",
-    log: "Log",
-  })[category] ?? category;
 ---
 
 <BaseLayout
@@ -104,9 +97,6 @@ const formatCategory = (category: string) =>
                     <p class="blog-post-date">
                       {post.data.pubDate.toISOString().slice(0, 10)}
                     </p>
-                    <span class="post-kind">
-                      {formatCategory(post.data.category)}
-                    </span>
                   </div>
 
                   <div class="blog-post-main">
@@ -118,7 +108,7 @@ const formatCategory = (category: string) =>
                       </h3>
                       <p>{post.data.description}</p>
 
-                      <ul class="tag-list">
+                      <ul class="tag-list blog-post-tags">
                         {post.data.tags.map((tag) => (
                           <li>
                             <a href={`/tags/${tag}`}>{tag}</a>
