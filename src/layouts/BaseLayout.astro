@@ -1,9 +1,21 @@
 ---
 import "../styles/global.css";
 
-const { title = "jhle0", description = "Personal developer blog" } =
-  Astro.props;
+const {
+  title = "jhle0",
+  description = "Personal developer blog",
+  canonicalPath,
+  ogImage,
+  ogType = "website",
+  noindex = false,
+  publishedTime,
+  modifiedTime,
+} = Astro.props;
 const currentPath = Astro.url.pathname;
+const siteOrigin = (Astro.site ?? Astro.url).origin;
+const normalizedCanonicalPath = canonicalPath ?? Astro.url.pathname;
+const canonicalUrl = new URL(normalizedCanonicalPath, siteOrigin).toString();
+const ogImageUrl = new URL(ogImage ?? "/og/site.svg", siteOrigin).toString();
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -22,8 +34,33 @@ const navItems = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="jhle0 blog RSS"
+      href={new URL("/rss.xml", siteOrigin).toString()}
+    />
+
+    <meta property="og:site_name" content="jhle0" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+    {noindex && <meta name="robots" content="noindex,nofollow" />}
   </head>
   <body>
+    <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
     <header class="site-header">
       <div class="site-shell">
         <nav class="site-nav" aria-label="Primary">
@@ -57,7 +94,7 @@ const navItems = [
       </div>
     </header>
 
-    <main class="site-main site-shell">
+    <main id="main-content" class="site-main site-shell">
       <slot />
     </main>
 

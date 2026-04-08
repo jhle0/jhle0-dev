@@ -31,6 +31,29 @@ body {
     margin: 0;
 }
 
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -3rem;
+    z-index: 50;
+    padding: 0.45rem 0.7rem;
+    border-radius: 10px;
+    background: var(--text);
+    color: #fff;
+    transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+    top: 0.8rem;
+}
+
 a {
     color: inherit;
     text-decoration: none;
@@ -381,9 +404,60 @@ button {
     padding: 1.35rem;
 }
 
+.tag-post-grid {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+}
+
+.tag-post-grid li {
+    margin: 0;
+    padding: 1.2rem 1.3rem;
+}
+
+.tag-post-grid h2 {
+    font-size: 1.35rem;
+    margin-bottom: 0.4rem;
+}
+
 .feature-grid p:last-child,
 .project-card p:last-child {
     margin-bottom: 0;
+}
+
+.contact-grid {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.contact-grid li {
+    margin: 0;
+}
+
+.contact-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    min-height: 100%;
+    padding: 1.3rem;
+}
+
+.contact-card h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.2rem;
+}
+
+.contact-card p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.contact-card .button-link {
+    margin-top: auto;
 }
 
 .explore-link {
@@ -586,6 +660,12 @@ button {
     letter-spacing: 0.04em;
 }
 
+.blog-toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+
 .blog-post-card-list {
     list-style: none;
     padding: 0;
@@ -755,6 +835,7 @@ button {
 .article-content h2,
 .article-content h3 {
     margin-top: 2.2rem;
+    scroll-margin-top: 5.4rem;
 }
 
 .article-content ul,
@@ -762,19 +843,211 @@ button {
     margin-bottom: 1rem;
 }
 
+.entry-article {
+    max-width: var(--content-width);
+}
+
+.entry-content-layout {
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+}
+
+.entry-content-main {
+    min-width: 0;
+}
+
+.entry-toc {
+    position: sticky;
+    top: 5.4rem;
+    padding: 0.95rem;
+}
+
+.entry-toc-title {
+    margin: 0 0 0.6rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.entry-toc-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.15rem;
+}
+
+.entry-toc-item {
+    margin: 0;
+}
+
+.entry-toc-item.depth-3 {
+    padding-left: 0.65rem;
+}
+
+.entry-toc-link {
+    display: block;
+    padding: 0.35rem 0.45rem;
+    border-radius: 10px;
+    color: var(--muted);
+    font-size: 0.92rem;
+}
+
+.entry-toc-link:hover {
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.78);
+}
+
+.entry-toc-link.is-active {
+    color: var(--text);
+    background: var(--accent-soft);
+    font-weight: 600;
+}
+
+.entry-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.1rem;
+}
+
+.entry-meta-list {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.entry-top-actions {
+    margin-bottom: 1.1rem;
+}
+
+.history-back-button {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.75);
+    color: var(--muted);
+    min-height: 2.2rem;
+    padding: 0.2rem 0.85rem;
+    cursor: pointer;
+}
+
+.history-back-button:hover {
+    color: var(--text);
+    border-color: var(--line-strong);
+}
+
+.entry-actions {
+    margin-top: 2.5rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--line);
+}
+
+.entry-pagination {
+    margin-top: 1.25rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.entry-nav-link {
+    display: grid;
+    gap: 0.35rem;
+    padding: 0.95rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.72);
+}
+
+.entry-nav-link:hover {
+    text-decoration: none;
+    border-color: var(--line-strong);
+}
+
+.entry-nav-link strong {
+    line-height: 1.4;
+}
+
+.entry-nav-link.align-right {
+    text-align: right;
+}
+
+.entry-nav-link.is-empty {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.entry-nav-direction {
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.entry-series {
+    margin-top: 1rem;
+    padding: 1rem 1.1rem;
+}
+
+.series-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.35rem;
+    margin-top: 0.75rem;
+}
+
+.series-item {
+    margin: 0;
+}
+
+.series-item a {
+    display: block;
+    padding: 0.35rem 0.45rem;
+    border-radius: 10px;
+}
+
+.series-item a:hover {
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.78);
+}
+
+.series-item.is-current a {
+    background: var(--accent-soft);
+    color: var(--text);
+    font-weight: 600;
+}
+
+.series-nav {
+    margin-top: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.entry-related {
+    margin-top: 1.25rem;
+}
+
 @media (max-width: 960px) {
     .feature-grid,
-    .projects-grid {
+    .projects-grid,
+    .contact-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .about-page,
-    .blog-archive-layout {
+    .blog-archive-layout,
+    .entry-content-layout {
         grid-template-columns: 1fr;
     }
 
     .about-sidebar,
-    .blog-sidebar {
+    .blog-sidebar,
+    .entry-toc {
         position: static;
     }
 
@@ -801,7 +1074,8 @@ button {
     .section-heading,
     .project-card-top,
     .blog-toolbar,
-    .blog-post-meta-row {
+    .blog-post-meta-row,
+    .series-nav {
         flex-direction: column;
         align-items: flex-start;
     }
@@ -809,9 +1083,23 @@ button {
     .feature-grid,
     .explore-grid,
     .projects-grid,
+    .contact-grid,
     .info-card-grid,
     .interest-grid {
         grid-template-columns: 1fr;
+    }
+
+    .entry-meta-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .entry-pagination {
+        grid-template-columns: 1fr;
+    }
+
+    .entry-nav-link.align-right {
+        text-align: left;
     }
 
     .blog-post-main {
@@ -843,5 +1131,16 @@ button {
 
     .button-link {
         width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
     }
 }

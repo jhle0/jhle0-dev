@@ -3,10 +3,41 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="Contact | jhle0" description="Contact information">
-  <h1>Contact</h1>
-  <ul>
-    <li>Email: your-email@example.com</li>
-    <li>GitHub: https://github.com/jhle0</li>
-    <li>LinkedIn: coming soon</li>
-  </ul>
+  <section class="page-intro">
+    <p class="eyebrow">Contact</p>
+    <h1>연락 가능한 채널</h1>
+    <p class="intro-copy">
+      협업, 피드백, 혹은 가벼운 대화도 환영한다. 아래 채널로 편하게 연락할 수
+      있다.
+    </p>
+  </section>
+
+  <section class="section-block">
+    <ul class="contact-grid">
+      <li class="surface-card contact-card">
+        <h2>Email</h2>
+        <p>your-email@example.com</p>
+        <a class="button-link" href="mailto:your-email@example.com">
+          Send email
+        </a>
+      </li>
+      <li class="surface-card contact-card">
+        <h2>GitHub</h2>
+        <p>@jhle0</p>
+        <a
+          class="button-link"
+          href="https://github.com/jhle0"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Visit profile
+        </a>
+      </li>
+      <li class="surface-card contact-card">
+        <h2>LinkedIn</h2>
+        <p>준비 중</p>
+        <span class="meta">profile link will be added later</span>
+      </li>
+    </ul>
+  </section>
 </BaseLayout>
