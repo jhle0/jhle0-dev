@@ -118,13 +118,11 @@ collections:
 
       - label: "본문"
         name: "body"
-        widget: "markdown"
-        modes: ["raw"]
-        buttons:
-          ["bold", "italic", "code", "link", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list"]
-        editor_components:
-          ["image", "code-block", "math-block", "callout", "toggle", "figure"]
-        hint: "수식과 LaTeX가 섞인 글은 raw 모드가 가장 안정적입니다. $$...$$ 블록이나 Math Block을 사용하면 안전합니다."
+        widget: "code"
+        default_language: "markdown"
+        allow_language_selection: false
+        output_code_only: true
+        hint: "수식과 LaTeX가 섞인 글은 원문 markdown 그대로 저장하는 방식이 가장 안정적입니다. $$...$$ 블록을 그대로 적으면 됩니다."
         default: |
           짧은 도입 문단으로 글의 맥락을 먼저 적습니다.
 
@@ -242,12 +240,10 @@ collections:
 
       - label: "본문"
         name: "body"
-        widget: "markdown"
-        modes: ["raw"]
-        buttons:
-          ["bold", "italic", "code", "link", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list"]
-        editor_components:
-          ["image", "code-block", "callout", "toggle", "figure"]
+        widget: "code"
+        default_language: "markdown"
+        allow_language_selection: false
+        output_code_only: true
         default: |
           프로젝트를 한 줄로 소개합니다.
 
