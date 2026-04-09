@@ -10,7 +10,7 @@ body {
   margin: 0;
   padding: 2.5rem 2rem 4rem;
   color: #191919;
-  background: #ffffff;
+  background: linear-gradient(180deg, #fffefb 0%, #f7f4ee 100%);
   font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR",
     system-ui, sans-serif;
   line-height: 1.7;
@@ -26,6 +26,11 @@ main,
 
 .preview-doc {
   margin: 0 auto;
+  padding: 2rem 2.2rem 2.6rem;
+  border: 1px solid #e7e1d6;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 20px 44px rgba(17, 17, 17, 0.04);
 }
 
 .preview-header {
@@ -75,6 +80,10 @@ main,
 
 .preview-body {
   font-size: 1rem;
+}
+
+.preview-body > *:first-child {
+  margin-top: 0;
 }
 
 h1,
@@ -232,6 +241,15 @@ blockquote.notion-callout p {
   background: #fbfaf7;
   font-family: "SFMono-Regular", "SF Mono", "JetBrains Mono", monospace;
   white-space: pre-wrap;
+}
+
+.preview-body [data-slate-editor],
+.preview-body .CodeMirror,
+.preview-body textarea {
+  min-height: 260px;
+  border-radius: 16px;
+  border: 1px solid #e6e1d8;
+  background: #fbfaf7;
 }
 
 input[type="checkbox"] {

@@ -21,6 +21,7 @@ logo_url: /favicon.svg
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
+publish_mode: "simple"
 
 collections:
   - name: "blog"
@@ -33,8 +34,18 @@ collections:
     format: "frontmatter"
     slug: "{{fields.slug}}"
     preview_path: "blog/{{slug}}"
-    summary: "{{title}}"
+    summary: "{{title}} · {{slug}}"
     sortable_fields: ["pubDate", "updatedDate", "title", "featured"]
+    view_filters:
+      - label: "Published"
+        field: "draft"
+        pattern: false
+      - label: "Drafts"
+        field: "draft"
+        pattern: true
+      - label: "Featured"
+        field: "featured"
+        pattern: true
     editor:
       preview: true
     fields:
@@ -150,8 +161,18 @@ collections:
     format: "frontmatter"
     slug: "{{fields.slug}}"
     preview_path: "projects/{{slug}}"
-    summary: "{{title}}"
+    summary: "{{title}} · {{slug}}"
     sortable_fields: ["pubDate", "updatedDate", "title", "status"]
+    view_filters:
+      - label: "Planned"
+        field: "status"
+        pattern: "planned"
+      - label: "In Progress"
+        field: "status"
+        pattern: "in-progress"
+      - label: "Completed"
+        field: "status"
+        pattern: "completed"
     editor:
       preview: true
     fields:

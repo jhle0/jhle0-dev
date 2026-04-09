@@ -185,8 +185,37 @@ button {
     font-size: 0.95rem;
 }
 
+.site-footer-copy {
+    display: grid;
+    gap: 0.15rem;
+}
+
 .site-footer p {
     margin: 0;
+}
+
+.site-footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.55rem;
+}
+
+.site-footer-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.2rem;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.62);
+    color: var(--muted);
+}
+
+.site-footer-links a:hover {
+    color: var(--text);
+    text-decoration: none;
+    border-color: var(--line-strong);
 }
 
 .page-intro,
