@@ -19,18 +19,13 @@ body {
   width: min(calc(100% - 2rem), 1180px);
   margin: 0 auto;
   padding: 1.2rem 0 1.1rem;
-}
-
-body.is-entry-editor .admin-guide {
-  display: none;
+  position: sticky;
+  top: 0;
+  z-index: 20;
 }
 
 body.is-entry-editor .admin-chrome {
-  padding-bottom: 0.35rem;
-}
-
-body.is-entry-editor .admin-brandbar {
-  margin-bottom: 0;
+  display: none;
 }
 
 .admin-brandbar {
@@ -136,6 +131,47 @@ body.is-entry-editor .admin-brandbar {
 #nc-root {
   width: min(calc(100% - 2rem), 1180px);
   margin: 0 auto 2rem;
+}
+
+#nc-root .CodeMirror,
+#nc-root .cm-editor {
+  min-height: 520px;
+  border: 1px solid #ddd7cb;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 18px 40px rgba(17, 17, 17, 0.05);
+  overflow: hidden;
+}
+
+#nc-root .CodeMirror-scroll,
+#nc-root .cm-scroller {
+  min-height: 520px;
+}
+
+#nc-root .CodeMirror,
+#nc-root .cm-content,
+#nc-root .cm-line {
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR",
+    system-ui, sans-serif;
+  font-size: 0.97rem;
+  line-height: 1.8;
+}
+
+#nc-root .CodeMirror-gutters,
+#nc-root .cm-gutters {
+  background: #f6f2ea;
+  border-right: 1px solid #e3dccf;
+}
+
+#nc-root .CodeMirror-lines,
+#nc-root .cm-contentContainer {
+  padding-top: 1rem;
+  padding-bottom: 1.2rem;
+}
+
+#nc-root .CodeMirror-cursor,
+#nc-root .cm-cursor {
+  border-left-color: #1f4d3f;
 }
 
 @media (max-width: 900px) {

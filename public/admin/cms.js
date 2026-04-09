@@ -80,7 +80,10 @@
 
   function isEntryEditorRoute() {
     const hash = window.location.hash || "";
-    return /\/collections\/.+\/(entries\/.+|new)$/.test(hash);
+    return (
+      hash.includes("/collections/") &&
+      (hash.includes("/entries/") || hash.includes("/new"))
+    );
   }
 
   function syncAdminChromeVisibility() {
@@ -185,6 +188,7 @@
     CMS.registerPreviewTemplate("projects", ProjectPreview);
     syncAdminChromeVisibility();
     window.addEventListener("hashchange", syncAdminChromeVisibility);
+    window.setInterval(syncAdminChromeVisibility, 250);
 
     CMS.registerEditorComponent({
       id: "math-block",
