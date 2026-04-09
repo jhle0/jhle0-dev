@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "jhle0-dev-cms-auth",
+  "main": "src/index.js",
+  "compatibility_date": "2026-04-09",
+  "workers_dev": true,
+  "vars": {
+    "SITE_URL": "https://jhle0.github.io/jhle0-dev",
+    "SITE_ORIGIN": "https://jhle0.github.io",
+    "GITHUB_SCOPE": "public_repo"
+  }
+}

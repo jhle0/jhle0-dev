@@ -31,6 +31,7 @@ npm run cms:proxy
 
 - [Decap GitHub 인증 가이드](./docs/decap-github-auth.md)
 - [노션에서 블로그로 옮기는 작성 규칙](./docs/notion-to-blog-guide.md)
+- [Cloudflare Worker OAuth Proxy](./cms-auth/cloudflare-worker/README.md)
 
 ## Decap CMS 구성
 
@@ -54,7 +55,17 @@ npm run cms:proxy
 1. Netlify Identity + Git Gateway 사용
 2. 별도 OAuth proxy/auth endpoint 연결
 
-이미 `public/admin/config.yml`에는 이 값을 이어서 넣을 수 있도록 주석 자리를 마련해두었습니다.
+이 저장소에는 Cloudflare Worker 기반 OAuth proxy 스캐폴드도 포함되어 있습니다.
+
+```sh
+cd cms-auth/cloudflare-worker
+npm install
+npx wrangler secret put GITHUB_CLIENT_ID
+npx wrangler secret put GITHUB_CLIENT_SECRET
+npm run deploy
+cd ../..
+npm run cms:auth:set -- https://YOUR_WORKER.workers.dev
+```
 
 ## 빌드
 

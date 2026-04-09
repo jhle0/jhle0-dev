@@ -25,6 +25,10 @@ Decap 공식 문서도 GitHub backend에는 외부 OAuth client 또는 Netlify I
 
 현재 프로젝트는 GitHub Pages 흐름이므로 2번이 더 자연스럽습니다.
 
+이 저장소에는 바로 사용할 수 있는 Cloudflare Worker 스캐폴드가 이미 들어 있습니다.
+
+- [Cloudflare Worker OAuth Proxy](/Users/ljeonghyeon/Desktop/dev_blog/jhle0-dev/cms-auth/cloudflare-worker/README.md)
+
 ## 연결 순서
 
 1. GitHub OAuth App 생성
@@ -49,8 +53,15 @@ backend:
   repo: jhle0/jhle0-dev
   branch: main
   use_graphql: true
+  site_domain: jhle0.github.io
   base_url: https://YOUR_AUTH_SERVICE_DOMAIN
   auth_endpoint: auth
+```
+
+직접 손으로 바꾸지 않고 아래 명령으로 반영해도 됩니다.
+
+```sh
+npm run cms:auth:set -- https://YOUR_AUTH_SERVICE_DOMAIN
 ```
 
 ## 실제 배포 전에 체크할 것
@@ -78,5 +89,7 @@ npm run cms:proxy
 - `public/images/uploads` 업로드 경로 연결 완료
 - 노션 친화형 프리뷰/블록 구성 완료
 - 로컬 프록시 실행 스크립트 연결 완료
+- Cloudflare Worker OAuth proxy 스캐폴드 추가 완료
+- CMS 설정 자동 반영 스크립트 추가 완료
 
 즉, 남은 건 외부 auth service를 실제로 하나 올리는 일뿐입니다.

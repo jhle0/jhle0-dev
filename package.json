@@ -10,7 +10,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "cms:proxy": "decap-server"
+    "cms:proxy": "decap-server",
+    "cms:auth:set": "node ./scripts/set-cms-auth.mjs",
+    "cms:auth:clear": "node ./scripts/set-cms-auth.mjs --clear"
   },
   "devDependencies": {
     "decap-server": "^3.3.3"
