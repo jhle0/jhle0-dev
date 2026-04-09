@@ -119,11 +119,12 @@ collections:
       - label: "본문"
         name: "body"
         widget: "markdown"
+        modes: ["raw"]
         buttons:
           ["bold", "italic", "code", "link", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list"]
         editor_components:
           ["image", "code-block", "math-block", "callout", "toggle", "figure"]
-        hint: "노션에서 붙여넣은 뒤 필요한 곳에 Callout, Toggle, Math, Figure 블록을 추가하면 실제 블로그와 더 비슷하게 정리됩니다."
+        hint: "수식과 LaTeX가 섞인 글은 raw 모드가 가장 안정적입니다. $$...$$ 블록이나 Math Block을 사용하면 안전합니다."
         default: |
           짧은 도입 문단으로 글의 맥락을 먼저 적습니다.
 
@@ -242,6 +243,7 @@ collections:
       - label: "본문"
         name: "body"
         widget: "markdown"
+        modes: ["raw"]
         buttons:
           ["bold", "italic", "code", "link", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list"]
         editor_components:
