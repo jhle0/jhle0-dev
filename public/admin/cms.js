@@ -17,22 +17,12 @@
       .replace(/-+/g, "-");
   }
 
-  function formatDate(value) {
-    const date = value instanceof Date ? value : new Date(value);
-    if (Number.isNaN(date.getTime())) return "";
-    return date.toISOString().slice(0, 10);
-  }
-
   function normalizeTags(rawTags) {
     if (!rawTags || !rawTags.toJS) return [];
     return rawTags
       .toJS()
       .map((tag) => String(tag || "").trim())
       .filter(Boolean);
-  }
-
-  function ensureText(value) {
-    return typeof value === "string" ? value : "";
   }
 
   function notionPreviewShell({ eyebrow, title, description, meta, hero, body }) {
@@ -131,40 +121,6 @@
 
     CMS.registerPreviewTemplate("blog", BlogPreview);
     CMS.registerPreviewTemplate("projects", ProjectPreview);
-
-    CMS.registerEventListener({
-      name: "preSave",
-      handler: ({ entry }) => {
-        const data = entry.get("data");
-        const nextSlug = !data.get("slug") ? slugify(data.get("title")) : "";
-        const today = formatDate(new Date());
-        const nextData = data.withMutations((draft) => {
-          if (!draft.get("pubDate")) {
-            draft.set("pubDate", today);
-          }
-
-          if (nextSlug) {
-            draft.set("slug", nextSlug);
-          }
-
-          if (!draft.get("updatedDate")) {
-            draft.set("updatedDate", today);
-          }
-
-          ["heroImage", "series", "canonicalURL", "githubUrl", "demoUrl"].forEach((field) => {
-            if (draft.has(field)) {
-              draft.set(field, ensureText(draft.get(field)));
-            }
-          });
-
-          if (draft.has("status") && !draft.get("status")) {
-            draft.set("status", "planned");
-          }
-        });
-
-        return entry.set("data", nextData);
-      },
-    });
 
     CMS.registerEditorComponent({
       id: "math-block",
