@@ -3,8 +3,8 @@ backend:
   repo: jhle0/jhle0-dev
   branch: main
   use_graphql: true
-  site_domain: jhle0.github.io
-  # GitHub Pages의 배포된 /admin 에서 로그인까지 완전히 쓰려면
+  site_domain: jhle0-dev.vercel.app
+  # 배포된 /admin 에서 GitHub 로그인까지 쓰려면
   # 아래 두 값을 외부 OAuth proxy 서비스에 맞게 채워주세요.
   base_url: https://jhle0-dev-cms-auth.dumiso04.workers.dev
   auth_endpoint: auth
@@ -14,8 +14,8 @@ local_backend:
   allowed_hosts: ["127.0.0.1", "localhost"]
 
 locale: ko
-site_url: https://jhle0.github.io/jhle0-dev
-display_url: https://jhle0.github.io/jhle0-dev
+site_url: https://jhle0-dev.vercel.app
+display_url: https://jhle0-dev.vercel.app
 logo_url: /favicon.svg
 
 media_folder: "public/images/uploads"

@@ -67,6 +67,8 @@ cd ../..
 npm run cms:auth:set -- https://YOUR_WORKER.workers.dev
 ```
 
+현재 배포 기준 사이트 주소는 `https://jhle0-dev.vercel.app` 입니다.
+
 ## 빌드
 
 ```sh

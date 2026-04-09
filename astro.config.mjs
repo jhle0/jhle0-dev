@@ -6,7 +6,7 @@ import rehypeKatex from 'rehype-katex';
 
 // https://astro.build/config
 export default defineConfig({
-  site: process.env.SITE_URL ?? 'https://jhle0.github.io/jhle0-dev',
+  site: process.env.SITE_URL ?? 'https://jhle0-dev.vercel.app',
   markdown: {
     remarkPlugins: [remarkGfm, remarkMath],
     rehypePlugins: [rehypeKatex],

@@ -9,7 +9,7 @@ type SitemapItem = {
 };
 
 export const GET: APIRoute = async ({ site }) => {
-  const siteUrl = site ?? new URL("https://jhle0.github.io/jhle0-dev");
+  const siteUrl = site ?? new URL("https://jhle0-dev.vercel.app");
   const [blogPosts, projects] = await Promise.all([
     getCollection("blog"),
     getCollection("projects"),

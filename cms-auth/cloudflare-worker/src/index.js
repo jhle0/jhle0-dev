@@ -201,7 +201,7 @@ async function handleCallback(request, env) {
     return popupResponse(
       "error",
       { error: "missing_oauth_params", provider: "github" },
-      env.SITE_ORIGIN || "https://jhle0.github.io",
+      env.SITE_ORIGIN || "https://jhle0-dev.vercel.app",
     );
   }
 

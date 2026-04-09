@@ -32,7 +32,7 @@ if (!shouldClear) {
 }
 
 const original = fs.readFileSync(configPath, "utf8");
-const siteDomain = "jhle0.github.io";
+const siteDomain = "jhle0-dev.vercel.app";
 const baseUrlLine = shouldClear
   ? "  # base_url: https://your-auth-service.example.com"
   : `  base_url: ${nextBaseUrl}`;

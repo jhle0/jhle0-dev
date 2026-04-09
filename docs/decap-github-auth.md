@@ -23,7 +23,7 @@ Decap 공식 문서도 GitHub backend에는 외부 OAuth client 또는 Netlify I
 1. 사이트를 Netlify로 옮기고 `Git Gateway + Identity`를 사용
 2. 지금처럼 GitHub Pages를 유지하고, 별도 OAuth proxy를 하나 둠
 
-현재 프로젝트는 GitHub Pages 흐름이므로 2번이 더 자연스럽습니다.
+현재 프로젝트는 Vercel 배포 주소를 사용하고 있으므로 2번이 가장 자연스럽습니다.
 
 이 저장소에는 바로 사용할 수 있는 Cloudflare Worker 스캐폴드가 이미 들어 있습니다.
 
@@ -38,7 +38,7 @@ Decap 공식 문서도 GitHub backend에는 외부 OAuth client 또는 Netlify I
 
 ## GitHub OAuth App 설정 예시
 
-- Homepage URL: `https://jhle0.github.io/jhle0-dev`
+- Homepage URL: `https://jhle0-dev.vercel.app`
 - Authorization callback URL: `https://YOUR_AUTH_SERVICE_DOMAIN/auth`
 
 `YOUR_AUTH_SERVICE_DOMAIN`은 OAuth proxy를 배포한 주소입니다.
@@ -53,7 +53,7 @@ backend:
   repo: jhle0/jhle0-dev
   branch: main
   use_graphql: true
-  site_domain: jhle0.github.io
+  site_domain: jhle0-dev.vercel.app
   base_url: https://YOUR_AUTH_SERVICE_DOMAIN
   auth_endpoint: auth
 ```

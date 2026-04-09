@@ -17,7 +17,7 @@ Decap 공식 문서는 GitHub backend에 외부 OAuth server 또는 edge worker�
 
 ## GitHub OAuth App 값
 
-- Homepage URL: `https://jhle0.github.io/jhle0-dev`
+- Homepage URL: `https://jhle0-dev.vercel.app`
 - Authorization callback URL: `https://YOUR_WORKER.workers.dev/callback`
 
 ## 로컬 준비

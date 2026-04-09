@@ -12,7 +12,7 @@ const escapeXml = (value: string) =>
     .replaceAll("'", "&apos;");
 
 export const GET: APIRoute = async ({ site }) => {
-  const siteUrl = (site ?? new URL("https://jhle0.github.io/jhle0-dev")).toString();
+  const siteUrl = (site ?? new URL("https://jhle0-dev.vercel.app")).toString();
   const posts = (await getCollection("blog"))
     .filter((post) => !post.data.draft)
     .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
