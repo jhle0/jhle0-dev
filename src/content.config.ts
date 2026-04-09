@@ -1,20 +1,35 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
+const optionalDate = z.preprocess(
+  (value) => (value === "" || value == null ? undefined : value),
+  z.coerce.date().optional(),
+);
+
+const optionalString = z.preprocess(
+  (value) => (value === "" || value == null ? undefined : value),
+  z.string().optional(),
+);
+
+const optionalProjectStatus = z.preprocess(
+  (value) => (value === "" || value == null ? undefined : value),
+  z.enum(["planned", "in-progress", "completed"]).optional(),
+);
+
 const blog = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
     pubDate: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
+    updatedDate: optionalDate,
     slug: z.string(),
     tags: z.array(z.string()),
     draft: z.boolean().default(false),
-    heroImage: z.string().optional(),
-    series: z.string().optional(),
+    heroImage: optionalString,
+    series: optionalString,
     featured: z.boolean().default(false),
-    canonicalURL: z.string().optional(),
+    canonicalURL: optionalString,
   }),
 });
 
@@ -24,14 +39,14 @@ const projects = defineCollection({
     title: z.string(),
     description: z.string(),
     pubDate: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
+    updatedDate: optionalDate,
     slug: z.string(),
     tags: z.array(z.string()),
     draft: z.boolean().default(false),
-    heroImage: z.string().optional(),
-    status: z.enum(["planned", "in-progress", "completed"]).optional(),
-    githubUrl: z.string().optional(),
-    demoUrl: z.string().optional(),
+    heroImage: optionalString,
+    status: optionalProjectStatus,
+    githubUrl: optionalString,
+    demoUrl: optionalString,
   }),
 });
 
