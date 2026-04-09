@@ -74,6 +74,7 @@ collections:
       - label: "태그"
         name: "tags"
         widget: "list"
+        default: []
         summary: "{{fields.tag}}"
         hint: "자유 입력입니다. 새 태그를 쓰면 그대로 태그 페이지가 생성됩니다."
         field:
@@ -91,12 +92,14 @@ collections:
         name: "heroImage"
         widget: "image"
         required: false
+        default: ""
         hint: "업로드 이미지는 /images/uploads 로 저장됩니다."
 
       - label: "시리즈"
         name: "series"
         widget: "string"
         required: false
+        default: ""
         hint: "같은 시리즈 글끼리 같은 이름을 사용하세요."
 
       - label: "추천 글"
@@ -109,6 +112,7 @@ collections:
         name: "canonicalURL"
         widget: "string"
         required: false
+        default: ""
         pattern:
           - "^https?://.+$"
           - "정본 URL은 http:// 또는 https:// 로 시작해야 합니다."
@@ -203,6 +207,7 @@ collections:
       - label: "태그"
         name: "tags"
         widget: "list"
+        default: []
         summary: "{{fields.tag}}"
         hint: "프로젝트 성격과 기술 스택을 자유롭게 적습니다."
         field:
@@ -220,12 +225,14 @@ collections:
         name: "heroImage"
         widget: "image"
         required: false
+        default: ""
         hint: "업로드 이미지는 /images/uploads 로 저장됩니다."
 
       - label: "상태"
         name: "status"
         widget: "select"
         required: false
+        default: "planned"
         options:
           - { label: "Planned", value: "planned" }
           - { label: "In Progress", value: "in-progress" }
@@ -235,6 +242,7 @@ collections:
         name: "githubUrl"
         widget: "string"
         required: false
+        default: ""
         pattern:
           - "^https?://.+$"
           - "GitHub URL은 http:// 또는 https:// 로 시작해야 합니다."
@@ -243,6 +251,7 @@ collections:
         name: "demoUrl"
         widget: "string"
         required: false
+        default: ""
         pattern:
           - "^https?://.+$"
           - "Demo URL은 http:// 또는 https:// 로 시작해야 합니다."
