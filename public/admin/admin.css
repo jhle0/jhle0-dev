@@ -21,6 +21,18 @@ body {
   padding: 1.2rem 0 1.1rem;
 }
 
+body.is-entry-editor .admin-guide {
+  display: none;
+}
+
+body.is-entry-editor .admin-chrome {
+  padding-bottom: 0.35rem;
+}
+
+body.is-entry-editor .admin-brandbar {
+  margin-bottom: 0;
+}
+
 .admin-brandbar {
   display: flex;
   align-items: flex-end;

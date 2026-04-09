@@ -25,6 +25,68 @@
       .filter(Boolean);
   }
 
+  function escapeForHtmlBlock(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
+  function renderMarkdownPreview(content) {
+    const source = String(content ?? "");
+
+    if (!source.trim()) {
+      return "<p>본문 미리보기가 여기에 표시됩니다.</p>";
+    }
+
+    const mathBlocks = [];
+    const withMathPlaceholders = source.replace(
+      /\$\$([\s\S]*?)\$\$/g,
+      (_, formula) => {
+        const index = mathBlocks.push(
+          `<pre class="preview-math-block">${escapeForHtmlBlock(formula.trim())}</pre>`,
+        ) - 1;
+        return `@@MATH_BLOCK_${index}@@`;
+      },
+    );
+
+    if (window.marked?.setOptions) {
+      window.marked.setOptions({
+        breaks: true,
+        gfm: true,
+      });
+    }
+
+    const rendered = window.marked?.parse
+      ? window.marked.parse(withMathPlaceholders)
+      : `<pre>${escapeForHtmlBlock(withMathPlaceholders)}</pre>`;
+
+    return mathBlocks.reduce(
+      (html, block, index) => html.replace(`@@MATH_BLOCK_${index}@@`, block),
+      rendered,
+    );
+  }
+
+  function getBodyPreviewNode(rawBody) {
+    const h = window.h;
+
+    return h("section", {
+      className: "preview-body preview-rendered-body",
+      dangerouslySetInnerHTML: {
+        __html: renderMarkdownPreview(rawBody),
+      },
+    });
+  }
+
+  function isEntryEditorRoute() {
+    const hash = window.location.hash || "";
+    return /\/collections\/.+\/(entries\/.+|new)$/.test(hash);
+  }
+
+  function syncAdminChromeVisibility() {
+    document.body.classList.toggle("is-entry-editor", isEntryEditorRoute());
+  }
+
   function notionPreviewShell({ eyebrow, title, description, meta, hero, body }) {
     const h = window.h;
 
@@ -88,7 +150,7 @@
           description,
           meta,
           hero: heroAsset,
-          body: this.props.widgetFor("body"),
+          body: getBodyPreviewNode(entry.getIn(["data", "body"])),
         });
       },
     });
@@ -114,13 +176,15 @@
           description,
           meta,
           hero: heroAsset,
-          body: this.props.widgetFor("body"),
+          body: getBodyPreviewNode(entry.getIn(["data", "body"])),
         });
       },
     });
 
     CMS.registerPreviewTemplate("blog", BlogPreview);
     CMS.registerPreviewTemplate("projects", ProjectPreview);
+    syncAdminChromeVisibility();
+    window.addEventListener("hashchange", syncAdminChromeVisibility);
 
     CMS.registerEditorComponent({
       id: "math-block",
