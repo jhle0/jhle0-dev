@@ -664,7 +664,7 @@ button {
 .blog-toolbar p {
     margin: 0;
     color: var(--muted);
-    font-size: 0.92rem;
+    font-size: 0.86rem;
     letter-spacing: 0.04em;
 }
 
@@ -684,7 +684,7 @@ button {
 }
 
 .blog-post-card {
-    padding: 1.35rem 1.45rem;
+    padding: 1.2rem 1.3rem;
     border: 1px solid var(--line);
     border-radius: var(--radius);
     background: linear-gradient(180deg, var(--surface-strong), var(--surface));
@@ -699,7 +699,7 @@ button {
 
 .blog-post-card article {
     display: grid;
-    gap: 0.95rem;
+    gap: 0.75rem;
 }
 
 .blog-post-meta-row {
@@ -712,7 +712,7 @@ button {
 .blog-post-date {
     margin: 0;
     color: var(--muted);
-    font-size: 0.92rem;
+    font-size: 0.84rem;
 }
 
 .status-pill {
@@ -733,7 +733,7 @@ button {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 1.25rem;
+    gap: 1rem;
 }
 
 .blog-post-text {
@@ -741,14 +741,17 @@ button {
 }
 
 .blog-post-text h3 {
-    margin-bottom: 0.45rem;
-    font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+    margin-bottom: 0.35rem;
+    font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+    line-height: 1.22;
 }
 
 .blog-post-text p {
-    margin-bottom: 1rem;
+    margin-bottom: 0.85rem;
     color: var(--muted);
-    max-width: 58ch;
+    max-width: 62ch;
+    font-size: 0.96rem;
+    line-height: 1.65;
 }
 
 .blog-post-tags a {
@@ -757,8 +760,9 @@ button {
 
 .blog-post-arrow {
     color: var(--muted);
-    font-size: 2rem;
+    font-size: 1.5rem;
     line-height: 1;
+    padding-top: 0.15rem;
 }
 
 .blog-post-text h3 a:hover {
@@ -846,7 +850,7 @@ button {
 .article-content {
     margin-top: 0;
     max-width: 100%;
-    padding: 1.8rem 1.9rem;
+    padding: 2rem 2.15rem;
     border-radius: var(--radius);
 }
 
@@ -854,6 +858,10 @@ button {
 .article-content h3 {
     margin-top: 2.2rem;
     scroll-margin-top: 5.4rem;
+}
+
+.article-content > :first-child {
+    margin-top: 0;
 }
 
 .article-content ul,
@@ -870,7 +878,9 @@ button {
 .article-content p,
 .article-content li,
 .article-content blockquote {
-    max-width: 66ch;
+    max-width: 70ch;
+    font-size: 1rem;
+    line-height: 1.78;
 }
 
 .article-content code {
@@ -905,10 +915,26 @@ button {
     max-width: 100%;
 }
 
+.entry-article .page-intro {
+    max-width: min(100%, 920px);
+    margin-left: auto;
+}
+
+.entry-article .page-intro h1 {
+    font-size: clamp(2.1rem, 3vw, 3.1rem);
+    line-height: 1.12;
+}
+
+.entry-article .intro-copy {
+    max-width: 72ch;
+    font-size: 0.98rem;
+    line-height: 1.7;
+}
+
 .entry-content-layout {
     display: grid;
-    grid-template-columns: 240px minmax(0, 1fr);
-    gap: 1.35rem;
+    grid-template-columns: 170px minmax(0, 1fr);
+    gap: 1.75rem;
     align-items: start;
 }
 
@@ -918,17 +944,22 @@ button {
 
 .entry-content-main {
     min-width: 0;
+    max-width: 100%;
 }
 
 .entry-toc {
     position: sticky;
     top: 5.4rem;
-    padding: 0.95rem;
+    padding: 0.85rem 0.75rem 0.85rem 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
 }
 
 .entry-toc-title {
     margin: 0 0 0.6rem;
-    font-size: 0.82rem;
+    font-size: 0.76rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--muted);
@@ -951,10 +982,11 @@ button {
 
 .entry-toc-link {
     display: block;
-    padding: 0.35rem 0.45rem;
+    padding: 0.28rem 0.55rem;
     border-radius: 10px;
     color: var(--muted);
-    font-size: 0.92rem;
+    font-size: 0.85rem;
+    line-height: 1.45;
 }
 
 .entry-toc-link:hover {
@@ -979,6 +1011,7 @@ button {
 .entry-meta-list {
     justify-content: flex-start;
     flex-wrap: wrap;
+    gap: 0.8rem 1rem;
 }
 
 .entry-top-actions {
@@ -991,8 +1024,9 @@ button {
     background: rgba(255, 255, 255, 0.75);
     color: var(--muted);
     min-height: 2.2rem;
-    padding: 0.2rem 0.85rem;
+    padding: 0.18rem 0.78rem;
     cursor: pointer;
+    font-size: 0.9rem;
 }
 
 .history-back-button:hover {
@@ -1020,7 +1054,7 @@ button {
 .entry-nav-link {
     display: grid;
     gap: 0.35rem;
-    padding: 0.95rem 1rem;
+    padding: 0.85rem 0.95rem;
     border: 1px solid var(--line);
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.72);
@@ -1033,6 +1067,7 @@ button {
 
 .entry-nav-link strong {
     line-height: 1.4;
+    font-size: 0.97rem;
 }
 
 .entry-nav-link.align-right {
@@ -1046,19 +1081,19 @@ button {
 
 .entry-nav-direction {
     color: var(--muted);
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
 }
 
 .entry-series {
     margin-top: 1rem;
-    padding: 1rem 1.1rem;
+    padding: 0.95rem 1rem;
 }
 
 .entry-series h2,
 .entry-related h2 {
-    font-size: 1.45rem;
+    font-size: 1.2rem;
 }
 
 .series-list {
@@ -1103,6 +1138,19 @@ button {
     margin-top: 1.25rem;
 }
 
+.entry-related .tag-post-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.entry-related .tag-post-grid li {
+    padding: 1rem 1.05rem;
+}
+
+.entry-related .tag-post-grid h3 {
+    font-size: 1.05rem;
+    margin-bottom: 0.35rem;
+}
+
 @media (max-width: 960px) {
     .feature-grid,
     .projects-grid,
@@ -1124,6 +1172,14 @@ button {
 
     .article-content {
         padding: 1.5rem;
+    }
+
+    .entry-article .page-intro {
+        margin-left: 0;
+    }
+
+    .entry-related .tag-post-grid {
+        grid-template-columns: 1fr;
     }
 
     .about-profile-image {
