@@ -2,6 +2,7 @@ backend:
   name: github
   repo: jhle0/jhle0-dev
   branch: main
+  auth_scope: repo
   use_graphql: true
   site_domain: jhle0-dev.vercel.app
   # 배포된 /admin 에서 GitHub 로그인까지 쓰려면

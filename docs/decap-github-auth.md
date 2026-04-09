@@ -52,6 +52,7 @@ backend:
   name: github
   repo: jhle0/jhle0-dev
   branch: main
+  auth_scope: repo
   use_graphql: true
   site_domain: jhle0-dev.vercel.app
   base_url: https://YOUR_AUTH_SERVICE_DOMAIN
@@ -91,5 +92,6 @@ npm run cms:proxy
 - 로컬 프록시 실행 스크립트 연결 완료
 - Cloudflare Worker OAuth proxy 스캐폴드 추가 완료
 - CMS 설정 자동 반영 스크립트 추가 완료
+- GitHub OAuth scope를 `repo` 기준으로 정리 완료
 
 즉, 남은 건 외부 auth service를 실제로 하나 올리는 일뿐입니다.

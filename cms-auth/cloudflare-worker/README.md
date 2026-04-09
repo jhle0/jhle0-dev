@@ -70,5 +70,5 @@ npx wrangler secret put GITHUB_CLIENT_SECRET
 
 ## 기본 scope
 
-현재 공개 저장소 기준으로 `public_repo` scope를 사용합니다.  
-비공개 저장소로 바꿀 경우 `wrangler.jsonc`의 `GITHUB_SCOPE`를 `repo`로 바꾸면 됩니다.
+현재는 저장 실패 가능성을 줄이기 위해 `repo` scope를 사용합니다.  
+공개 저장소만 다룰 때는 `public_repo`로 줄일 수도 있지만, CMS 저장 흐름 검증이 끝나기 전까지는 `repo`가 더 안전합니다.

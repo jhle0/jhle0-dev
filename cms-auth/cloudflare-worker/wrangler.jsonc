@@ -7,6 +7,6 @@
   "vars": {
     "SITE_URL": "https://jhle0-dev.vercel.app",
     "SITE_ORIGIN": "https://jhle0-dev.vercel.app",
-    "GITHUB_SCOPE": "public_repo"
+    "GITHUB_SCOPE": "repo"
   }
 }
