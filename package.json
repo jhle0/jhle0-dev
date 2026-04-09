@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "cms:proxy": "npx decap-server"
   },
   "dependencies": {
     "astro": "^6.1.4",

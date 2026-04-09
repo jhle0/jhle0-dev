@@ -1,43 +1,60 @@
-# Astro Starter Kit: Minimal
+# jhle0-dev
+
+Astro 기반 개인 개발 블로그입니다. 블로그 글과 프로젝트는 Astro content collections로 관리하고, 브라우저에서 바로 편집할 수 있도록 Decap CMS를 `/admin` 경로에 연결해두었습니다.
+
+## 주요 경로
+
+- `src/content/blog`: 블로그 글 Markdown
+- `src/content/projects`: 프로젝트 Markdown
+- `public/images/uploads`: CMS 업로드 이미지
+- `public/admin`: Decap CMS 설정
+
+## 로컬 실행
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+로컬에서 Decap CMS까지 함께 쓰려면 아래 명령을 별도 터미널에서 실행합니다.
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```sh
+npm run cms:proxy
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+그다음 아래 주소로 접속하면 됩니다.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- 사이트: `http://localhost:4321`
+- 관리자: `http://localhost:4321/admin/`
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Decap CMS 구성
 
-## 🧞 Commands
+현재 `/admin`은 아래 구조에 맞게 연결되어 있습니다.
 
-All commands are run from the root of the project, from a terminal:
+- GitHub backend 기준 저장소: `jhle0/jhle0-dev`
+- 브랜치: `main`
+- 블로그 컬렉션: `src/content/blog`
+- 프로젝트 컬렉션: `src/content/projects`
+- 업로드 이미지 경로: `public/images/uploads`
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+`tags`는 자유 입력 리스트이며, 기존 `category`는 사용하지 않습니다.
 
-## 👀 Want to learn more?
+## 배포된 `/admin`에 대해 꼭 알아둘 점
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+로컬 편집은 `local_backend: true` 설정과 `decap-server`로 바로 동작합니다.  
+다만 배포된 GitHub Pages의 `/admin`에서 GitHub 로그인까지 완전히 동작시키려면, GitHub OAuth를 중계해주는 외부 인증 포인트가 하나 필요합니다.
+
+즉, 저장소 내부 구현은 끝났지만 아래 둘 중 하나가 추가되어야 배포 환경 로그인도 완성됩니다.
+
+1. Netlify Identity + Git Gateway 사용
+2. 별도 OAuth proxy/auth endpoint 연결
+
+이미 `public/admin/config.yml`에는 이 값을 이어서 넣을 수 있도록 주석 자리를 마련해두었습니다.
+
+## 빌드
+
+```sh
+npm run build
+```
+
+Node 버전은 `>=22.12.0` 기준입니다.

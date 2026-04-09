@@ -1,0 +1,192 @@
+backend:
+  name: github
+  repo: jhle0/jhle0-dev
+  branch: main
+  # GitHub Pages의 배포된 /admin 에서 로그인까지 완전히 쓰려면
+  # 아래 두 값을 외부 OAuth proxy 서비스에 맞게 채워주세요.
+  # base_url: https://your-auth-service.example.com
+  # auth_endpoint: auth
+
+local_backend: true
+
+locale: ko
+site_url: https://jhle0.github.io/jhle0-dev
+display_url: https://jhle0.github.io/jhle0-dev
+logo_url: /favicon.svg
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    label_singular: "Post"
+    folder: "src/content/blog"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{fields.slug}}"
+    preview_path: "blog/{{slug}}"
+    summary: "{{title}}"
+    sortable_fields: ["pubDate", "updatedDate", "title", "featured"]
+    editor:
+      preview: true
+    fields:
+      - label: "제목"
+        name: "title"
+        widget: "string"
+
+      - label: "설명"
+        name: "description"
+        widget: "text"
+
+      - label: "발행일"
+        name: "pubDate"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        picker_utc: false
+
+      - label: "수정일"
+        name: "updatedDate"
+        widget: "datetime"
+        required: false
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        picker_utc: false
+
+      - label: "슬러그"
+        name: "slug"
+        widget: "string"
+        hint: "URL에 들어갈 고유 값입니다. 예: my-first-post"
+
+      - label: "태그"
+        name: "tags"
+        widget: "list"
+        summary: "{{fields.tag}}"
+        field:
+          label: "태그"
+          name: "tag"
+          widget: "string"
+
+      - label: "초안"
+        name: "draft"
+        widget: "boolean"
+        default: false
+        required: false
+
+      - label: "대표 이미지"
+        name: "heroImage"
+        widget: "image"
+        required: false
+
+      - label: "시리즈"
+        name: "series"
+        widget: "string"
+        required: false
+        hint: "같은 시리즈 글끼리 같은 이름을 사용하세요."
+
+      - label: "추천 글"
+        name: "featured"
+        widget: "boolean"
+        default: false
+        required: false
+
+      - label: "정본 URL"
+        name: "canonicalURL"
+        widget: "string"
+        required: false
+
+      - label: "본문"
+        name: "body"
+        widget: "markdown"
+
+  - name: "projects"
+    label: "Projects"
+    label_singular: "Project"
+    folder: "src/content/projects"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{fields.slug}}"
+    preview_path: "projects/{{slug}}"
+    summary: "{{title}}"
+    sortable_fields: ["pubDate", "updatedDate", "title", "status"]
+    editor:
+      preview: true
+    fields:
+      - label: "제목"
+        name: "title"
+        widget: "string"
+
+      - label: "설명"
+        name: "description"
+        widget: "text"
+
+      - label: "발행일"
+        name: "pubDate"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        picker_utc: false
+
+      - label: "수정일"
+        name: "updatedDate"
+        widget: "datetime"
+        required: false
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        picker_utc: false
+
+      - label: "슬러그"
+        name: "slug"
+        widget: "string"
+
+      - label: "태그"
+        name: "tags"
+        widget: "list"
+        summary: "{{fields.tag}}"
+        field:
+          label: "태그"
+          name: "tag"
+          widget: "string"
+
+      - label: "초안"
+        name: "draft"
+        widget: "boolean"
+        default: false
+        required: false
+
+      - label: "대표 이미지"
+        name: "heroImage"
+        widget: "image"
+        required: false
+
+      - label: "상태"
+        name: "status"
+        widget: "select"
+        required: false
+        options:
+          - { label: "Planned", value: "planned" }
+          - { label: "In Progress", value: "in-progress" }
+          - { label: "Completed", value: "completed" }
+
+      - label: "GitHub URL"
+        name: "githubUrl"
+        widget: "string"
+        required: false
+
+      - label: "Demo URL"
+        name: "demoUrl"
+        widget: "string"
+        required: false
+
+      - label: "본문"
+        name: "body"
+        widget: "markdown"

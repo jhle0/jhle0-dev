@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>jhle0-dev CMS</title>
+    <style>
+      :root {
+        color-scheme: light;
+      }
+
+      body {
+        margin: 0;
+        background: #f6f5f2;
+        color: #111111;
+        font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR",
+          system-ui, sans-serif;
+      }
+
+      noscript {
+        display: block;
+        max-width: 720px;
+        margin: 4rem auto;
+        padding: 1rem 1.25rem;
+        border: 1px solid #d7d2c8;
+        border-radius: 16px;
+        background: #fffdf8;
+        line-height: 1.6;
+      }
+    </style>
+    <script>
+      window.CMS_MANUAL_INIT = true;
+    </script>
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  </head>
+  <body>
+    <noscript>
+      Decap CMS를 사용하려면 JavaScript를 켜주세요.
+    </noscript>
+    <script>
+      if (window.CMS) {
+        window.CMS.registerPreviewStyle("/admin/preview.css");
+        window.CMS.init();
+      }
+    </script>
+  </body>
+</html>
