@@ -27,6 +27,11 @@ npm run cms:proxy
 - 사이트: `http://localhost:4321`
 - 관리자: `http://localhost:4321/admin/`
 
+더 편하게 쓰려면 아래 문서도 같이 보면 좋습니다.
+
+- [Decap GitHub 인증 가이드](./docs/decap-github-auth.md)
+- [노션에서 블로그로 옮기는 작성 규칙](./docs/notion-to-blog-guide.md)
+
 ## Decap CMS 구성
 
 현재 `/admin`은 아래 구조에 맞게 연결되어 있습니다.

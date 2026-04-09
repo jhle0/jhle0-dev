@@ -2,12 +2,15 @@ backend:
   name: github
   repo: jhle0/jhle0-dev
   branch: main
+  use_graphql: true
   # GitHub Pages의 배포된 /admin 에서 로그인까지 완전히 쓰려면
   # 아래 두 값을 외부 OAuth proxy 서비스에 맞게 채워주세요.
   # base_url: https://your-auth-service.example.com
   # auth_endpoint: auth
 
-local_backend: true
+local_backend:
+  url: http://localhost:8081/api/v1
+  allowed_hosts: ["127.0.0.1", "localhost"]
 
 locale: ko
 site_url: https://jhle0.github.io/jhle0-dev
@@ -62,11 +65,15 @@ collections:
         name: "slug"
         widget: "string"
         hint: "URL에 들어갈 고유 값입니다. 예: my-first-post"
+        pattern:
+          - "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          - "슬러그는 영문 소문자, 숫자, 하이픈만 사용할 수 있습니다."
 
       - label: "태그"
         name: "tags"
         widget: "list"
         summary: "{{fields.tag}}"
+        hint: "자유 입력입니다. 새 태그를 쓰면 그대로 태그 페이지가 생성됩니다."
         field:
           label: "태그"
           name: "tag"
@@ -82,6 +89,7 @@ collections:
         name: "heroImage"
         widget: "image"
         required: false
+        hint: "업로드 이미지는 /images/uploads 로 저장됩니다."
 
       - label: "시리즈"
         name: "series"
@@ -99,10 +107,49 @@ collections:
         name: "canonicalURL"
         widget: "string"
         required: false
+        pattern:
+          - "^https?://.+$"
+          - "정본 URL은 http:// 또는 https:// 로 시작해야 합니다."
 
       - label: "본문"
         name: "body"
         widget: "markdown"
+        buttons:
+          ["bold", "italic", "code", "link", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list"]
+        editor_components:
+          ["image", "code-block", "math-block", "callout", "toggle", "figure"]
+        hint: "노션에서 붙여넣은 뒤 필요한 곳에 Callout, Toggle, Math, Figure 블록을 추가하면 실제 블로그와 더 비슷하게 정리됩니다."
+        default: |
+          짧은 도입 문단으로 글의 맥락을 먼저 적습니다.
+
+          ## 핵심 요약
+
+          - 이 글에서 다루는 내용
+          - 왜 중요한지
+          - 읽고 나면 무엇을 얻는지
+
+          <blockquote class="notion-callout">
+            <p><strong>메모</strong></p>
+            <p>노션의 콜아웃과 비슷한 강조 블록입니다.</p>
+          </blockquote>
+
+          ## 본문
+
+          설명 문단을 이어서 적습니다.
+
+          $$
+          a^2 + b^2 = c^2
+          $$
+
+          <details><summary>보조 설명 보기</summary>
+
+          숨겨둘 보조 정보나 접어둘 예시를 적습니다.
+
+          </details>
+
+          ## 마무리
+
+          배운 점이나 다음 액션을 짧게 정리합니다.
 
   - name: "projects"
     label: "Projects"
@@ -147,11 +194,15 @@ collections:
       - label: "슬러그"
         name: "slug"
         widget: "string"
+        pattern:
+          - "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          - "슬러그는 영문 소문자, 숫자, 하이픈만 사용할 수 있습니다."
 
       - label: "태그"
         name: "tags"
         widget: "list"
         summary: "{{fields.tag}}"
+        hint: "프로젝트 성격과 기술 스택을 자유롭게 적습니다."
         field:
           label: "태그"
           name: "tag"
@@ -167,6 +218,7 @@ collections:
         name: "heroImage"
         widget: "image"
         required: false
+        hint: "업로드 이미지는 /images/uploads 로 저장됩니다."
 
       - label: "상태"
         name: "status"
@@ -181,12 +233,42 @@ collections:
         name: "githubUrl"
         widget: "string"
         required: false
+        pattern:
+          - "^https?://.+$"
+          - "GitHub URL은 http:// 또는 https:// 로 시작해야 합니다."
 
       - label: "Demo URL"
         name: "demoUrl"
         widget: "string"
         required: false
+        pattern:
+          - "^https?://.+$"
+          - "Demo URL은 http:// 또는 https:// 로 시작해야 합니다."
 
       - label: "본문"
         name: "body"
         widget: "markdown"
+        buttons:
+          ["bold", "italic", "code", "link", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list"]
+        editor_components:
+          ["image", "code-block", "callout", "toggle", "figure"]
+        default: |
+          프로젝트를 한 줄로 소개합니다.
+
+          ## 개요
+
+          - 무엇을 만든 프로젝트인지
+          - 누구를 위한 프로젝트인지
+
+          ## 내가 맡은 역할
+
+          - 역할 1
+          - 역할 2
+
+          ## 핵심 구현
+
+          구체적인 구현 포인트를 적습니다.
+
+          ## 회고
+
+          잘된 점과 아쉬운 점을 정리합니다.

@@ -33,6 +33,7 @@
       window.CMS_MANUAL_INIT = true;
     </script>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script src="/admin/cms.js"></script>
   </head>
   <body>
     <noscript>
@@ -41,6 +42,7 @@
     <script>
       if (window.CMS) {
         window.CMS.registerPreviewStyle("/admin/preview.css");
+        window.initializeJhle0Cms?.();
         window.CMS.init();
       }
     </script>

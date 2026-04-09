@@ -19,8 +19,62 @@ body {
 main,
 .frame-content,
 .nc-previewPane-frame,
-.cms-content {
+.cms-content,
+.preview-doc {
   max-width: 760px;
+}
+
+.preview-doc {
+  margin: 0 auto;
+}
+
+.preview-header {
+  margin-bottom: 2rem;
+}
+
+.preview-eyebrow {
+  margin: 0 0 0.7rem;
+  color: #8b8a86;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.preview-title {
+  margin-bottom: 0.65rem;
+}
+
+.preview-description {
+  max-width: 64ch;
+  margin-top: 0;
+  color: #5f5c57;
+}
+
+.preview-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.55rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.preview-meta-item {
+  padding: 0.26rem 0.62rem;
+  border: 1px solid #ebe6dc;
+  border-radius: 999px;
+  background: #fbfaf7;
+  color: #56544f;
+  font-size: 0.82rem;
+}
+
+.preview-hero {
+  margin-top: 1.3rem;
+}
+
+.preview-body {
+  font-size: 1rem;
 }
 
 h1,
@@ -144,6 +198,40 @@ details {
 summary {
   cursor: pointer;
   font-weight: 600;
+}
+
+figure {
+  margin: 1.35rem 0;
+}
+
+figcaption {
+  margin-top: 0.65rem;
+  color: #6a6761;
+  font-size: 0.92rem;
+}
+
+.notion-callout,
+blockquote.notion-callout {
+  display: block;
+  padding: 0.95rem 1rem;
+  border: 1px solid #e6e1d8;
+  border-radius: 14px;
+  background: #f7f6f3;
+}
+
+.notion-callout p,
+blockquote.notion-callout p {
+  margin: 0.2rem 0;
+}
+
+.preview-math-block {
+  overflow-x: auto;
+  padding: 0.95rem 1rem;
+  border: 1px solid #e6e1d8;
+  border-radius: 14px;
+  background: #fbfaf7;
+  font-family: "SFMono-Regular", "SF Mono", "JetBrains Mono", monospace;
+  white-space: pre-wrap;
 }
 
 input[type="checkbox"] {

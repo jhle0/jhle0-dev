@@ -10,7 +10,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "cms:proxy": "npx decap-server"
+    "cms:proxy": "decap-server"
+  },
+  "devDependencies": {
+    "decap-server": "^3.3.3"
   },
   "dependencies": {
     "astro": "^6.1.4",
@@ -18,5 +21,8 @@
     "rehype-katex": "^7.0.1",
     "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0"
+  },
+  "devDependencies": {
+    "decap-server": "^3.6.0"
   }
 }
