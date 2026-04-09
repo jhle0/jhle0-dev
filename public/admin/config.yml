@@ -6,7 +6,7 @@ backend:
   site_domain: jhle0.github.io
   # GitHub Pages의 배포된 /admin 에서 로그인까지 완전히 쓰려면
   # 아래 두 값을 외부 OAuth proxy 서비스에 맞게 채워주세요.
-  base_url: https://example.workers.dev
+  base_url: https://jhle0-dev-cms-auth.dumiso04.workers.dev
   auth_endpoint: auth
 
 local_backend:
