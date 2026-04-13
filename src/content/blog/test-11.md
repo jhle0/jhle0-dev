@@ -6,7 +6,7 @@ updatedDate: 2026-04-09
 slug: test-11
 tags:
   - log
-draft: false
+draft: true
 featured: false
 ---
 짧은 도입 문단으로 글의 맥락을 먼저 적습니다.

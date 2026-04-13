@@ -236,6 +236,13 @@ button {
     font-size: 1.05rem;
 }
 
+.section-copy {
+    max-width: 540px;
+    margin: 0.35rem 0 0;
+    color: var(--muted);
+    font-size: 0.98rem;
+}
+
 .eyebrow {
     margin-bottom: 0.9rem;
     color: var(--accent);
@@ -291,6 +298,12 @@ button {
 
 .button-link:hover {
     text-decoration: none;
+}
+
+.button-link.is-secondary {
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--text);
 }
 
 .inline-list {
@@ -416,6 +429,32 @@ button {
     color: var(--accent);
     display: inline-block;
     width: 1rem;
+}
+
+.home-hero-meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    max-width: 680px;
+    margin-top: 1.8rem;
+    padding: 1rem 1.15rem;
+}
+
+.home-hero-meta div {
+    display: grid;
+    gap: 0.2rem;
+}
+
+.home-hero-meta small {
+    color: var(--muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.home-hero-meta strong {
+    font-size: 1rem;
+    letter-spacing: -0.01em;
 }
 
 .feature-grid,
@@ -1462,6 +1501,10 @@ button {
     .contact-grid,
     .info-card-grid,
     .interest-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .home-hero-meta {
         grid-template-columns: 1fr;
     }
 

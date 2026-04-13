@@ -2,11 +2,11 @@
 title: 선형회귀 테스트
 description: ff
 pubDate: 2026-04-09
-updatedDate: ""
+updatedDate: 2026-04-09
 slug: test-linear-regression
 tags:
   - log
-draft: false
+draft: true
 featured: false
 ---
 # 선형회귀(Linear Regression)
