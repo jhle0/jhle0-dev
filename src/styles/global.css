@@ -553,7 +553,7 @@ button {
 
 .about-page {
     display: grid;
-    grid-template-columns: 280px minmax(0, 1fr);
+    grid-template-columns: 340px minmax(0, 1fr);
     gap: 2.25rem;
     align-items: start;
 }
@@ -561,37 +561,99 @@ button {
 .about-sidebar {
     position: sticky;
     top: 5.25rem;
+    align-self: start;
 }
 
-.about-profile-image {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    border-radius: calc(var(--radius) + 2px);
-    margin-bottom: 1rem;
-    border: 1px solid var(--line);
+.about-sidebar-panel {
+    display: grid;
+    gap: 1.6rem;
+    padding: 1.35rem 1.2rem;
 }
 
-.about-sidebar-block + .about-sidebar-block {
-    margin-top: 1rem;
+.about-fact-list {
+    display: grid;
+    gap: 1.35rem;
 }
 
-.about-sidebar-block {
-    padding: 1rem 1.1rem;
-}
-
-.about-sidebar-block h3,
+.about-fact-item h3,
+.about-tech-intro h3,
 .info-card h3,
 .interest-card h3 {
     font-size: 1rem;
-    margin-bottom: 0.55rem;
+    margin-bottom: 0.45rem;
 }
 
-.about-sidebar-block p,
+.about-fact-item p,
+.about-tech-intro p,
 .info-card p,
 .interest-card p {
     margin: 0;
     color: var(--muted);
+}
+
+.about-fact-item p {
+    font-size: 1.02rem;
+    line-height: 1.6;
+}
+
+.about-tech-stack {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.about-tech-group {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.about-tech-group h4 {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.94rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.about-tech-grid {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.about-tech-grid li {
+    margin: 0;
+}
+
+.about-tech-chip {
+    display: flex;
+    align-items: flex-end;
+    min-height: 78px;
+    padding: 0.85rem 0.85rem 0.8rem;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    color: #3f4c5e;
+    font-size: 0.98rem;
+    font-weight: 600;
+    line-height: 1.3;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.about-tech-grid.tone-sand .about-tech-chip {
+    background: #fbf4df;
+}
+
+.about-tech-grid.tone-blue .about-tech-chip {
+    background: #edf3ff;
+}
+
+.about-tech-grid.tone-green .about-tech-chip {
+    background: #edf8f1;
+}
+
+.about-tech-grid.tone-mint .about-tech-chip {
+    background: #edf8f6;
 }
 
 .about-main section + section {
@@ -1466,8 +1528,8 @@ button {
         grid-template-columns: 1fr;
     }
 
-    .about-profile-image {
-        max-width: 320px;
+    .about-sidebar-panel {
+        max-width: 560px;
     }
 }
 
@@ -1500,7 +1562,8 @@ button {
     .projects-grid,
     .contact-grid,
     .info-card-grid,
-    .interest-grid {
+    .interest-grid,
+    .about-tech-grid {
         grid-template-columns: 1fr;
     }
 
