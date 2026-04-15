@@ -101,18 +101,29 @@ const navItems = [
     </main>
 
     <footer class="site-footer site-shell">
-      <div class="site-footer-copy">
-        <p>jhle0</p>
-        <p>study notes, projects, and now logs.</p>
+      <div class="site-footer-brand">
+        <a class="site-footer-logo" href="/">jhle0</a>
+        <p>CS와 AI를 공부하며 쌓아가는 개인 개발 블로그.</p>
+        <p class="site-footer-copyright">
+          © 2026 Lee Jeonghyeon. All rights reserved.
+        </p>
       </div>
 
-      <nav class="site-footer-links" aria-label="Footer">
-        <a href="/rss.xml">RSS</a>
-        <a href="/admin/">Admin</a>
-        <a href="https://github.com/jhle0" target="_blank" rel="noreferrer">
-          GitHub
-        </a>
-      </nav>
+      <div class="site-footer-meta">
+        <nav class="site-footer-links" aria-label="Footer">
+          <a href="/blog">Blog</a>
+          <a href="/projects">Projects</a>
+          <a href="/rss.xml">RSS</a>
+          <a href="https://github.com/jhle0" target="_blank" rel="noreferrer">
+            GitHub
+          </a>
+          <a href="/admin/">Admin</a>
+        </nav>
+
+        <p class="site-footer-built">
+          Built with Astro · Deployed on Vercel
+        </p>
+      </div>
     </footer>
   </body>
 </html>
