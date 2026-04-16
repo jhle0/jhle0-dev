@@ -127,7 +127,7 @@ const allTags = [
           }
         </ul>
 
-        <p id="blog-empty-state" class="blog-empty-state" hidden>
+        <p id="blog-empty-state" class="blog-empty-state" hidden style="display: none;">
           No posts match your current filters.
         </p>
       </div>
@@ -252,7 +252,9 @@ const allTags = [
       resultsCount.textContent = `SHOWING ${sorted.length} OF ${totalCount} POSTS`;
       sortToggle.textContent =
         sortOrder === "desc" ? "DESCENDING" : "ASCENDING";
-      emptyState.hidden = sorted.length !== 0;
+      const isEmpty = sorted.length === 0;
+      emptyState.hidden = !isEmpty;
+      emptyState.style.display = isEmpty ? "block" : "none";
 
       updateActiveFilterStyles();
       syncQueryString(query, selectedTags);
