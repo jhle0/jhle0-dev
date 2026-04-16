@@ -38,6 +38,12 @@ export const ui = {
       projects: "Projects",
       contact: "Contact",
     },
+    theme: {
+      label: "테마 전환",
+      system: "System",
+      light: "Light",
+      dark: "Dark",
+    },
     footer: {
       description: "CS와 AI를 공부하며 쌓아가는 개인 개발 블로그.",
       builtWith: "Astro로 만들고 Vercel에 배포했습니다.",
@@ -52,6 +58,12 @@ export const ui = {
       blog: "Blog",
       projects: "Projects",
       contact: "Contact",
+    },
+    theme: {
+      label: "Theme switcher",
+      system: "System",
+      light: "Light",
+      dark: "Dark",
     },
     footer: {
       description: "A personal developer blog built around CS and AI notes.",

@@ -29,6 +29,7 @@ const ogImageUrl = new URL(ogImage ?? "/og/site.svg", siteOrigin).toString();
 const basePath = stripLocaleFromPath(currentPath);
 const koreanUrl = new URL(localizePath("ko", basePath), siteOrigin).toString();
 const englishUrl = new URL(localizePath("en", basePath), siteOrigin).toString();
+const themeUi = localeUi.theme;
 
 const navItems = [
   { href: localizePath(locale, "/"), label: localeUi.nav.home },
@@ -68,9 +69,37 @@ const navItems = [
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="color-scheme" content="light dark" />
     <link rel="alternate" hreflang="ko" href={koreanUrl} />
     <link rel="alternate" hreflang="en" href={englishUrl} />
     <link rel="alternate" hreflang="x-default" href={koreanUrl} />
+    <script is:inline>
+      (() => {
+        const storageKey = "jhle0-theme";
+        const root = document.documentElement;
+
+        try {
+          const saved = localStorage.getItem(storageKey);
+          const preference =
+            saved === "light" || saved === "dark" ? saved : "system";
+
+          root.dataset.themePreference = preference;
+
+          if (preference === "light" || preference === "dark") {
+            root.dataset.theme = preference;
+            root.style.colorScheme = preference;
+            return;
+          }
+
+          root.removeAttribute("data-theme");
+          root.style.colorScheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        } catch {
+          root.dataset.themePreference = "system";
+        }
+      })();
+    </script>
 
     {publishedTime && <meta property="article:published_time" content={publishedTime} />}
     {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
@@ -123,6 +152,30 @@ const navItems = [
                 EN
               </a>
             </div>
+
+            <div class="site-theme-switcher" aria-label={themeUi.label}>
+              <button
+                type="button"
+                class="site-theme-button"
+                data-theme-choice="system"
+              >
+                {themeUi.system}
+              </button>
+              <button
+                type="button"
+                class="site-theme-button"
+                data-theme-choice="light"
+              >
+                {themeUi.light}
+              </button>
+              <button
+                type="button"
+                class="site-theme-button"
+                data-theme-choice="dark"
+              >
+                {themeUi.dark}
+              </button>
+            </div>
           </div>
         </nav>
       </div>
@@ -156,5 +209,67 @@ const navItems = [
         </p>
       </div>
     </footer>
+    <script is:inline>
+      (() => {
+        const storageKey = "jhle0-theme";
+        const root = document.documentElement;
+        const buttons = Array.from(
+          document.querySelectorAll("[data-theme-choice]"),
+        );
+        const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+        function getStoredPreference() {
+          try {
+            const saved = localStorage.getItem(storageKey);
+            return saved === "light" || saved === "dark" ? saved : "system";
+          } catch {
+            return "system";
+          }
+        }
+
+        function applyTheme(preference) {
+          root.dataset.themePreference = preference;
+
+          if (preference === "light" || preference === "dark") {
+            root.dataset.theme = preference;
+            root.style.colorScheme = preference;
+          } else {
+            root.removeAttribute("data-theme");
+            root.style.colorScheme = media.matches ? "dark" : "light";
+          }
+
+          buttons.forEach((button) => {
+            const isActive = button.dataset.themeChoice === preference;
+            button.classList.toggle("is-active", isActive);
+            button.setAttribute("aria-pressed", isActive ? "true" : "false");
+          });
+        }
+
+        const initialPreference = getStoredPreference();
+        applyTheme(initialPreference);
+
+        buttons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const nextPreference = button.dataset.themeChoice ?? "system";
+
+            try {
+              if (nextPreference === "system") {
+                localStorage.removeItem(storageKey);
+              } else {
+                localStorage.setItem(storageKey, nextPreference);
+              }
+            } catch {}
+
+            applyTheme(nextPreference);
+          });
+        });
+
+        media.addEventListener("change", () => {
+          if (getStoredPreference() === "system") {
+            applyTheme("system");
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
