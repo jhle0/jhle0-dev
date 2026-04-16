@@ -90,7 +90,7 @@ h3 {
 }
 
 p {
-    margin: 0 0 1rem;
+    margin: 0 0 1.2rem;
 }
 
 small {
@@ -248,7 +248,7 @@ button {
 .page-intro,
 .section-block,
 .home-hero {
-    margin-bottom: 4rem;
+    margin-bottom: 4.5rem;
 }
 
 .page-intro {
@@ -265,7 +265,7 @@ button {
 
 .section-copy {
     max-width: 540px;
-    margin: 0.35rem 0 0;
+    margin: 0.5rem 0 0;
     color: var(--muted);
     font-size: 0.98rem;
 }
@@ -431,14 +431,14 @@ button {
     max-width: 18ch;
     line-height: 1.02;
     text-wrap: balance;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
 }
 
 .home-hero .hero-lead {
     max-width: 44rem;
     font-size: 1.12rem;
     line-height: 1.8;
-    margin-bottom: 1rem;
+    margin-bottom: 1.35rem;
 }
 
 .home-hero-kicker {
@@ -453,7 +453,7 @@ button {
     display: flex;
     flex-wrap: wrap;
     gap: 0.85rem;
-    margin: 2rem 0 0;
+    margin: 2.3rem 0 0;
 }
 
 .home-action-link {
