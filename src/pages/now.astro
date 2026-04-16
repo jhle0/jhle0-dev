@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { nowUpdates } from "../data/now";
+---
+
+<BaseLayout title="Now | jhle0" description="What I am up to now">
+  <section class="page-intro">
+    <p class="eyebrow">Right now</p>
+    <h1>NOW</h1>
+    <p class="intro-copy">
+      최근에 무엇을 공부하고 만들고 있는지, 짧은 타임라인 형태로 남기는 현재
+      로그.
+    </p>
+  </section>
+
+  <section class="section-block timeline">
+    <ul class="timeline-list">
+      {
+        nowUpdates.map((item) => (
+          <li class="timeline-item">
+            <div class="timeline-marker" />
+            <div class="timeline-content">
+              <p class="timeline-date">{item.date}</p>
+              <p>{item.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

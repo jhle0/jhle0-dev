@@ -1,0 +1,341 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const getRelatedPosts = (
+    post: CollectionEntry<"blog">,
+    allPosts: CollectionEntry<"blog">[],
+  ) => {
+    const postTags = new Set(post.data.tags.map((tag) => tag.toLowerCase()));
+    const scored = allPosts
+      .filter((candidate) => candidate.id !== post.id)
+      .map((candidate) => {
+        const sharedTags = candidate.data.tags.filter((tag) =>
+          postTags.has(tag.toLowerCase()),
+        ).length;
+        const score = sharedTags * 3;
+        return { candidate, score };
+      })
+      .sort(
+        (a, b) =>
+          b.score - a.score ||
+          b.candidate.data.pubDate.getTime() -
+            a.candidate.data.pubDate.getTime(),
+      );
+
+    const related = scored
+      .filter(({ score }) => score > 0)
+      .map(({ candidate }) => candidate)
+      .slice(0, 3);
+
+    if (related.length < 3) {
+      const usedIds = new Set(related.map((item) => item.id));
+      for (const candidate of allPosts) {
+        if (candidate.id === post.id || usedIds.has(candidate.id)) continue;
+        related.push(candidate);
+        usedIds.add(candidate.id);
+        if (related.length === 3) break;
+      }
+    }
+
+    return related;
+  };
+
+  const posts = (await getCollection("blog"))
+    .filter((post) => !post.data.draft)
+    .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+  return posts.map((post, index) => {
+    const seriesName = post.data.series?.trim() ?? "";
+    const seriesPosts = seriesName
+      ? posts
+          .filter((candidate) => candidate.data.series?.trim() === seriesName)
+          .sort((a, b) => a.data.pubDate.getTime() - b.data.pubDate.getTime())
+      : [];
+    const seriesIndex = seriesPosts.findIndex(
+      (candidate) => candidate.id === post.id,
+    );
+
+    return {
+      params: { slug: post.data.slug },
+      props: {
+        post,
+        newerPost: posts[index - 1] ?? null,
+        olderPost: posts[index + 1] ?? null,
+        relatedPosts: getRelatedPosts(post, posts),
+        seriesName,
+        seriesPosts,
+        seriesIndex,
+      },
+    };
+  });
+}
+
+const {
+  post,
+  newerPost,
+  olderPost,
+  relatedPosts,
+  seriesName,
+  seriesPosts,
+  seriesIndex,
+} = Astro.props;
+const { Content, headings } = await render(post);
+const tocHeadings = headings.filter(
+  (heading) => heading.depth >= 2 && heading.depth <= 3,
+);
+const seriesPrev =
+  seriesIndex > 0 && seriesPosts.length > 1 ? seriesPosts[seriesIndex - 1] : null;
+const seriesNext =
+  seriesIndex >= 0 && seriesIndex < seriesPosts.length - 1
+    ? seriesPosts[seriesIndex + 1]
+    : null;
+
+const readingTimeMinutes = Math.max(
+  1,
+  Math.ceil(post.body.split(/\s+/u).filter(Boolean).length / 220),
+);
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  dateModified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": new URL(`/blog/${post.data.slug}`, Astro.site ?? Astro.url).toString(),
+  },
+  author: {
+    "@type": "Person",
+    name: "jhle0",
+  },
+};
+---
+
+<BaseLayout
+  title={`${post.data.title} | jhle0`}
+  description={post.data.description}
+  canonicalPath={`/blog/${post.data.slug}`}
+  ogImage={`/og/blog/${post.data.slug}.svg`}
+  ogType="article"
+  publishedTime={post.data.pubDate.toISOString()}
+  modifiedTime={(post.data.updatedDate ?? post.data.pubDate).toISOString()}
+>
+  <article class="entry-article notion-entry">
+    <header class="page-intro">
+      <div class="entry-top-actions">
+        <button
+          id="history-back-button"
+          type="button"
+          class="history-back-button"
+          aria-label="Go back to previous page"
+        >
+          ← 뒤로가기
+        </button>
+        <noscript>
+          <a class="text-link" href="/blog">Back to blog</a>
+        </noscript>
+      </div>
+
+      <div class="entry-meta-row entry-meta-list">
+        <p class="meta">{post.data.pubDate.toISOString().slice(0, 10)}</p>
+        <p class="meta">{readingTimeMinutes} min read</p>
+        {post.data.updatedDate && (
+          <p class="meta">
+            updated {post.data.updatedDate.toISOString().slice(0, 10)}
+          </p>
+        )}
+      </div>
+      <h1>{post.data.title}</h1>
+      <p class="intro-copy">{post.data.description}</p>
+      {post.data.tags.length > 0 && (
+        <ul class="tag-list entry-tag-list">
+          {post.data.tags.map((tag) => (
+            <li>
+              <a href={`/tags/${tag}`}>{tag}</a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </header>
+
+    <div
+      class:list={[
+        "entry-content-layout",
+        tocHeadings.length > 0 ? "has-toc" : "is-single-column",
+      ]}
+    >
+      {tocHeadings.length > 0 && (
+        <aside class="entry-toc surface-card">
+          <p class="entry-toc-title">On this page</p>
+          <ul class="entry-toc-list">
+            {tocHeadings.map((heading) => (
+              <li class:list={["entry-toc-item", `depth-${heading.depth}`]}>
+                <a class="entry-toc-link" href={`#${heading.slug}`}>
+                  {heading.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      )}
+
+      <div class="entry-content-main">
+        <div class="article-content surface-card">
+          <Content />
+        </div>
+      </div>
+    </div>
+
+    <div class="entry-actions">
+      <a class="text-link" href="/blog">Back to blog</a>
+    </div>
+
+    <nav class="entry-pagination" aria-label="Post navigation">
+      {newerPost ? (
+        <a class="entry-nav-link" href={`/blog/${newerPost.data.slug}`}>
+          <span class="entry-nav-direction">Newer</span>
+          <strong>{newerPost.data.title}</strong>
+        </a>
+      ) : (
+        <div class="entry-nav-link is-empty" />
+      )}
+
+      {olderPost ? (
+        <a class="entry-nav-link align-right" href={`/blog/${olderPost.data.slug}`}>
+          <span class="entry-nav-direction">Older</span>
+          <strong>{olderPost.data.title}</strong>
+        </a>
+      ) : (
+        <div class="entry-nav-link is-empty" />
+      )}
+    </nav>
+
+    {seriesName && seriesPosts.length > 1 && (
+      <section class="entry-series surface-card">
+        <p class="eyebrow">Series</p>
+        <h2>{seriesName}</h2>
+        <p class="meta">
+          {seriesIndex + 1} / {seriesPosts.length}
+        </p>
+        <ul class="series-list">
+          {seriesPosts.map((seriesPost, index) => (
+            <li class:list={["series-item", seriesPost.id === post.id && "is-current"]}>
+              <a href={`/blog/${seriesPost.data.slug}`}>
+                {index + 1}. {seriesPost.data.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <div class="series-nav">
+          {seriesPrev ? (
+            <a class="text-link" href={`/blog/${seriesPrev.data.slug}`}>
+              ← 이전 시리즈 글
+            </a>
+          ) : (
+            <span class="meta">첫 시리즈 글</span>
+          )}
+          {seriesNext ? (
+            <a class="text-link" href={`/blog/${seriesNext.data.slug}`}>
+              다음 시리즈 글 →
+            </a>
+          ) : (
+            <span class="meta">마지막 시리즈 글</span>
+          )}
+        </div>
+      </section>
+    )}
+
+    {relatedPosts.length > 0 && (
+      <section class="entry-related section-block">
+        <h2>Related posts</h2>
+        <ul class="tag-post-grid">
+          {relatedPosts.map((relatedPost) => (
+            <li class="surface-card">
+              <article class="stack-sm">
+                <p class="meta">{relatedPost.data.pubDate.toISOString().slice(0, 10)}</p>
+                <h3>
+                  <a href={`/blog/${relatedPost.data.slug}`}>{relatedPost.data.title}</a>
+                </h3>
+                <p>{relatedPost.data.description}</p>
+                <ul class="tag-list">
+                  {relatedPost.data.tags.slice(0, 3).map((tag) => (
+                    <li>
+                      <a href={`/tags/${tag}`}>{tag}</a>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
+
+  <script is:inline>
+    const backButton = document.getElementById("history-back-button");
+
+    backButton?.addEventListener("click", () => {
+      const hasPreviousHistory = window.history.length > 1;
+      const hasInternalReferrer = (() => {
+        if (!document.referrer) return false;
+        try {
+          return new URL(document.referrer).origin === window.location.origin;
+        } catch {
+          return false;
+        }
+      })();
+
+      if (hasPreviousHistory && hasInternalReferrer) {
+        window.history.back();
+        return;
+      }
+
+      window.location.href = "/blog";
+    });
+
+    const tocLinks = Array.from(document.querySelectorAll(".entry-toc-link"));
+    const headingTargets = tocLinks
+      .map((link) => {
+        const href = link.getAttribute("href");
+        if (!href || !href.startsWith("#")) return null;
+        return document.getElementById(href.slice(1));
+      })
+      .filter(Boolean);
+
+    if (tocLinks.length > 0 && headingTargets.length > 0) {
+      const activate = (id) => {
+        tocLinks.forEach((link) => {
+          const isActive = link.getAttribute("href") === `#${id}`;
+          link.classList.toggle("is-active", isActive);
+        });
+      };
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+          if (visible.length > 0) {
+            activate(visible[0].target.id);
+          }
+        },
+        {
+          rootMargin: "0px 0px -60% 0px",
+          threshold: [0.1, 0.5, 1],
+        },
+      );
+
+      headingTargets.forEach((target) => observer.observe(target));
+      activate(headingTargets[0].id);
+    }
+  </script>
+</BaseLayout>

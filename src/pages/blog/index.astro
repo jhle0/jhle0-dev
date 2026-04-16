@@ -1,0 +1,283 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+const publishedPosts = posts
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+const allTags = [
+  ...new Set(publishedPosts.flatMap((post) => post.data.tags)),
+].sort();
+---
+
+<BaseLayout
+  title="Blog | jhle0"
+  description="Study notes, project logs, and learning records."
+  canonicalPath="/blog"
+  ogImage="/og/site.svg"
+>
+  <section class="blog-archive-page">
+    <header class="blog-archive-header page-intro">
+      <p class="eyebrow">Archive</p>
+      <h1>Blog</h1>
+      <p class="intro-copy">
+        공부한 개념, 만든 것의 기록, 그리고 중간 회고를 아카이브 형태로 모아둔
+        공간.
+      </p>
+    </header>
+
+    <div class="blog-archive-layout">
+      <aside class="blog-sidebar surface-card">
+        <div class="blog-search-box">
+          <span class="blog-search-icon" aria-hidden="true">⌕</span>
+          <input
+            id="blog-search"
+            type="text"
+            placeholder="Search posts"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="blog-filter-header">
+          <h2>TAGS</h2>
+          <button id="clear-filters" type="button">Clear</button>
+        </div>
+
+        <ul class="blog-filter-list">
+          {
+            allTags.map((tag) => (
+              <li>
+                <label class="blog-filter-item">
+                  <input
+                    type="checkbox"
+                    value={tag}
+                    class="blog-tag-checkbox"
+                  />
+                  <span>{tag}</span>
+                </label>
+              </li>
+            ))
+          }
+        </ul>
+      </aside>
+
+      <div class="blog-content-area">
+        <div class="blog-toolbar">
+          <p id="blog-results-count">
+            SHOWING {publishedPosts.length} OF {publishedPosts.length} POSTS
+          </p>
+
+          <div class="blog-toolbar-actions">
+            <a class="text-link" href="/rss.xml">RSS</a>
+            <button
+              id="sort-toggle"
+              type="button"
+              class="blog-sort-button"
+              data-order="desc"
+            >
+              DESCENDING
+            </button>
+          </div>
+        </div>
+
+        <ul id="blog-post-list" class="blog-post-card-list">
+          {
+            publishedPosts.map((post) => (
+              <li
+                class="blog-post-card"
+                data-title={post.data.title.toLowerCase()}
+                data-description={post.data.description.toLowerCase()}
+                data-tags={post.data.tags.join(" ").toLowerCase()}
+                data-date={post.data.pubDate.toISOString()}
+              >
+                <article>
+                  <div class="blog-post-meta-row">
+                    <p class="blog-post-date">
+                      {post.data.pubDate.toISOString().slice(0, 10)}
+                    </p>
+                  </div>
+
+                  <div class="blog-post-main">
+                    <div class="blog-post-text">
+                      <h3>
+                        <a href={`/blog/${post.data.slug}`}>
+                          {post.data.title}
+                        </a>
+                      </h3>
+                      <p>{post.data.description}</p>
+
+                      <ul class="tag-list blog-post-tags">
+                        {post.data.tags.map((tag) => (
+                          <li>
+                            <a href={`/tags/${tag}`}>{tag}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div class="blog-post-arrow" aria-hidden="true">
+                      ›
+                    </div>
+                  </div>
+                </article>
+              </li>
+            ))
+          }
+        </ul>
+
+        <p id="blog-empty-state" class="blog-empty-state" hidden>
+          No posts match your current filters.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    const searchInput = document.getElementById("blog-search");
+    const clearButton = document.getElementById("clear-filters");
+    const sortToggle = document.getElementById("sort-toggle");
+    const resultsCount = document.getElementById("blog-results-count");
+    const postList = document.getElementById("blog-post-list");
+    const emptyState = document.getElementById("blog-empty-state");
+    const checkboxes = Array.from(
+      document.querySelectorAll(".blog-tag-checkbox"),
+    );
+    const allCards = Array.from(document.querySelectorAll(".blog-post-card"));
+    const totalCount = allCards.length;
+    const url = new URL(window.location.href);
+    const queryFromUrl = (url.searchParams.get("q") || "").trim();
+    const sortFromUrl = url.searchParams.get("sort");
+    const tagsFromUrl = (url.searchParams.get("tags") || "")
+      .split(",")
+      .map((tag) => tag.trim().toLowerCase())
+      .filter(Boolean);
+
+    let sortOrder = sortFromUrl === "asc" ? "asc" : "desc";
+
+    if (searchInput) {
+      searchInput.value = queryFromUrl;
+    }
+
+    const initialTagSet = new Set(tagsFromUrl);
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = initialTagSet.has(checkbox.value.toLowerCase());
+    });
+
+    function getSelectedTags() {
+      return checkboxes
+        .filter((checkbox) => checkbox.checked)
+        .map((checkbox) => checkbox.value.toLowerCase());
+    }
+
+    function updateActiveFilterStyles() {
+      checkboxes.forEach((checkbox) => {
+        const label = checkbox.closest(".blog-filter-item");
+        if (!label) return;
+
+        if (checkbox.checked) {
+          label.classList.add("is-active");
+        } else {
+          label.classList.remove("is-active");
+        }
+      });
+    }
+
+    function matchesSearch(card, query) {
+      const haystack = [
+        card.dataset.title || "",
+        card.dataset.description || "",
+        card.dataset.tags || "",
+      ].join(" ");
+
+      return haystack.includes(query);
+    }
+
+    function matchesTags(card, selectedTags) {
+      if (selectedTags.length === 0) return true;
+      const cardTags = (card.dataset.tags || "").split(" ").filter(Boolean);
+      return selectedTags.every((tag) => cardTags.includes(tag));
+    }
+
+    function sortCards(cards) {
+      return cards.sort((a, b) => {
+        const aDate = new Date(a.dataset.date).getTime();
+        const bDate = new Date(b.dataset.date).getTime();
+        return sortOrder === "desc" ? bDate - aDate : aDate - bDate;
+      });
+    }
+
+    function syncQueryString(query, selectedTags) {
+      const nextUrl = new URL(window.location.href);
+
+      if (query) {
+        nextUrl.searchParams.set("q", query);
+      } else {
+        nextUrl.searchParams.delete("q");
+      }
+
+      if (selectedTags.length > 0) {
+        nextUrl.searchParams.set("tags", selectedTags.join(","));
+      } else {
+        nextUrl.searchParams.delete("tags");
+      }
+
+      if (sortOrder === "asc") {
+        nextUrl.searchParams.set("sort", "asc");
+      } else {
+        nextUrl.searchParams.delete("sort");
+      }
+
+      window.history.replaceState(
+        null,
+        "",
+        `${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`,
+      );
+    }
+
+    function render() {
+      const query = (searchInput.value || "").trim().toLowerCase();
+      const selectedTags = getSelectedTags();
+
+      const filtered = allCards.filter((card) => {
+        return matchesSearch(card, query) && matchesTags(card, selectedTags);
+      });
+
+      const sorted = sortCards([...filtered]);
+
+      postList.innerHTML = "";
+      sorted.forEach((card) => postList.appendChild(card));
+
+      resultsCount.textContent = `SHOWING ${sorted.length} OF ${totalCount} POSTS`;
+      sortToggle.textContent =
+        sortOrder === "desc" ? "DESCENDING" : "ASCENDING";
+      emptyState.hidden = sorted.length !== 0;
+
+      updateActiveFilterStyles();
+      syncQueryString(query, selectedTags);
+    }
+
+    searchInput?.addEventListener("input", render);
+
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", render);
+    });
+
+    clearButton?.addEventListener("click", () => {
+      searchInput.value = "";
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+      });
+      sortOrder = "desc";
+      render();
+    });
+
+    sortToggle?.addEventListener("click", () => {
+      sortOrder = sortOrder === "desc" ? "asc" : "desc";
+      render();
+    });
+
+    render();
+  </script>
+</BaseLayout>
