@@ -23,11 +23,17 @@ export const GET: APIRoute = async ({ site }) => {
 
   const pages: SitemapItem[] = [
     { path: "/" },
+    { path: "/en/" },
     { path: "/about" },
+    { path: "/en/about" },
     { path: "/now" },
+    { path: "/en/now" },
     { path: "/blog" },
+    { path: "/en/blog" },
     { path: "/projects" },
+    { path: "/en/projects" },
     { path: "/contact" },
+    { path: "/en/contact" },
     { path: "/rss.xml" },
   ];
 
@@ -36,8 +42,18 @@ export const GET: APIRoute = async ({ site }) => {
     lastmod: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
   }));
 
+  const localizedPostPages = publishedPosts.map((post) => ({
+    path: `/en/blog/${post.data.slug}`,
+    lastmod: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+  }));
+
   const projectPages = publishedProjects.map((project) => ({
     path: `/projects/${project.data.slug}`,
+    lastmod: (project.data.updatedDate ?? project.data.pubDate).toISOString(),
+  }));
+
+  const localizedProjectPages = publishedProjects.map((project) => ({
+    path: `/en/projects/${project.data.slug}`,
     lastmod: (project.data.updatedDate ?? project.data.pubDate).toISOString(),
   }));
 
@@ -45,7 +61,19 @@ export const GET: APIRoute = async ({ site }) => {
     path: `/tags/${tag}`,
   }));
 
-  const urls = [...pages, ...postPages, ...projectPages, ...tagPages]
+  const localizedTagPages = tags.map((tag) => ({
+    path: `/en/tags/${tag}`,
+  }));
+
+  const urls = [
+    ...pages,
+    ...postPages,
+    ...localizedPostPages,
+    ...projectPages,
+    ...localizedProjectPages,
+    ...tagPages,
+    ...localizedTagPages,
+  ]
     .map(({ path, lastmod }) => {
       const location = new URL(path, siteUrl).toString();
       return `

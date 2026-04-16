@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
 const posts = (await getCollection("blog"))
@@ -14,23 +14,25 @@ const projects = (await getCollection("projects"))
 ---
 
 <BaseLayout
+  locale="en"
   title="Home | jhle0"
-  description="Study notes, projects, and logs in one place."
+  description="A personal developer archive built around CS and AI."
+  canonicalPath="/en/"
 >
   <section class="home-hero">
     <p class="eyebrow">Developer archive</p>
     <h1>
-      <span class="home-hero-title-line">CS와 AI를</span>
-      <span class="home-hero-title-line">공부하며 쌓아가는</span>
-      <span class="home-hero-title-line">개인 개발 아카이브</span>
+      <span class="home-hero-title-line">A personal archive</span>
+      <span class="home-hero-title-line">built while studying</span>
+      <span class="home-hero-title-line">CS and AI.</span>
     </h1>
     <p class="home-hero-kicker">
       CS fundamentals / AI learning / project notes
     </p>
     <div class="home-hero-actions">
-      <a class="home-action-link is-primary" href="/blog">View Blog</a>
-      <a class="home-action-link" href="/about">About</a>
-      <a class="home-action-link" href="/projects">View Projects</a>
+      <a class="home-action-link is-primary" href="/en/blog">View Blog</a>
+      <a class="home-action-link" href="/en/about">About</a>
+      <a class="home-action-link" href="/en/projects">View Projects</a>
     </div>
   </section>
 
@@ -40,10 +42,11 @@ const projects = (await getCollection("projects"))
         <p class="eyebrow">Recent writing</p>
         <h2>Recent Posts</h2>
         <p class="section-copy">
-          공부하며 바로 기록한 메모와, 구현하면서 정리한 생각들을 모아둔 글들.
+          Notes from study sessions, implementation logs, and reflections
+          gathered into one archive.
         </p>
       </div>
-      <a class="text-link" href="/blog">View all posts</a>
+      <a class="text-link" href="/en/blog">View all posts</a>
     </div>
     {
       posts.length === 0 ? (
@@ -57,13 +60,13 @@ const projects = (await getCollection("projects"))
                   {post.data.pubDate.toISOString().slice(0, 10)}
                 </p>
                 <h3>
-                  <a href={`/blog/${post.data.slug}`}>{post.data.title}</a>
+                  <a href={`/en/blog/${post.data.slug}`}>{post.data.title}</a>
                 </h3>
                 <p>{post.data.description}</p>
                 <ul class="tag-list">
                   {post.data.tags.slice(0, 3).map((tag) => (
                     <li>
-                      <a href={`/tags/${tag}`}>{tag}</a>
+                      <a href={`/en/tags/${tag}`}>{tag}</a>
                     </li>
                   ))}
                 </ul>
@@ -81,10 +84,11 @@ const projects = (await getCollection("projects"))
         <p class="eyebrow">Selected builds</p>
         <h2>Recent Projects</h2>
         <p class="section-copy">
-          구현 자체보다도 설계 과정과 회고가 남도록 정리한 작업들.
+          Projects documented not only by results, but by design decisions,
+          process, and lessons learned.
         </p>
       </div>
-      <a class="text-link" href="/projects">View all projects</a>
+      <a class="text-link" href="/en/projects">View all projects</a>
     </div>
     {
       projects.length === 0 ? (
@@ -104,7 +108,7 @@ const projects = (await getCollection("projects"))
                   )}
                 </p>
                 <h3>
-                  <a href={`/projects/${project.data.slug}`}>
+                  <a href={`/en/projects/${project.data.slug}`}>
                     {project.data.title}
                   </a>
                 </h3>

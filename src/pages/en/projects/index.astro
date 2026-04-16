@@ -1,0 +1,97 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const projects = await getCollection("projects");
+const publishedProjects = projects
+  .filter((project) => !project.data.draft)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+const formatStatus = (status?: string) =>
+  !status ? null : status.replace("-", " ");
+---
+
+<BaseLayout
+  locale="en"
+  title="Projects | jhle0"
+  description="Projects archive"
+  canonicalPath="/en/projects"
+>
+  <section class="page-intro">
+    <p class="eyebrow">Projects archive</p>
+    <h1>Projects</h1>
+    <p class="intro-copy">
+      An archive of projects that records not only the result, but also the
+      problem, the process, and the lessons learned.
+    </p>
+  </section>
+
+  <section class="section-block">
+    {
+      publishedProjects.length === 0 ? (
+        <p class="empty-copy">No published projects yet.</p>
+      ) : (
+        <ul class="projects-grid">
+          {publishedProjects.map((project) => (
+            <li class="project-card surface-card">
+              <article class="stack-sm">
+                <div class="project-card-top">
+                  <p class="meta">{project.data.pubDate.toISOString().slice(0, 10)}</p>
+                  {project.data.status && (
+                    <span class="status-pill">{formatStatus(project.data.status)}</span>
+                  )}
+                </div>
+
+                <h2>
+                  <a href={`/en/projects/${project.data.slug}`}>
+                    {project.data.title}
+                  </a>
+                </h2>
+
+                <p>{project.data.description}</p>
+
+                {project.data.tags.length > 0 && (
+                  <ul class="tag-list">
+                    {project.data.tags.map((tag) => (
+                      <li>
+                        <span class="tag">{tag}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                <ul class="card-links">
+                  <li>
+                    <a href={`/en/projects/${project.data.slug}`}>Details</a>
+                  </li>
+                  {project.data.githubUrl && project.data.githubUrl !== "" && (
+                    <li>
+                      <a
+                        href={project.data.githubUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        GitHub
+                      </a>
+                    </li>
+                  )}
+                  {project.data.demoUrl && project.data.demoUrl !== "" && (
+                    <li>
+                      <a
+                        href={project.data.demoUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Demo
+                      </a>
+                    </li>
+                  )}
+                </ul>
+              </article>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</BaseLayout>

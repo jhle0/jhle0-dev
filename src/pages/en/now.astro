@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { nowUpdatesEn } from "../../data/now.en";
+---
+
+<BaseLayout
+  locale="en"
+  title="Now | jhle0"
+  description="What I am up to now"
+  canonicalPath="/en/now"
+>
+  <section class="page-intro">
+    <p class="eyebrow">Right now</p>
+    <h1>NOW</h1>
+    <p class="intro-copy">
+      A short timeline of what I have been studying, building, and focusing on
+      recently.
+    </p>
+  </section>
+
+  <section class="section-block timeline">
+    <ul class="timeline-list">
+      {
+        nowUpdatesEn.map((item) => (
+          <li class="timeline-item">
+            <div class="timeline-marker" />
+            <div class="timeline-content">
+              <p class="timeline-date">{item.date}</p>
+              <p>{item.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>
