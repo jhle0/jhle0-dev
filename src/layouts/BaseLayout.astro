@@ -172,10 +172,8 @@ const navItems = [
               data-label-light={themeUi.toggleToLight}
               data-label-dark={themeUi.toggleToDark}
             >
-              <span class="site-theme-toggle-track" aria-hidden="true">
-                <span class="site-theme-toggle-thumb"></span>
-                <span class="site-theme-icon site-theme-icon-sun">☀</span>
-                <span class="site-theme-icon site-theme-icon-moon">☾</span>
+              <span class="site-theme-toggle-icon" data-theme-icon aria-hidden="true">
+                ☀
               </span>
             </button>
           </div>
@@ -249,7 +247,6 @@ const navItems = [
           }
 
           if (toggleButton instanceof HTMLButtonElement) {
-            toggleButton.dataset.resolvedTheme = resolvedTheme;
             toggleButton.setAttribute(
               "aria-pressed",
               resolvedTheme === "dark" ? "true" : "false",
@@ -263,6 +260,11 @@ const navItems = [
             if (nextLabel) {
               toggleButton.setAttribute("aria-label", nextLabel);
               toggleButton.setAttribute("title", nextLabel);
+            }
+
+            const icon = toggleButton.querySelector("[data-theme-icon]");
+            if (icon) {
+              icon.textContent = resolvedTheme === "dark" ? "☾" : "☀";
             }
           }
         }
