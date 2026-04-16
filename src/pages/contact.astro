@@ -7,36 +7,65 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <p class="eyebrow">Contact</p>
     <h1>연락 가능한 채널</h1>
     <p class="intro-copy">
-      협업, 피드백, 혹은 가벼운 대화도 환영한다. 아래 채널로 편하게 연락할 수
-      있다.
+      협업, 피드백, 공부 이야기, 혹은 가벼운 대화도 환영합니다. 가장 편한
+      채널로 연락해 주세요.
     </p>
+  </section>
+
+  <section class="section-block">
+    <div class="contact-lead surface-card">
+      <div>
+        <p class="eyebrow">Preferred</p>
+        <h2>가장 빠른 연락은 이메일</h2>
+        <p>
+          긴 이야기나 협업 문의는 이메일이 가장 확인이 빠릅니다. 코드나 작업
+          기록과 관련된 내용은 GitHub를 통해 봐주셔도 좋습니다.
+        </p>
+      </div>
+      <a class="button-link" href="mailto:dumiso04@gmail.com">Send email</a>
+    </div>
   </section>
 
   <section class="section-block">
     <ul class="contact-grid">
       <li class="surface-card contact-card">
+        <p class="contact-label">Best for</p>
         <h2>Email</h2>
-        <p>your-email@example.com</p>
-        <a class="button-link" href="mailto:your-email@example.com">
-          Send email
+        <p class="contact-value">dumiso04@gmail.com</p>
+        <p class="contact-copy">
+          협업 문의, 피드백, 질문, 혹은 개인적인 연락까지 가장 편하게 보낼 수
+          있는 채널입니다.
+        </p>
+        <a class="button-link" href="mailto:dumiso04@gmail.com">
+          이메일 보내기
         </a>
       </li>
       <li class="surface-card contact-card">
+        <p class="contact-label">Code & Archive</p>
         <h2>GitHub</h2>
-        <p>@jhle0</p>
+        <p class="contact-value">@jhle0</p>
+        <p class="contact-copy">
+          프로젝트 기록, 코드, 구현 흐름을 확인할 수 있습니다. 작업 관련 맥락은
+          GitHub에서 보는 편이 가장 자연스럽습니다.
+        </p>
         <a
           class="button-link"
           href="https://github.com/jhle0"
           target="_blank"
           rel="noreferrer"
         >
-          Visit profile
+          GitHub 보기
         </a>
       </li>
       <li class="surface-card contact-card">
+        <p class="contact-label">Social</p>
         <h2>LinkedIn</h2>
-        <p>준비 중</p>
-        <span class="meta">profile link will be added later</span>
+        <p class="contact-value">준비 중</p>
+        <p class="contact-copy">
+          아직 개설하지 않았습니다. 추후 개설되면 경력/활동 기록용 채널로 연결할
+          예정입니다.
+        </p>
+        <span class="contact-muted">추후 링크 추가 예정</span>
       </li>
     </ul>
   </section>

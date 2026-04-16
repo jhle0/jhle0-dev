@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://jhle0-dev.vercel.app/sitemap.xml

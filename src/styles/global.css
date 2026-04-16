@@ -538,22 +538,65 @@ button {
     margin: 0;
 }
 
+.contact-lead {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.45rem 1.5rem;
+}
+
+.contact-lead h2 {
+    margin-bottom: 0.45rem;
+    font-size: 1.45rem;
+}
+
+.contact-lead p:last-child {
+    margin-bottom: 0;
+    color: var(--muted);
+    max-width: 58ch;
+}
+
 .contact-card {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 0.75rem;
     min-height: 100%;
-    padding: 1.3rem;
+    padding: 1.35rem;
 }
 
 .contact-card h2 {
     font-size: 1.3rem;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0;
 }
 
 .contact-card p {
     margin: 0;
+}
+
+.contact-label {
+    color: var(--accent);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.contact-value {
+    color: var(--text);
+    font-size: 1rem;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+.contact-copy {
     color: var(--muted);
+    line-height: 1.65;
+}
+
+.contact-muted {
+    color: var(--muted);
+    font-size: 0.88rem;
 }
 
 .contact-card .button-link {
@@ -1652,6 +1695,11 @@ button {
 
     .site-footer-links {
         justify-content: flex-start;
+    }
+
+    .contact-lead {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .feature-grid,
