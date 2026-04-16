@@ -4,6 +4,7 @@ description: "블로그 검색과 태그 필터를 어떻게 설계할지 정리
 pubDate: 2026-04-12
 updatedDate: 2026-04-12
 slug: "building-searchable-content-archive"
+topic: development
 tags: ["search", "archive", "ux", "blog", "tag"]
 draft: false
 heroImage: ""

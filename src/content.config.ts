@@ -1,5 +1,6 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
+import { BLOG_TOPIC_VALUES } from "./lib/blog";
 
 const optionalDate = z.preprocess(
   (value) => (value === "" || value == null ? undefined : value),
@@ -24,6 +25,7 @@ const blog = defineCollection({
     pubDate: z.coerce.date(),
     updatedDate: optionalDate,
     slug: z.string(),
+    topic: z.enum(BLOG_TOPIC_VALUES).default("thoughts"),
     tags: z.array(z.string()),
     draft: z.boolean().default(false),
     heroImage: optionalString,

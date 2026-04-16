@@ -4,6 +4,7 @@ description: ff
 pubDate: 2026-04-09
 updatedDate: 2026-04-09
 slug: test-linear-regression
+topic: study
 tags:
   - log
 draft: true

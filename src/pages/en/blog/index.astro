@@ -1,15 +1,32 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import {
+  BLOG_TOPIC_VALUES,
+  getBlogTopicDescription,
+  getBlogTopicLabel,
+} from "../../../lib/blog";
 
 const posts = await getCollection("blog");
 const publishedPosts = posts
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 
-const allTags = [
-  ...new Set(publishedPosts.flatMap((post) => post.data.tags)),
-].sort();
+const topicSummaries = BLOG_TOPIC_VALUES.map((topic) => ({
+  value: topic,
+  label: getBlogTopicLabel(topic),
+  description: getBlogTopicDescription(topic, "en"),
+  count: publishedPosts.filter((post) => post.data.topic === topic).length,
+}));
+
+const allTags = [...new Set(publishedPosts.flatMap((post) => post.data.tags))]
+  .map((tag) => ({
+    value: tag,
+    count: publishedPosts.filter((post) => post.data.tags.includes(tag)).length,
+  }))
+  .sort((a, b) => b.count - a.count || a.value.localeCompare(b.value));
+
+const initialVisibleTags = 12;
 ---
 
 <BaseLayout
@@ -24,44 +41,100 @@ const allTags = [
       <p class="eyebrow">Archive</p>
       <h1>Blog</h1>
       <p class="intro-copy">
-        A searchable archive of study notes, build logs, and reflections from
-        the process.
+        An archive organized around broader topics first, then finer tags for
+        searching notes, build logs, and reflections.
       </p>
     </header>
 
+    <section class="blog-topic-panel surface-card">
+      <div class="blog-topic-panel-copy">
+        <p class="eyebrow">Topics</p>
+        <h2>Browse by topic</h2>
+        <p class="section-copy">
+          Narrow the archive by a broader topic first, then use tags to get to
+          the exact subject.
+        </p>
+      </div>
+
+      <div class="blog-topic-list" aria-label="Blog topics">
+        <button
+          type="button"
+          class="blog-topic-button is-active"
+          data-topic-filter="all"
+        >
+          <span>All</span>
+          <small>{publishedPosts.length}</small>
+        </button>
+
+        {
+          topicSummaries.map((topic) => (
+            <button
+              type="button"
+              class="blog-topic-button"
+              data-topic-filter={topic.value}
+              title={topic.description}
+            >
+              <span>{topic.label}</span>
+              <small>{topic.count}</small>
+            </button>
+          ))
+        }
+      </div>
+    </section>
+
     <div class="blog-archive-layout">
       <aside class="blog-sidebar surface-card">
-        <div class="blog-search-box">
-          <span class="blog-search-icon" aria-hidden="true">⌕</span>
-          <input
-            id="blog-search"
-            type="text"
-            placeholder="Search posts"
-            autocomplete="off"
-          />
+        <div class="blog-sidebar-section">
+          <div class="blog-search-box">
+            <span class="blog-search-icon" aria-hidden="true">⌕</span>
+            <input
+              id="blog-search"
+              type="text"
+              placeholder="Search posts"
+              autocomplete="off"
+            />
+          </div>
         </div>
 
-        <div class="blog-filter-header">
-          <h2>TAGS</h2>
-          <button id="clear-filters" type="button">Clear</button>
-        </div>
+        <div class="blog-sidebar-section">
+          <div class="blog-filter-header">
+            <h2>Tags</h2>
+            <button id="clear-filters" type="button">Reset</button>
+          </div>
 
-        <ul class="blog-filter-list">
-          {
-            allTags.map((tag) => (
-              <li>
-                <label class="blog-filter-item">
-                  <input
-                    type="checkbox"
-                    value={tag}
-                    class="blog-tag-checkbox"
-                  />
-                  <span>{tag}</span>
-                </label>
-              </li>
-            ))
-          }
-        </ul>
+          <ul
+            id="blog-tag-list"
+            class="blog-filter-list blog-filter-list-compact"
+          >
+            {
+              allTags.map((tag, index) => (
+                <li class:list={["blog-tag-list-item", index >= initialVisibleTags && "is-collapsed"]}>
+                  <label class="blog-filter-chip">
+                    <input
+                      type="checkbox"
+                      value={tag.value}
+                      class="blog-tag-checkbox"
+                    />
+                    <span>{tag.value}</span>
+                    <small>{tag.count}</small>
+                  </label>
+                </li>
+              ))
+            }
+          </ul>
+
+          {allTags.length > initialVisibleTags && (
+            <button
+              id="toggle-tags"
+              type="button"
+              class="blog-filter-toggle"
+              data-label-more="Show more tags"
+              data-label-less="Show fewer tags"
+            >
+              Show more tags
+            </button>
+          )}
+        </div>
       </aside>
 
       <div class="blog-content-area">
@@ -91,10 +164,23 @@ const allTags = [
                 data-title={post.data.title.toLowerCase()}
                 data-description={post.data.description.toLowerCase()}
                 data-tags={post.data.tags.join(" ").toLowerCase()}
+                data-topic={post.data.topic}
                 data-date={post.data.pubDate.toISOString()}
               >
                 <article>
                   <div class="blog-post-meta-row">
+                    <div class="blog-post-kickers">
+                      <a
+                        class="topic-pill"
+                        href={`/en/blog?topic=${post.data.topic}`}
+                      >
+                        {getBlogTopicLabel(post.data.topic)}
+                      </a>
+                      {post.data.series && (
+                        <span class="blog-series-pill">{post.data.series}</span>
+                      )}
+                    </div>
+
                     <p class="blog-post-date">
                       {post.data.pubDate.toISOString().slice(0, 10)}
                     </p>
@@ -110,7 +196,7 @@ const allTags = [
                       <p>{post.data.description}</p>
 
                       <ul class="tag-list blog-post-tags">
-                        {post.data.tags.map((tag) => (
+                        {post.data.tags.slice(0, 4).map((tag) => (
                           <li>
                             <a href={`/en/tags/${tag}`}>{tag}</a>
                           </li>
@@ -142,22 +228,33 @@ const allTags = [
     const resultsCount = document.getElementById("blog-results-count");
     const postList = document.getElementById("blog-post-list");
     const emptyState = document.getElementById("blog-empty-state");
-    const checkboxes = Array.from(
-      document.querySelectorAll(".blog-tag-checkbox"),
+    const checkboxes = Array.from(document.querySelectorAll(".blog-tag-checkbox"));
+    const topicButtons = Array.from(
+      document.querySelectorAll("[data-topic-filter]"),
     );
+    const tagList = document.getElementById("blog-tag-list");
+    const toggleTagsButton = document.getElementById("toggle-tags");
     const allCards = Array.from(document.querySelectorAll(".blog-post-card"));
     const totalCount = allCards.length;
+    const availableTopics = new Set(
+      topicButtons.map((button) => button.dataset.topicFilter || "all"),
+    );
+
     const url = new URL(window.location.href);
     const queryFromUrl = (url.searchParams.get("q") || "").trim();
     const sortFromUrl = url.searchParams.get("sort");
+    const topicFromUrl = (url.searchParams.get("topic") || "all")
+      .trim()
+      .toLowerCase();
     const tagsFromUrl = (url.searchParams.get("tags") || "")
       .split(",")
       .map((tag) => tag.trim().toLowerCase())
       .filter(Boolean);
 
     let sortOrder = sortFromUrl === "asc" ? "asc" : "desc";
+    let activeTopic = availableTopics.has(topicFromUrl) ? topicFromUrl : "all";
 
-    if (searchInput) {
+    if (searchInput instanceof HTMLInputElement) {
       searchInput.value = queryFromUrl;
     }
 
@@ -174,14 +271,17 @@ const allTags = [
 
     function updateActiveFilterStyles() {
       checkboxes.forEach((checkbox) => {
-        const label = checkbox.closest(".blog-filter-item");
+        const label = checkbox.closest(".blog-filter-chip");
         if (!label) return;
+        label.classList.toggle("is-active", checkbox.checked);
+      });
+    }
 
-        if (checkbox.checked) {
-          label.classList.add("is-active");
-        } else {
-          label.classList.remove("is-active");
-        }
+    function updateActiveTopicStyles() {
+      topicButtons.forEach((button) => {
+        const isActive = button.dataset.topicFilter === activeTopic;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", isActive ? "true" : "false");
       });
     }
 
@@ -190,9 +290,15 @@ const allTags = [
         card.dataset.title || "",
         card.dataset.description || "",
         card.dataset.tags || "",
+        card.dataset.topic || "",
       ].join(" ");
 
       return haystack.includes(query);
+    }
+
+    function matchesTopic(card) {
+      if (activeTopic === "all") return true;
+      return (card.dataset.topic || "").toLowerCase() === activeTopic;
     }
 
     function matchesTags(card, selectedTags) {
@@ -218,6 +324,12 @@ const allTags = [
         nextUrl.searchParams.delete("q");
       }
 
+      if (activeTopic !== "all") {
+        nextUrl.searchParams.set("topic", activeTopic);
+      } else {
+        nextUrl.searchParams.delete("topic");
+      }
+
       if (selectedTags.length > 0) {
         nextUrl.searchParams.set("tags", selectedTags.join(","));
       } else {
@@ -238,47 +350,79 @@ const allTags = [
     }
 
     function render() {
-      const query = (searchInput.value || "").trim().toLowerCase();
+      const query = ((searchInput instanceof HTMLInputElement ? searchInput.value : "") || "")
+        .trim()
+        .toLowerCase();
       const selectedTags = getSelectedTags();
 
       const filtered = allCards.filter((card) => {
-        return matchesSearch(card, query) && matchesTags(card, selectedTags);
+        return (
+          matchesSearch(card, query) &&
+          matchesTopic(card) &&
+          matchesTags(card, selectedTags)
+        );
       });
 
       const sorted = sortCards([...filtered]);
 
-      postList.innerHTML = "";
-      sorted.forEach((card) => postList.appendChild(card));
+      if (postList) {
+        postList.innerHTML = "";
+        sorted.forEach((card) => postList.appendChild(card));
+      }
 
-      resultsCount.textContent = `SHOWING ${sorted.length} OF ${totalCount} POSTS`;
-      sortToggle.textContent =
-        sortOrder === "desc" ? "DESCENDING" : "ASCENDING";
+      if (resultsCount) {
+        resultsCount.textContent = `SHOWING ${sorted.length} OF ${totalCount} POSTS`;
+      }
+      if (sortToggle) {
+        sortToggle.textContent = sortOrder === "desc" ? "DESCENDING" : "ASCENDING";
+      }
+
       const isEmpty = sorted.length === 0;
-      emptyState.hidden = !isEmpty;
-      emptyState.style.display = isEmpty ? "block" : "none";
+      if (emptyState) {
+        emptyState.hidden = !isEmpty;
+        emptyState.style.display = isEmpty ? "block" : "none";
+      }
 
       updateActiveFilterStyles();
+      updateActiveTopicStyles();
       syncQueryString(query, selectedTags);
     }
 
-    searchInput?.addEventListener("input", render);
-
-    checkboxes.forEach((checkbox) => {
-      checkbox.addEventListener("change", render);
-    });
-
     clearButton?.addEventListener("click", () => {
-      searchInput.value = "";
+      if (searchInput instanceof HTMLInputElement) {
+        searchInput.value = "";
+      }
+      activeTopic = "all";
       checkboxes.forEach((checkbox) => {
         checkbox.checked = false;
       });
-      sortOrder = "desc";
       render();
     });
 
+    searchInput?.addEventListener("input", render);
     sortToggle?.addEventListener("click", () => {
       sortOrder = sortOrder === "desc" ? "asc" : "desc";
       render();
+    });
+    checkboxes.forEach((checkbox) => checkbox.addEventListener("change", render));
+    topicButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        activeTopic = button.dataset.topicFilter || "all";
+        render();
+      });
+    });
+
+    toggleTagsButton?.addEventListener("click", () => {
+      if (!tagList) return;
+
+      const expanded = tagList.classList.toggle("is-expanded");
+      const nextLabel = expanded
+        ? toggleTagsButton.dataset.labelLess
+        : toggleTagsButton.dataset.labelMore;
+
+      if (nextLabel) {
+        toggleTagsButton.textContent = nextLabel;
+      }
     });
 
     render();

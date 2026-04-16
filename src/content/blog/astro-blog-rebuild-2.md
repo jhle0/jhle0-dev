@@ -4,6 +4,7 @@ description: "타이포, 카드, 간격, 네비게이션 규칙을 통일해 사
 pubDate: 2026-04-09
 updatedDate: 2026-04-09
 slug: "astro-blog-rebuild-2"
+topic: development
 tags: ["astro", "css", "design", "series", "layout"]
 draft: false
 heroImage: ""

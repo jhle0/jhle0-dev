@@ -43,7 +43,7 @@ npm run cms:proxy
 - 프로젝트 컬렉션: `src/content/projects`
 - 업로드 이미지 경로: `public/images/uploads`
 
-`tags`는 자유 입력 리스트이며, 기존 `category`는 사용하지 않습니다.
+블로그 글은 `topic` 1개와 자유 입력 `tags` 리스트를 함께 사용합니다.
 
 ## 배포된 `/admin`에 대해 꼭 알아둘 점
 

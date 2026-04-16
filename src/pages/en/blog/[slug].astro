@@ -2,6 +2,7 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
+import { getBlogTopicLabel } from "../../../lib/blog";
 
 export async function getStaticPaths() {
   const getRelatedPosts = (
@@ -12,10 +13,11 @@ export async function getStaticPaths() {
     const scored = allPosts
       .filter((candidate) => candidate.id !== post.id)
       .map((candidate) => {
+        const topicBonus = candidate.data.topic === post.data.topic ? 5 : 0;
         const sharedTags = candidate.data.tags.filter((tag) =>
           postTags.has(tag.toLowerCase()),
         ).length;
-        const score = sharedTags * 3;
+        const score = topicBonus + sharedTags * 3;
         return { candidate, score };
       })
       .sort(
@@ -126,8 +128,15 @@ const readingTimeMinutes = Math.max(
       </div>
 
       <div class="entry-meta-row entry-meta-list">
+        <a
+          class="topic-pill entry-topic-pill"
+          href={`/en/blog?topic=${post.data.topic}`}
+        >
+          {getBlogTopicLabel(post.data.topic)}
+        </a>
         <p class="meta">{post.data.pubDate.toISOString().slice(0, 10)}</p>
         <p class="meta">{readingTimeMinutes} min read</p>
+        {post.data.series && <p class="meta">series · {post.data.series}</p>}
         {post.data.updatedDate && (
           <p class="meta">
             updated {post.data.updatedDate.toISOString().slice(0, 10)}
@@ -241,13 +250,30 @@ const readingTimeMinutes = Math.max(
           {relatedPosts.map((relatedPost) => (
             <li class="surface-card">
               <article class="stack-sm">
-                <p class="meta">{relatedPost.data.pubDate.toISOString().slice(0, 10)}</p>
+                <div class="entry-related-card-meta">
+                  <a
+                    class="topic-pill topic-pill-subtle"
+                    href={`/en/blog?topic=${relatedPost.data.topic}`}
+                  >
+                    {getBlogTopicLabel(relatedPost.data.topic)}
+                  </a>
+                  <p class="meta">
+                    {relatedPost.data.pubDate.toISOString().slice(0, 10)}
+                  </p>
+                </div>
                 <h3>
                   <a href={`/en/blog/${relatedPost.data.slug}`}>
                     {relatedPost.data.title}
                   </a>
                 </h3>
                 <p>{relatedPost.data.description}</p>
+                <ul class="tag-list">
+                  {relatedPost.data.tags.slice(0, 3).map((tag) => (
+                    <li>
+                      <a href={`/en/tags/${tag}`}>{tag}</a>
+                    </li>
+                  ))}
+                </ul>
               </article>
             </li>
           ))}

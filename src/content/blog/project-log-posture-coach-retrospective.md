@@ -4,6 +4,7 @@ description: "자세 교정 프로젝트를 진행하며 구현보다 더 크게
 pubDate: 2026-04-13
 updatedDate: 2026-04-13
 slug: "project-log-posture-coach-retrospective"
+topic: retrospective
 tags: ["project", "retrospective", "ai", "vision", "build"]
 draft: false
 heroImage: ""

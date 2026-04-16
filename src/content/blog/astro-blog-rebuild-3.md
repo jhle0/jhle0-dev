@@ -4,6 +4,7 @@ description: "뒤로가기, TOC, 관련 글, 시리즈 내비게이션을 더해
 pubDate: 2026-04-10
 updatedDate: 2026-04-10
 slug: "astro-blog-rebuild-3"
+topic: development
 tags: ["astro", "ux", "blog", "series", "toc"]
 draft: false
 heroImage: ""

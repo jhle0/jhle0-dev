@@ -25,6 +25,18 @@
       .filter(Boolean);
   }
 
+  function formatTopicLabel(value) {
+    const labels = {
+      study: "Study",
+      development: "Development",
+      retrospective: "Retrospective",
+      projects: "Projects",
+      thoughts: "Thoughts",
+    };
+
+    return labels[String(value || "").trim()] || "";
+  }
+
   function escapeForHtmlBlock(value) {
     return String(value ?? "")
       .replace(/&/g, "&amp;")
@@ -140,10 +152,11 @@
         const updatedDate = entry.getIn(["data", "updatedDate"]);
         const featured = entry.getIn(["data", "featured"]);
         const series = entry.getIn(["data", "series"]);
+        const topic = formatTopicLabel(entry.getIn(["data", "topic"]));
         const tags = normalizeTags(entry.getIn(["data", "tags"]));
         const heroImage = entry.getIn(["data", "heroImage"]);
         const heroAsset = heroImage ? this.props.getAsset(heroImage) : null;
-        const meta = [pubDate, updatedDate ? `updated ${updatedDate}` : "", series, featured ? "featured" : ""]
+        const meta = [topic, pubDate, updatedDate ? `updated ${updatedDate}` : "", series, featured ? "featured" : ""]
           .filter(Boolean)
           .concat(tags.map((tag) => `#${tag}`));
 

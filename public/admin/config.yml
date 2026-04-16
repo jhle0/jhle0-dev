@@ -34,8 +34,8 @@ collections:
     format: "frontmatter"
     slug: "{{fields.slug}}"
     preview_path: "blog/{{slug}}"
-    summary: "{{title}} · {{slug}}"
-    sortable_fields: ["pubDate", "updatedDate", "title", "featured"]
+    summary: "{{topic}} · {{title}}"
+    sortable_fields: ["pubDate", "updatedDate", "title", "topic", "featured"]
     view_filters:
       - label: "Published"
         field: "draft"
@@ -83,6 +83,18 @@ collections:
         pattern:
           - "^[a-z0-9]+(?:-[a-z0-9]+)*$"
           - "슬러그는 영문 소문자, 숫자, 하이픈만 사용할 수 있습니다."
+
+      - label: "Topic"
+        name: "topic"
+        widget: "select"
+        default: "study"
+        hint: "글의 가장 큰 주제를 하나 선택합니다. 태그보다 먼저 보이는 1차 분류입니다."
+        options:
+          - { label: "Study", value: "study" }
+          - { label: "Development", value: "development" }
+          - { label: "Retrospective", value: "retrospective" }
+          - { label: "Projects", value: "projects" }
+          - { label: "Thoughts", value: "thoughts" }
 
       - label: "태그"
         name: "tags"

@@ -4,6 +4,7 @@ description: "프롬프트를 바꿀 때 어떤 기준으로 결과를 비교할
 pubDate: 2026-04-14
 updatedDate: 2026-04-14
 slug: "notes-on-llm-evaluation-routines"
+topic: study
 tags: ["llm", "evaluation", "ai", "study", "prompt"]
 draft: false
 heroImage: ""

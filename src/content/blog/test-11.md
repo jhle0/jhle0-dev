@@ -4,6 +4,7 @@ description: "항목 저장 실패: TypeError: Cannot set properties of null (se
 pubDate: 2026-04-09
 updatedDate: 2026-04-09
 slug: test-11
+topic: development
 tags:
   - log
 draft: true
