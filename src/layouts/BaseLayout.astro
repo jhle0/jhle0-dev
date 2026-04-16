@@ -82,8 +82,15 @@ const navItems = [
           const saved = localStorage.getItem(storageKey);
           const preference =
             saved === "light" || saved === "dark" ? saved : "system";
+          const resolvedTheme =
+            preference === "system"
+              ? window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light"
+              : preference;
 
           root.dataset.themePreference = preference;
+          root.dataset.resolvedTheme = resolvedTheme;
 
           if (preference === "light" || preference === "dark") {
             root.dataset.theme = preference;
@@ -97,6 +104,9 @@ const navItems = [
             : "light";
         } catch {
           root.dataset.themePreference = "system";
+          root.dataset.resolvedTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
         }
       })();
     </script>
@@ -153,29 +163,21 @@ const navItems = [
               </a>
             </div>
 
-            <div class="site-theme-switcher" aria-label={themeUi.label}>
-              <button
-                type="button"
-                class="site-theme-button"
-                data-theme-choice="system"
-              >
-                {themeUi.system}
-              </button>
-              <button
-                type="button"
-                class="site-theme-button"
-                data-theme-choice="light"
-              >
-                {themeUi.light}
-              </button>
-              <button
-                type="button"
-                class="site-theme-button"
-                data-theme-choice="dark"
-              >
-                {themeUi.dark}
-              </button>
-            </div>
+            <button
+              type="button"
+              class="site-theme-toggle"
+              data-theme-toggle
+              aria-label={themeUi.toggleToDark}
+              title={themeUi.toggleToDark}
+              data-label-light={themeUi.toggleToLight}
+              data-label-dark={themeUi.toggleToDark}
+            >
+              <span class="site-theme-toggle-track" aria-hidden="true">
+                <span class="site-theme-toggle-thumb"></span>
+                <span class="site-theme-icon site-theme-icon-sun">☀</span>
+                <span class="site-theme-icon site-theme-icon-moon">☾</span>
+              </span>
+            </button>
           </div>
         </nav>
       </div>
@@ -213,9 +215,7 @@ const navItems = [
       (() => {
         const storageKey = "jhle0-theme";
         const root = document.documentElement;
-        const buttons = Array.from(
-          document.querySelectorAll("[data-theme-choice]"),
-        );
+        const toggleButton = document.querySelector("[data-theme-toggle]");
         const media = window.matchMedia("(prefers-color-scheme: dark)");
 
         function getStoredPreference() {
@@ -227,42 +227,62 @@ const navItems = [
           }
         }
 
+        function getResolvedTheme(preference) {
+          return preference === "system"
+            ? media.matches
+              ? "dark"
+              : "light"
+            : preference;
+        }
+
         function applyTheme(preference) {
+          const resolvedTheme = getResolvedTheme(preference);
           root.dataset.themePreference = preference;
+          root.dataset.resolvedTheme = resolvedTheme;
 
           if (preference === "light" || preference === "dark") {
             root.dataset.theme = preference;
             root.style.colorScheme = preference;
           } else {
             root.removeAttribute("data-theme");
-            root.style.colorScheme = media.matches ? "dark" : "light";
+            root.style.colorScheme = resolvedTheme;
           }
 
-          buttons.forEach((button) => {
-            const isActive = button.dataset.themeChoice === preference;
-            button.classList.toggle("is-active", isActive);
-            button.setAttribute("aria-pressed", isActive ? "true" : "false");
-          });
+          if (toggleButton instanceof HTMLButtonElement) {
+            toggleButton.dataset.resolvedTheme = resolvedTheme;
+            toggleButton.setAttribute(
+              "aria-pressed",
+              resolvedTheme === "dark" ? "true" : "false",
+            );
+
+            const nextLabel =
+              resolvedTheme === "dark"
+                ? toggleButton.dataset.labelLight
+                : toggleButton.dataset.labelDark;
+
+            if (nextLabel) {
+              toggleButton.setAttribute("aria-label", nextLabel);
+              toggleButton.setAttribute("title", nextLabel);
+            }
+          }
         }
 
         const initialPreference = getStoredPreference();
         applyTheme(initialPreference);
 
-        buttons.forEach((button) => {
-          button.addEventListener("click", () => {
-            const nextPreference = button.dataset.themeChoice ?? "system";
+        if (toggleButton instanceof HTMLButtonElement) {
+          toggleButton.addEventListener("click", () => {
+            const currentPreference = getStoredPreference();
+            const resolvedTheme = getResolvedTheme(currentPreference);
+            const nextPreference = resolvedTheme === "dark" ? "light" : "dark";
 
             try {
-              if (nextPreference === "system") {
-                localStorage.removeItem(storageKey);
-              } else {
-                localStorage.setItem(storageKey, nextPreference);
-              }
+              localStorage.setItem(storageKey, nextPreference);
             } catch {}
 
             applyTheme(nextPreference);
           });
-        });
+        }
 
         media.addEventListener("change", () => {
           if (getStoredPreference() === "system") {

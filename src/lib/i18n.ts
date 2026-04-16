@@ -40,9 +40,8 @@ export const ui = {
     },
     theme: {
       label: "테마 전환",
-      system: "System",
-      light: "Light",
-      dark: "Dark",
+      toggleToLight: "라이트 모드로 전환",
+      toggleToDark: "다크 모드로 전환",
     },
     footer: {
       description: "CS와 AI를 공부하며 쌓아가는 개인 개발 블로그.",
@@ -61,9 +60,8 @@ export const ui = {
     },
     theme: {
       label: "Theme switcher",
-      system: "System",
-      light: "Light",
-      dark: "Dark",
+      toggleToLight: "Switch to light mode",
+      toggleToDark: "Switch to dark mode",
     },
     footer: {
       description: "A personal developer blog built around CS and AI notes.",
