@@ -423,16 +423,16 @@ button {
 }
 
 .home-hero {
-    max-width: 1020px;
-    padding: 1.2rem 0 1.8rem;
+    max-width: 980px;
+    padding: 1.1rem 0 1.7rem;
 }
 
 .home-hero h1 {
-    max-width: 13.8ch;
-    font-size: clamp(3.3rem, 6.2vw, 5.8rem);
-    line-height: 0.96;
-    letter-spacing: -0.045em;
-    margin-bottom: 1.9rem;
+    max-width: 14.5ch;
+    font-size: clamp(2.9rem, 5.3vw, 4.9rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.35rem;
 }
 
 .home-hero-title-line {
@@ -440,7 +440,15 @@ button {
 }
 
 .home-hero-title-line + .home-hero-title-line {
-    margin-top: 0.16em;
+    margin-top: 0.12em;
+}
+
+.home-hero-kicker {
+    margin: 0 0 1.85rem;
+    color: var(--muted);
+    font-size: 0.88rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
 }
 
 .home-hero-actions {
