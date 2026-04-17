@@ -1508,7 +1508,7 @@ button {
 .article-content {
     margin-top: 0;
     max-width: 100%;
-    padding: 2rem 2.6rem 2.3rem;
+    padding: 1.95rem 2.1rem 2.2rem;
     border-radius: 18px;
     background: var(--surface-strong);
     box-shadow: var(--shadow);
@@ -1562,7 +1562,7 @@ button {
 .article-content p,
 .article-content li,
 .article-content blockquote {
-    max-width: 70ch;
+    max-width: 78ch;
     font-size: 0.98rem;
     line-height: 1.72;
     color: var(--notion-text);
@@ -1675,7 +1675,7 @@ button {
     display: flex;
     align-items: flex-start;
     gap: 0.65rem;
-    max-width: 72ch;
+    max-width: 80ch;
 }
 
 .article-content .task-list-item + .task-list-item {
@@ -1690,7 +1690,7 @@ button {
 }
 
 .article-content details {
-    max-width: 72ch;
+    max-width: 80ch;
     padding: 0.8rem 0.95rem;
     border: 1px solid var(--notion-details-border);
     border-radius: 14px;
@@ -1734,7 +1734,7 @@ button {
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 0.7rem;
-    max-width: 72ch;
+    max-width: 80ch;
     padding: 0.9rem 1rem;
     border: 1px solid var(--notion-details-border);
     border-radius: 14px;
@@ -1775,7 +1775,7 @@ button {
 }
 
 .entry-article .page-intro {
-    max-width: min(100%, 920px);
+    max-width: min(100%, 980px);
     margin-left: auto;
 }
 
@@ -1795,21 +1795,21 @@ button {
 }
 
 .entry-article .intro-copy {
-    max-width: 74ch;
+    max-width: 80ch;
     font-size: 0.95rem;
     line-height: 1.68;
 }
 
 .entry-content-layout {
     display: grid;
-    grid-template-columns: minmax(140px, 180px) minmax(0, 920px);
+    grid-template-columns: minmax(140px, 180px) minmax(0, 980px);
     justify-content: center;
     gap: 2.25rem;
     align-items: start;
 }
 
 .entry-content-layout.is-single-column {
-    grid-template-columns: minmax(0, 920px);
+    grid-template-columns: minmax(0, 980px);
 }
 
 .entry-content-main {
