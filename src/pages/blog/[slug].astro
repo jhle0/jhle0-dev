@@ -260,10 +260,10 @@ const articleJsonLd = {
     {relatedPosts.length > 0 && (
       <section class="entry-related section-block">
         <h2>Related posts</h2>
-        <ul class="tag-post-grid">
+        <ul class="tag-post-grid entry-related-grid">
           {relatedPosts.map((relatedPost) => (
             <li class="surface-card">
-              <article class="stack-sm">
+              <article class="entry-related-card">
                 <div class="entry-related-card-meta">
                   <a
                     class="topic-pill topic-pill-subtle"
@@ -278,8 +278,8 @@ const articleJsonLd = {
                 <h3>
                   <a href={`/blog/${relatedPost.data.slug}`}>{relatedPost.data.title}</a>
                 </h3>
-                <p>{relatedPost.data.description}</p>
-                <ul class="tag-list">
+                <p class="entry-related-card-copy">{relatedPost.data.description}</p>
+                <ul class="tag-list entry-related-tags">
                   {relatedPost.data.tags.slice(0, 3).map((tag) => (
                     <li>
                       <a href={`/tags/${tag}`}>{tag}</a>
