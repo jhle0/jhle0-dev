@@ -1010,6 +1010,12 @@ button {
     padding: 1.25rem 1.3rem;
 }
 
+.blog-topic-panel > .eyebrow {
+    margin-bottom: -0.35rem;
+    font-size: 1rem;
+    letter-spacing: 0.12em;
+}
+
 .blog-topic-panel-copy h2 {
     margin-bottom: 0.45rem;
     font-size: 1.3rem;
@@ -1385,6 +1391,16 @@ button {
 
 .blog-post-tags a {
     background: color-mix(in srgb, var(--surface-strong) 86%, var(--accent-soft));
+}
+
+.blog-post-tags {
+    align-items: center;
+    row-gap: 0.45rem;
+}
+
+.blog-post-tags li {
+    display: inline-flex;
+    align-items: center;
 }
 
 .blog-post-arrow {
