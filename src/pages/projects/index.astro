@@ -26,62 +26,87 @@ const formatStatus = (status?: string) =>
       publishedProjects.length === 0 ? (
         <p class="empty-copy">아직 공개된 프로젝트가 없습니다.</p>
       ) : (
-        <ul class="projects-grid">
+        <ul class="projects-archive-list">
           {publishedProjects.map((project) => (
             <li class="project-card surface-card">
-              <article class="stack-sm">
-                <div class="project-card-top">
-                  <p class="meta">{project.data.pubDate.toISOString().slice(0, 10)}</p>
-                  {project.data.status && (
-                    <span class="status-pill">{formatStatus(project.data.status)}</span>
+              <article class="project-card-layout">
+                <a
+                  class="project-card-visual"
+                  href={`/projects/${project.data.slug}`}
+                  aria-label={`${project.data.title} 프로젝트 보기`}
+                >
+                  {project.data.heroImage && project.data.heroImage !== "" ? (
+                    <img
+                      class="project-card-image"
+                      src={project.data.heroImage}
+                      alt={`${project.data.title} preview`}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div class="project-card-placeholder">
+                      <p class="project-card-placeholder-kicker">Project</p>
+                      <strong>{project.data.title}</strong>
+                      <span>{project.data.pubDate.toISOString().slice(0, 4)}</span>
+                    </div>
                   )}
-                </div>
+                </a>
 
-                <h2>
-                  <a href={`/projects/${project.data.slug}`}>
-                    {project.data.title}
-                  </a>
-                </h2>
+                <div class="project-card-body">
+                  <div class="project-card-top">
+                    <div class="project-card-meta">
+                      <p class="meta">{project.data.pubDate.toISOString().slice(0, 10)}</p>
+                      {project.data.status && (
+                        <span class="status-pill">{formatStatus(project.data.status)}</span>
+                      )}
+                    </div>
+                  </div>
 
-                <p>{project.data.description}</p>
+                  <h2>
+                    <a href={`/projects/${project.data.slug}`}>
+                      {project.data.title}
+                    </a>
+                  </h2>
 
-                {project.data.tags.length > 0 && (
-                  <ul class="tag-list">
-                    {project.data.tags.map((tag) => (
+                  <p class="project-card-copy">{project.data.description}</p>
+
+                  {project.data.tags.length > 0 && (
+                    <ul class="tag-list project-card-tags">
+                      {project.data.tags.map((tag) => (
+                        <li>
+                          <span class="tag">{tag}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  <ul class="card-links project-card-links">
+                    <li>
+                      <a href={`/projects/${project.data.slug}`}>Details</a>
+                    </li>
+                    {project.data.githubUrl && project.data.githubUrl !== "" && (
                       <li>
-                        <span class="tag">{tag}</span>
+                        <a
+                          href={project.data.githubUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          GitHub
+                        </a>
                       </li>
-                    ))}
+                    )}
+                    {project.data.demoUrl && project.data.demoUrl !== "" && (
+                      <li>
+                        <a
+                          href={project.data.demoUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Demo
+                        </a>
+                      </li>
+                    )}
                   </ul>
-                )}
-
-                <ul class="card-links">
-                  <li>
-                    <a href={`/projects/${project.data.slug}`}>Details</a>
-                  </li>
-                  {project.data.githubUrl && project.data.githubUrl !== "" && (
-                    <li>
-                      <a
-                        href={project.data.githubUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        GitHub
-                      </a>
-                    </li>
-                  )}
-                  {project.data.demoUrl && project.data.demoUrl !== "" && (
-                    <li>
-                      <a
-                        href={project.data.demoUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        Demo
-                      </a>
-                    </li>
-                  )}
-                </ul>
+                </div>
               </article>
             </li>
           ))}
