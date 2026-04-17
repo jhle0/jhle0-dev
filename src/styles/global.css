@@ -1394,13 +1394,25 @@ button {
 }
 
 .blog-post-tags {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
     row-gap: 0.45rem;
 }
 
 .blog-post-tags li {
-    display: inline-flex;
+    display: flex;
+    align-items: stretch;
+    margin: 0 !important;
+}
+
+.blog-post-tags a {
+    display: flex;
     align-items: center;
+    min-height: 2rem;
+    line-height: 1;
+    vertical-align: middle;
 }
 
 .blog-post-arrow {
