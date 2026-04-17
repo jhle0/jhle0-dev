@@ -8,7 +8,12 @@ const publishedProjects = projects
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 
 const formatStatus = (status?: string) =>
-  !status ? null : status.replace("-", " ");
+  !status
+    ? null
+    : status
+        .split("-")
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(" ");
 ---
 
 <BaseLayout title="Projects | jhle0" description="Projects archive">
@@ -49,15 +54,21 @@ const formatStatus = (status?: string) =>
                       <span>{project.data.pubDate.toISOString().slice(0, 4)}</span>
                     </div>
                   )}
+
+                  <div class="project-card-visual-overlay">
+                    <span class="project-card-visual-kicker">Archive</span>
+                    {project.data.status && (
+                      <span class="project-card-visual-status">
+                        {formatStatus(project.data.status)}
+                      </span>
+                    )}
+                  </div>
                 </a>
 
                 <div class="project-card-body">
                   <div class="project-card-top">
                     <div class="project-card-meta">
                       <p class="meta">{project.data.pubDate.toISOString().slice(0, 10)}</p>
-                      {project.data.status && (
-                        <span class="status-pill">{formatStatus(project.data.status)}</span>
-                      )}
                     </div>
                   </div>
 
@@ -81,7 +92,12 @@ const formatStatus = (status?: string) =>
 
                   <ul class="card-links project-card-links">
                     <li>
-                      <a href={`/projects/${project.data.slug}`}>Details</a>
+                      <a
+                        class="project-card-link-primary"
+                        href={`/projects/${project.data.slug}`}
+                      >
+                        Details
+                      </a>
                     </li>
                     {project.data.githubUrl && project.data.githubUrl !== "" && (
                       <li>
