@@ -729,7 +729,7 @@ button {
     gap: 1rem;
 }
 
-.tag-post-grid li {
+.tag-post-grid > li {
     margin: 0;
     padding: 1.2rem 1.3rem;
 }
@@ -2045,7 +2045,7 @@ button {
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.entry-related .tag-post-grid li {
+.entry-related .tag-post-grid > li {
     padding: 1rem 1.05rem;
 }
 
