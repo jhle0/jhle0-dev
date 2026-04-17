@@ -2057,7 +2057,10 @@ button {
 
 .entry-related-tags {
     margin: 0;
-    gap: 0.38rem;
+    justify-content: flex-start;
+    align-items: center;
+    align-self: start;
+    gap: 0.28rem;
 }
 
 .entry-related-tags li {
@@ -2066,7 +2069,7 @@ button {
 
 .entry-related-tags a {
     min-height: 1.8rem;
-    padding: 0.16rem 0.58rem;
+    padding: 0.14rem 0.52rem;
     font-size: 0.8rem;
     line-height: 1;
     background: color-mix(in srgb, var(--surface-strong) 82%, var(--accent-soft));
