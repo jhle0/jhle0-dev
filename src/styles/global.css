@@ -644,6 +644,7 @@ button {
 
 .home-hero-title-line {
     display: block;
+    white-space: nowrap;
 }
 
 .home-hero-title-line + .home-hero-title-line {
