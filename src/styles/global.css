@@ -1684,7 +1684,7 @@ button {
 .article-content {
     margin-top: 0;
     max-width: 100%;
-    padding: 1.95rem 2.1rem 2.2rem;
+    padding: 2.25rem 2.9rem 2.45rem;
     border-radius: 18px;
     background: var(--surface-strong);
     box-shadow: var(--shadow);
@@ -1692,8 +1692,14 @@ button {
 
 .article-content h2,
 .article-content h3 {
-    margin-top: 2rem;
+    margin-top: 2.8rem;
     scroll-margin-top: 5.4rem;
+}
+
+.article-content h2 + h3,
+.article-content h3 + h2,
+.article-content h3 + h3 {
+    margin-top: 2.1rem;
 }
 
 .article-content > :first-child {
@@ -1728,11 +1734,13 @@ button {
 .article-content h2 {
     font-size: 1.45rem;
     line-height: 1.3;
+    margin-bottom: 0.95rem;
 }
 
 .article-content h3 {
     font-size: 1.16rem;
     line-height: 1.35;
+    margin-bottom: 0.75rem;
 }
 
 .article-content p,
@@ -2285,7 +2293,7 @@ button {
     }
 
     .article-content {
-        padding: 1.5rem;
+        padding: 1.85rem 2rem 1.95rem;
     }
 
     .entry-article .page-intro {
@@ -2387,7 +2395,7 @@ button {
     }
 
     .article-content {
-        padding: 1.2rem 1.1rem;
+        padding: 1.4rem 1.25rem 1.5rem;
     }
 }
 
