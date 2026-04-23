@@ -17,7 +17,6 @@ draft: false
 series: Neural Network
 featured: false
 ---
-# **신경망 기초 (Neural Network Foundations)**
 
 ## 인공신경망이란 ?
 
