@@ -2,13 +2,13 @@ import type { APIRoute } from "astro";
 
 export const prerender = true;
 
-export const GET: APIRoute = ({ site }) => {
-  const siteUrl = site ?? new URL("https://jhle0-dev.vercel.app");
-  const sitemapUrl = new URL("/sitemap.xml", siteUrl).toString();
+const SITE_URL = new URL("https://jhle0-dev.vercel.app");
+const SITEMAP_URL = new URL("/sitemap.xml", SITE_URL).toString();
 
-  const body = ["User-agent: *", "Allow: /", `Sitemap: ${sitemapUrl}`].join("\n");
+const ROBOTS_LINES = ["User-agent: *", "Allow: /", `Sitemap: ${SITEMAP_URL}`];
 
-  return new Response(body, {
+export const GET: APIRoute = () => {
+  return new Response(`${ROBOTS_LINES.join("\n")}\n`, {
     headers: {
       "Content-Type": "text/plain; charset=utf-8",
     },
