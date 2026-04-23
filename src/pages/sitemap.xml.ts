@@ -8,8 +8,9 @@ type SitemapItem = {
   lastmod?: string;
 };
 
-export const GET: APIRoute = async ({ site }) => {
-  const siteUrl = site ?? new URL("https://jhle0-dev.vercel.app");
+const SITE_URL = new URL("https://jhle0-dev.vercel.app");
+
+export const GET: APIRoute = async () => {
   const [blogPosts, projects] = await Promise.all([
     getCollection("blog"),
     getCollection("projects"),
@@ -75,7 +76,7 @@ export const GET: APIRoute = async ({ site }) => {
     ...localizedTagPages,
   ]
     .map(({ path, lastmod }) => {
-      const location = new URL(path, siteUrl).toString();
+      const location = new URL(path, SITE_URL).toString();
       return `
   <url>
     <loc>${location}</loc>
