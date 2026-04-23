@@ -76,3 +76,17 @@ npm run build
 ```
 
 Node 버전은 `>=22.12.0` 기준입니다.
+
+
+## SEO 설정 (sitemap/robots)
+
+`astro.config.mjs`의 `site` 값이 sitemap/robots의 기준 URL이 됩니다.
+운영 도메인을 쓰는 경우 배포 환경 변수 `SITE_URL`을 반드시 운영 주소로 설정하세요.
+
+예시:
+
+```sh
+SITE_URL=https://YOUR_DOMAIN
+```
+
+설정 후 빌드하면 `sitemap.xml`, `robots.txt`에 같은 기준 URL이 반영됩니다.
