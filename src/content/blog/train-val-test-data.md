@@ -8,10 +8,12 @@ updatedDate: ""
 slug: train-val-test-data
 topic: study
 tags:
+  - ai-basic
   - machine-learning
   - train-val-test
+  - overfitting
+  - underfitting
   - validation
-  - overfitting underfitting
   - holdout-validation
 draft: false
 featured: false
