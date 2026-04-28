@@ -18,10 +18,6 @@ export const GET: APIRoute = async () => {
 
   const publishedPosts = blogPosts.filter((post) => !post.data.draft);
   const publishedProjects = projects.filter((project) => !project.data.draft);
-  const tags = [
-    ...new Set(publishedPosts.flatMap((post) => post.data.tags)),
-  ].sort();
-
   const pages: SitemapItem[] = [
     { path: "/" },
     { path: "/en/" },
@@ -58,13 +54,6 @@ export const GET: APIRoute = async () => {
     lastmod: (project.data.updatedDate ?? project.data.pubDate).toISOString(),
   }));
 
-  const tagPages = tags.map((tag) => ({
-    path: `/tags/${tag}`,
-  }));
-
-  const localizedTagPages = tags.map((tag) => ({
-    path: `/en/tags/${tag}`,
-  }));
 
   const urls = [
     ...pages,
@@ -72,8 +61,6 @@ export const GET: APIRoute = async () => {
     ...localizedPostPages,
     ...projectPages,
     ...localizedProjectPages,
-    ...tagPages,
-    ...localizedTagPages,
   ]
     .map(({ path, lastmod }) => {
       const location = new URL(path, SITE_URL).toString();
