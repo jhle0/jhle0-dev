@@ -60,7 +60,7 @@ $$
 
 이걸 그림으로 나타내면 다음과 같다
 
-![NeuralNetwork_example.png]
+![신경망의 순전파 구조](public/images/uploads/neuralnetwork_example.png)
 
 신경망을 수식으로 보면,
 
