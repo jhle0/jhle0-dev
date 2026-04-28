@@ -3,6 +3,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getBlogTopicLabel } from "../../../lib/blog";
+import { normalizeContentImagePath } from "../../../lib/content-image";
 
 export async function getStaticPaths() {
   const getRelatedPosts = (
@@ -99,6 +100,9 @@ const readingTimeMinutes = Math.max(
   1,
   Math.ceil(post.body.split(/\s+/u).filter(Boolean).length / 220),
 );
+const heroImageSrc = post.data.heroImage
+  ? normalizeContentImagePath(post.data.heroImage)
+  : "";
 ---
 
 <BaseLayout
@@ -145,6 +149,11 @@ const readingTimeMinutes = Math.max(
       </div>
       <h1>{post.data.title}</h1>
       <p class="intro-copy">{post.data.description}</p>
+      {heroImageSrc && (
+        <figure class="entry-hero-image">
+          <img src={heroImageSrc} alt={post.data.title} loading="lazy" decoding="async" />
+        </figure>
+      )}
       {post.data.tags.length > 0 && (
         <ul class="tag-list entry-tag-list">
           {post.data.tags.map((tag) => (

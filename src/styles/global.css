@@ -1984,6 +1984,17 @@ button {
     line-height: 1.68;
 }
 
+.entry-hero-image {
+    margin: 1.1rem 0 0.9rem;
+}
+
+.entry-hero-image img {
+    width: 100%;
+    border-radius: 14px;
+    border: 1px solid var(--notion-pre-border);
+    background: var(--notion-img-bg);
+}
+
 .entry-content-layout {
     display: grid;
     grid-template-columns: minmax(140px, 180px) minmax(0, 980px);
