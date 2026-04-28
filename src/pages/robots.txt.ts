@@ -13,4 +13,4 @@ export const GET: APIRoute = () => {
       "Content-Type": "text/plain; charset=utf-8",
     },
   });
-};
+
