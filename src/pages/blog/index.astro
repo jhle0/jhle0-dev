@@ -6,11 +6,13 @@ import {
   getBlogTopicDescription,
   getBlogTopicLabel,
 } from "../../lib/blog";
+import { getSeriesSummaries } from "../../lib/series";
 
 const posts = await getCollection("blog");
 const publishedPosts = posts
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+const seriesSummaries = getSeriesSummaries(publishedPosts);
 
 const topicSummaries = BLOG_TOPIC_VALUES.map((topic) => ({
   value: topic,
@@ -72,6 +74,41 @@ const initialVisibleTags = 12;
         }
       </div>
     </section>
+
+    {seriesSummaries.length > 0 && (
+      <section class="section-block">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Learning Paths</p>
+            <h2>Series</h2>
+            <p class="section-copy">
+              이어지는 글을 학습 순서대로 묶었습니다. 새 글은 흐름의 아래쪽으로 이어집니다.
+            </p>
+          </div>
+          <a class="text-link" href="/series">모든 시리즈 보기</a>
+        </div>
+
+        <ul class="tag-post-grid entry-related-grid">
+          {seriesSummaries.slice(0, 3).map((series) => (
+            <li class="surface-card">
+              <article class="entry-related-card">
+                <div class="entry-related-card-meta">
+                  <p class="meta">{series.posts.length} posts</p>
+                  <p class="meta">updated {series.updatedAt.toISOString().slice(0, 10)}</p>
+                </div>
+                <h3>
+                  <a href={`/series/${series.slug}`}>{series.name}</a>
+                </h3>
+                <p class="entry-related-card-copy">
+                  {series.firstPost.data.title}부터 {series.lastPost.data.title}까지 이어집니다.
+                </p>
+                <a class="text-link" href={`/series/${series.slug}`}>러닝패스 보기</a>
+              </article>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
 
     <div class="blog-archive-layout">
       <aside class="blog-sidebar surface-card">
