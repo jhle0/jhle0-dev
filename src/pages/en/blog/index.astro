@@ -6,11 +6,13 @@ import {
   getBlogTopicDescription,
   getBlogTopicLabel,
 } from "../../../lib/blog";
+import { getSeriesSummaries } from "../../../lib/series";
 
 const posts = await getCollection("blog");
 const publishedPosts = posts
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+const seriesSummaries = getSeriesSummaries(publishedPosts);
 
 const topicSummaries = BLOG_TOPIC_VALUES.map((topic) => ({
   value: topic,
@@ -73,6 +75,41 @@ const initialVisibleTags = 12;
         }
       </div>
     </section>
+
+    {seriesSummaries.length > 0 && (
+      <section class="section-block">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Learning Paths</p>
+            <h2>Series</h2>
+            <p class="section-copy">
+              Connected posts ordered as a reading path. Newer entries continue lower in the sequence.
+            </p>
+          </div>
+          <a class="text-link" href="/en/series">View all series</a>
+        </div>
+
+        <ul class="tag-post-grid entry-related-grid">
+          {seriesSummaries.slice(0, 3).map((series) => (
+            <li class="surface-card">
+              <article class="entry-related-card">
+                <div class="entry-related-card-meta">
+                  <p class="meta">{series.posts.length} posts</p>
+                  <p class="meta">updated {series.updatedAt.toISOString().slice(0, 10)}</p>
+                </div>
+                <h3>
+                  <a href={`/en/series/${series.slug}`}>{series.name}</a>
+                </h3>
+                <p class="entry-related-card-copy">
+                  A path from {series.firstPost.data.title} to {series.lastPost.data.title}.
+                </p>
+                <a class="text-link" href={`/en/series/${series.slug}`}>Open learning path</a>
+              </article>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
 
     <div class="blog-archive-layout">
       <aside class="blog-sidebar surface-card">
