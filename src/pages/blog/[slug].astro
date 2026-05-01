@@ -4,6 +4,7 @@ import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getBlogTopicLabel } from "../../lib/blog";
 import { normalizeContentImagePath } from "../../lib/content-image";
+import { getSeriesName, getSeriesPosts, getSeriesSlug } from "../../lib/series";
 
 export async function getStaticPaths() {
   const getRelatedPosts = (
@@ -51,12 +52,9 @@ export async function getStaticPaths() {
     .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 
   return posts.map((post, index) => {
-    const seriesName = post.data.series?.trim() ?? "";
-    const seriesPosts = seriesName
-      ? posts
-          .filter((candidate) => candidate.data.series?.trim() === seriesName)
-          .sort((a, b) => a.data.pubDate.getTime() - b.data.pubDate.getTime())
-      : [];
+    const seriesName = getSeriesName(post);
+    const seriesSlug = seriesName ? getSeriesSlug(seriesName) : "";
+    const seriesPosts = seriesName ? getSeriesPosts(posts, seriesName) : [];
     const seriesIndex = seriesPosts.findIndex(
       (candidate) => candidate.id === post.id,
     );
@@ -69,6 +67,7 @@ export async function getStaticPaths() {
         olderPost: posts[index + 1] ?? null,
         relatedPosts: getRelatedPosts(post, posts),
         seriesName,
+        seriesSlug,
         seriesPosts,
         seriesIndex,
       },
@@ -82,6 +81,7 @@ const {
   olderPost,
   relatedPosts,
   seriesName,
+  seriesSlug,
   seriesPosts,
   seriesIndex,
 } = Astro.props;
@@ -154,7 +154,11 @@ const articleJsonLd = {
         </a>
         <p class="meta">{post.data.pubDate.toISOString().slice(0, 10)}</p>
         <p class="meta">{readingTimeMinutes} min read</p>
-        {post.data.series && <p class="meta">series · {post.data.series}</p>}
+        {seriesName && (
+          <a class="meta text-link" href={`/series/${seriesSlug}`}>
+            series · {seriesName}
+          </a>
+        )}
         {post.data.updatedDate && (
           <p class="meta">
             updated {post.data.updatedDate.toISOString().slice(0, 10)}
@@ -234,7 +238,9 @@ const articleJsonLd = {
     {seriesName && seriesPosts.length > 1 && (
       <section class="entry-series surface-card">
         <p class="eyebrow">Series</p>
-        <h2>{seriesName}</h2>
+        <h2>
+          <a href={`/series/${seriesSlug}`}>{seriesName}</a>
+        </h2>
         <p class="meta">
           {seriesIndex + 1} / {seriesPosts.length}
         </p>

@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
+import { getSeriesSummaries } from "../lib/series";
 
 export const prerender = true;
 
@@ -18,6 +19,8 @@ export const GET: APIRoute = async () => {
 
   const publishedPosts = blogPosts.filter((post) => !post.data.draft);
   const publishedProjects = projects.filter((project) => !project.data.draft);
+  const seriesSummaries = getSeriesSummaries(publishedPosts);
+
   const pages: SitemapItem[] = [
     { path: "/" },
     { path: "/en/" },
@@ -27,6 +30,8 @@ export const GET: APIRoute = async () => {
     { path: "/en/now" },
     { path: "/blog" },
     { path: "/en/blog" },
+    { path: "/series" },
+    { path: "/en/series" },
     { path: "/projects" },
     { path: "/en/projects" },
     { path: "/contact" },
@@ -44,6 +49,16 @@ export const GET: APIRoute = async () => {
     lastmod: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
   }));
 
+  const seriesPages = seriesSummaries.map((series) => ({
+    path: `/series/${series.slug}`,
+    lastmod: series.updatedAt.toISOString(),
+  }));
+
+  const localizedSeriesPages = seriesSummaries.map((series) => ({
+    path: `/en/series/${series.slug}`,
+    lastmod: series.updatedAt.toISOString(),
+  }));
+
   const projectPages = publishedProjects.map((project) => ({
     path: `/projects/${project.data.slug}`,
     lastmod: (project.data.updatedDate ?? project.data.pubDate).toISOString(),
@@ -54,11 +69,12 @@ export const GET: APIRoute = async () => {
     lastmod: (project.data.updatedDate ?? project.data.pubDate).toISOString(),
   }));
 
-
   const urls = [
     ...pages,
     ...postPages,
     ...localizedPostPages,
+    ...seriesPages,
+    ...localizedSeriesPages,
     ...projectPages,
     ...localizedProjectPages,
   ]
