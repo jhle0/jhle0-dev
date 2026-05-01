@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import BlogArticleStyles from "../../components/BlogArticleStyles.astro";
 import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getBlogTopicLabel } from "../../lib/blog";
@@ -307,6 +308,8 @@ const articleJsonLd = {
       </section>
     )}
   </article>
+
+  <BlogArticleStyles />
 
   <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
 
