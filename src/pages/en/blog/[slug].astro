@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import BlogArticleStyles from "../../../components/BlogArticleStyles.astro";
 import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getBlogTopicLabel } from "../../../lib/blog";
@@ -295,6 +296,8 @@ const heroImageSrc = post.data.heroImage
       </section>
     )}
   </article>
+
+  <BlogArticleStyles />
 
   <script is:inline>
     const backButton = document.getElementById("history-back-button");
