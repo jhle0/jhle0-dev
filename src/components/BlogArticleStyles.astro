@@ -112,9 +112,13 @@
     border: 0;
     border-radius: 0;
     background: transparent;
+    overflow: visible;
+    text-align: center;
   }
 
   .notion-entry .article-content .katex-display > .katex {
+    display: inline-block;
+    max-width: 100%;
     text-align: center;
   }
 
@@ -163,6 +167,10 @@
     .notion-entry .article-content blockquote {
       font-size: 0.98rem;
       line-height: 1.78;
+    }
+
+    .notion-entry .article-content .katex-display > .katex {
+      font-size: clamp(0.72rem, 3.5vw, 1rem);
     }
   }
 </style>
