@@ -12,6 +12,11 @@ const optionalString = z.preprocess(
   z.string().optional(),
 );
 
+const optionalNumber = z.preprocess(
+  (value) => (value === "" || value == null ? undefined : value),
+  z.coerce.number().int().positive().optional(),
+);
+
 const optionalProjectStatus = z.preprocess(
   (value) => (value === "" || value == null ? undefined : value),
   z.enum(["planned", "in-progress", "completed"]).optional(),
@@ -30,6 +35,7 @@ const blog = defineCollection({
     draft: z.boolean().default(false),
     heroImage: optionalString,
     series: optionalString,
+    seriesOrder: optionalNumber,
     featured: z.boolean().default(false),
     canonicalURL: optionalString,
   }),
