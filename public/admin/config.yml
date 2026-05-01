@@ -35,7 +35,7 @@ collections:
     slug: "{{fields.slug}}"
     preview_path: "blog/{{slug}}"
     summary: "{{topic}} · {{title}}"
-    sortable_fields: ["pubDate", "updatedDate", "title", "topic", "featured"]
+    sortable_fields: ["pubDate", "updatedDate", "title", "topic", "series", "seriesOrder", "featured"]
     view_filters:
       - label: "Published"
         field: "draft"
@@ -124,6 +124,15 @@ collections:
         widget: "string"
         required: false
         hint: "같은 시리즈 글끼리 같은 이름을 사용하세요."
+
+      - label: "시리즈 순서"
+        name: "seriesOrder"
+        widget: "number"
+        required: false
+        value_type: "int"
+        min: 1
+        step: 1
+        hint: "같은 시리즈 안에서 읽을 순서입니다. 비워두면 발행일이 오래된 글부터 자동 정렬됩니다."
 
       - label: "추천 글"
         name: "featured"
