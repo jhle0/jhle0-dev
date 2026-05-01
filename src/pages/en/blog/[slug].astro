@@ -5,6 +5,7 @@ import type { CollectionEntry } from "astro:content";
 import { getBlogTopicLabel } from "../../../lib/blog";
 import { normalizeContentImagePath } from "../../../lib/content-image";
 import { getSeriesName, getSeriesPosts, getSeriesSlug } from "../../../lib/series";
+import { getTocHeadings } from "../../../lib/toc";
 
 export async function getStaticPaths() {
   const getRelatedPosts = (
@@ -86,9 +87,7 @@ const {
   seriesIndex,
 } = Astro.props;
 const { Content, headings } = await render(post);
-const tocHeadings = headings.filter(
-  (heading) => heading.depth >= 2 && heading.depth <= 3,
-);
+const tocHeadings = getTocHeadings(headings, post.body);
 const seriesPrev =
   seriesIndex > 0 && seriesPosts.length > 1 ? seriesPosts[seriesIndex - 1] : null;
 const seriesNext =
