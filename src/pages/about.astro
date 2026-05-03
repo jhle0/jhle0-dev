@@ -31,12 +31,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           </section>
 
           <section class="about-fact-item">
-            <h3>Direction</h3>
-            <p>
-              탄탄한 CS 기초 위에서 머신러닝과 딥러닝을 제대로 이해하고, 그 기반
-              위에 멀티모달과 embodied AI를 깊게 탐구한 뒤, 더 나아가 Physical
-              AI까지 이어지는 방향으로 성장하고 싶다.
-            </p>
+            <h3>Focus</h3>
+            <p>AI/DL · LLM · VLM · VLA</p>
           </section>
         </div>
 
@@ -101,14 +97,15 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           쌓아가기 위한 공간입니다.
         </p>
         <p>
-          장기적으로는 탄탄한 CS 기초 위에서 머신러닝과 딥러닝을 제대로
-          이해하고, 그 위에서 멀티모달과 embodied AI를 중점적으로 탐구하며, 더
-          나아가 Physical AI까지 이어지는 방향으로 공부를 확장해가고 싶다.
+          저는 VLM/VLA 기반 Physical AI를 공부하고 싶습니다. 시각 정보와 언어
+          명령을 함께 이해하는 모델에서 출발해, 이를 실제 환경에서의 행동 예측과
+          로봇 제어로 연결하는 방향에 관심이 있습니다. 장기적으로는 환경을
+          인식하고 추론하며 행동하는 embodied AI agent를 연구하는 것이 목표입니다.
         </p>
       </section>
 
-      <section class="section-block">
-        <h2>Values & Philosophy</h2>
+      <section class="section-block about-compact-section">
+        <h2>Study Philosophy</h2>
         <div class="info-card-grid">
           <article class="info-card surface-card">
             <h3>Endure to the end</h3>
@@ -148,22 +145,22 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </div>
       </section>
 
-      <section class="section-block">
+      <section class="section-block about-compact-section">
         <h2>Beyond Work</h2>
         <div class="interest-grid">
           <article class="interest-card surface-card">
             <h3>Scuba Diving</h3>
             <p>
-              스쿠버다이빙 오픈워터 자격증을 보유하고 있다. 일과 공부 밖에서
-              완전히 다른 환경에 몰입하는 시간이라 더 좋아하는 취미다.
+              스쿠버다이빙 오픈워터 자격증을 보유하고 있습니다. 일과 공부 밖에서
+              완전히 다른 환경에 몰입하는 시간이라 더 좋아하는 취미입니다.
             </p>
           </article>
 
           <article class="interest-card surface-card">
             <h3>Golf</h3>
             <p>
-              아직 배우는 중이지만, 자세와 리듬을 차분히 다듬어가는 과정 자체가
-              재미있어서 개인적으로 꾸준히 이어가고 싶은 취미다.
+              아직 배우는 중이고, 반복하고 연습하는 과정 자체가 재미있어서
+              개인적으로 꾸준히 이어가고 싶은 취미 입니다.
             </p>
           </article>
         </div>
@@ -189,3 +186,38 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .about-page .about-profile-image {
+    width: min(100%, 250px);
+    justify-self: center;
+  }
+
+  .about-compact-section {
+    margin-bottom: 3.25rem;
+  }
+
+  .about-compact-section h2 {
+    margin-bottom: 1rem;
+    font-size: clamp(1.35rem, 2vw, 1.75rem);
+  }
+
+  .about-compact-section .info-card-grid,
+  .about-compact-section .interest-grid {
+    gap: 0.8rem;
+  }
+
+  .about-compact-section .info-card,
+  .about-compact-section .interest-card {
+    padding: 1rem;
+  }
+
+  .about-compact-section h3 {
+    font-size: 0.98rem;
+  }
+
+  .about-compact-section p {
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+</style>
