@@ -12,7 +12,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             src="/images/profile/profile.jpg"
             alt="Profile photo of jhle0"
           />
-          <div class="about-profile-copy">
+          <div>
             <p class="about-profile-kicker">Developer archive</p>
             <h2>이정현</h2>
             <p>CS와 AI를 공부하며 기록으로 성장하는 개발자</p>
@@ -32,13 +32,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
           <section class="about-fact-item">
             <h3>Focus</h3>
-            <ul class="about-focus-list" aria-label="Focus areas">
-              <li>CS</li>
-              <li>AI/DL</li>
-              <li>LLM</li>
-              <li>VLM</li>
-              <li>VLA</li>
-            </ul>
+            <p>CS · AI/DL · LLM · VLM · VLA</p>
           </section>
         </div>
 
@@ -203,39 +197,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     padding: 1.05rem;
   }
 
-  .about-page .about-profile-card {
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    padding-bottom: 1.05rem;
-  }
-
   .about-page .about-profile-image {
-    flex: 0 0 128px;
-    width: 128px;
-    height: 128px;
-    aspect-ratio: 1;
-    object-fit: cover;
-    border-radius: 22px;
-  }
-
-  .about-page .about-profile-copy {
-    min-width: 0;
-  }
-
-  .about-page .about-profile-kicker {
-    margin-bottom: 0.28rem;
-    font-size: 0.72rem;
-  }
-
-  .about-page .about-profile-card h2 {
-    margin-bottom: 0.28rem;
-    font-size: 1.32rem;
-  }
-
-  .about-page .about-profile-card p:last-child {
-    font-size: 0.92rem;
-    line-height: 1.52;
+    width: min(100%, 250px);
+    justify-self: center;
   }
 
   .about-page .about-fact-list {
@@ -245,30 +209,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   .about-page .about-fact-item p {
     font-size: 0.94rem;
     line-height: 1.55;
-  }
-
-  .about-focus-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-    list-style: none;
-    margin: 0.2rem 0 0;
-    padding: 0;
-  }
-
-  .about-focus-list li {
-    display: inline-flex;
-    align-items: center;
-    min-height: 1.8rem;
-    margin: 0;
-    padding: 0.12rem 0.56rem;
-    border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--line));
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--accent-soft) 84%, var(--surface-strong));
-    color: var(--accent);
-    font-size: 0.78rem;
-    font-weight: 700;
-    line-height: 1;
   }
 
   .about-page .about-tech-stack {
@@ -326,18 +266,5 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   .about-compact-section p {
     font-size: 0.92rem;
     line-height: 1.6;
-  }
-
-  @media (max-width: 420px) {
-    .about-page .about-profile-card {
-      align-items: flex-start;
-      flex-direction: column;
-    }
-
-    .about-page .about-profile-image {
-      flex-basis: auto;
-      width: 116px;
-      height: 116px;
-    }
   }
 </style>
