@@ -11,6 +11,10 @@ type SitemapItem = {
 
 const SITE_URL = new URL("https://jhle0-dev.vercel.app");
 
+function toLastMod(date: Date): string {
+  return date.toISOString();
+}
+
 export const GET: APIRoute = async () => {
   const [blogPosts, projects] = await Promise.all([
     getCollection("blog"),
@@ -20,64 +24,37 @@ export const GET: APIRoute = async () => {
   const publishedPosts = blogPosts.filter((post) => !post.data.draft);
   const publishedProjects = projects.filter((project) => !project.data.draft);
   const seriesSummaries = getSeriesSummaries(publishedPosts);
+  const tagPages = [...new Set(publishedPosts.flatMap((post) => post.data.tags))]
+    .sort((a, b) => a.localeCompare(b))
+    .map((tag) => ({ path: `/tags/${tag}` }));
 
   const pages: SitemapItem[] = [
     { path: "/" },
-    { path: "/en/" },
     { path: "/about" },
-    { path: "/en/about" },
     { path: "/now" },
-    { path: "/en/now" },
     { path: "/blog" },
-    { path: "/en/blog" },
     { path: "/series" },
-    { path: "/en/series" },
     { path: "/projects" },
-    { path: "/en/projects" },
     { path: "/contact" },
-    { path: "/en/contact" },
     { path: "/rss.xml" },
   ];
 
   const postPages = publishedPosts.map((post) => ({
     path: `/blog/${post.data.slug}`,
-    lastmod: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
-  }));
-
-  const localizedPostPages = publishedPosts.map((post) => ({
-    path: `/en/blog/${post.data.slug}`,
-    lastmod: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+    lastmod: toLastMod(post.data.updatedDate ?? post.data.pubDate),
   }));
 
   const seriesPages = seriesSummaries.map((series) => ({
     path: `/series/${series.slug}`,
-    lastmod: series.updatedAt.toISOString(),
-  }));
-
-  const localizedSeriesPages = seriesSummaries.map((series) => ({
-    path: `/en/series/${series.slug}`,
-    lastmod: series.updatedAt.toISOString(),
+    lastmod: toLastMod(series.updatedAt),
   }));
 
   const projectPages = publishedProjects.map((project) => ({
     path: `/projects/${project.data.slug}`,
-    lastmod: (project.data.updatedDate ?? project.data.pubDate).toISOString(),
+    lastmod: toLastMod(project.data.updatedDate ?? project.data.pubDate),
   }));
 
-  const localizedProjectPages = publishedProjects.map((project) => ({
-    path: `/en/projects/${project.data.slug}`,
-    lastmod: (project.data.updatedDate ?? project.data.pubDate).toISOString(),
-  }));
-
-  const urls = [
-    ...pages,
-    ...postPages,
-    ...localizedPostPages,
-    ...seriesPages,
-    ...localizedSeriesPages,
-    ...projectPages,
-    ...localizedProjectPages,
-  ]
+  const urls = [...pages, ...postPages, ...seriesPages, ...projectPages, ...tagPages]
     .map(({ path, lastmod }) => {
       const location = new URL(path, SITE_URL).toString();
       return `
