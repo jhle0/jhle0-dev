@@ -3,8 +3,8 @@ title: "링크 계층: 프레이밍, 오류 검출, MAC과 스위칭"
 description: |-
   링크 계층의 동작 원리부터 스위치, VLAN, MPLS, 데이터센터 네트워크 구조까지 확장 개념을 정리한 글입니다.
   실제 웹 요청 흐름을 통해 계층 간 상호작용까지 함께 다룹니다.
-pubDate: 2026-05-04
-updatedDate: 2026-05-04
+pubDate: 2025-10-12
+updatedDate: ""
 slug: data-link-layer-switching-vlan-mpls-datacenter
 topic: study
 tags:
@@ -16,7 +16,7 @@ tags:
   - Data Center
 draft: false
 series: Network
-seriesOrder: 8
+seriesOrder: 6
 featured: false
 ---
 > Active recall
