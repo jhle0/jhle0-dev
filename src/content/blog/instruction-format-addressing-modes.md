@@ -1,6 +1,10 @@
 ---
 title: 명령어 형식과 주소 지정 방식 (Addressing Modes)
-description: 명령어 형식과 주소 지정 방식 (Addressing Modes)
+description: >-
+  CPU 명령어의 구조(OpCode, Operand)와 데이터 접근 방법인 다양한 주소 지정 방식(Immediate, Direct,
+  Indirect 등)을 정리한 글입니다.
+
+  각 방식의 동작 원리와 성능·사용 사례까지 함께 다룹니다.
 pubDate: 2025-07-20
 updatedDate: ""
 slug: instruction-format-addressing-modes
