@@ -15,6 +15,7 @@ tags:
 draft: false
 heroImage: ""
 series: Neural Network
+seriesOrder: 2
 featured: false
 ---
 ## 학습 과정이란
