@@ -6,7 +6,7 @@ This document is a quick handoff note for future Codex sessions working on `jhle
 
 ## What This Project Is
 
-`jhle0-dev` is a personal developer blog for study notes, project writeups, and learning logs.
+`jhle0-dev` is a Korean personal developer blog for study notes, project writeups, and learning logs.
 
 The public site is configured around:
 
@@ -14,6 +14,7 @@ The public site is configured around:
 - Production URL: `https://jhle0-dev.vercel.app`
 - Main theme: a personal CS/AI developer archive
 - Core content: CS fundamentals, AI learning, project notes, retrospectives, and build logs
+- Canonical language/URL structure: Korean pages at the root paths, without `/en`
 
 The app is built with Astro and deployed on Vercel.
 
@@ -45,14 +46,20 @@ For local Decap CMS editing, run the Astro dev server and `npm run cms:proxy` in
 - `src/content.config.ts`: Astro content collection schemas
 - `src/pages/index.astro`: Home page
 - `src/pages/blog/index.astro`: Blog archive with filters/search/sort
+- `src/pages/blog/[slug].astro`: Blog detail route
 - `src/pages/projects/index.astro`: Project archive
-- `src/layouts/BaseLayout.astro`: Global layout, SEO, nav, theme toggle, locale switcher
+- `src/pages/projects/[slug].astro`: Project detail route
+- `src/pages/series/index.astro`: Series archive
+- `src/pages/series/[series].astro`: Series detail route
+- `src/pages/tags/[tag].astro`: Tag archive route
+- `src/pages/sitemap.xml.ts`: Sitemap generation for canonical Korean/root URLs
+- `src/layouts/BaseLayout.astro`: Global layout, SEO, nav, and theme toggle
 - `src/lib/blog.ts`: Blog topic constants, labels, and descriptions
 - `src/lib/series.ts`: Series grouping/sorting helpers
-- `src/lib/i18n.ts`: Korean/English locale helpers and UI labels
 - `src/styles/global.css`: Global styling
 - `public/admin/config.yml`: Decap CMS configuration
 - `public/images/uploads`: CMS-uploaded images
+- `vercel.json`: Redirects `/en/*` to canonical root paths
 - `docs`: Project documentation
 - `cms-auth/cloudflare-worker`: Cloudflare Worker OAuth proxy scaffold for Decap CMS auth
 
@@ -129,11 +136,12 @@ Valid project status values are:
 - Local Decap backend support through `decap-server`
 - Cloudflare Worker OAuth proxy scaffold for deployed CMS auth
 - Light/dark theme toggle persisted with `localStorage`
-- Korean/English locale helpers with `/en` routing convention
 - SEO metadata in `BaseLayout.astro`
 - Canonical URLs and Open Graph/Twitter metadata
 - RSS link in the layout
 - `robots.txt` route pointing to sitemap
+- `sitemap.xml` containing canonical root-path pages, blog posts, series pages, and project pages
+- `/en` and `/en/*` 301 redirects to root-path canonical URLs through `vercel.json`
 - KaTeX math support for Markdown
 
 ## Design/UX Direction
@@ -191,11 +199,12 @@ Markdown uses:
 - Page title and description
 - Canonical URL
 - RSS alternate link
-- Open Graph metadata
+- Open Graph metadata with `ko_KR`
 - Twitter card metadata
-- `hreflang` alternates for `ko`, `en`, and `x-default`
 - Optional article published/modified times
 - Optional `noindex`
+
+`sitemap.xml.ts` intentionally excludes tag pages. Tag pages still exist and are reachable through internal links, but the sitemap focuses on canonical content pages rather than thin archive pages.
 
 ## Suggested Workflow For Future Codex Sessions
 
