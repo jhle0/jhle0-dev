@@ -15,6 +15,7 @@ tags:
   - MLP
 draft: false
 series: Neural Network
+seriesOrder: 1
 featured: false
 ---
 
