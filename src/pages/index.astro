@@ -11,6 +11,8 @@ const projects = (await getCollection("projects"))
   .filter((project) => !project.data.draft)
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
   .slice(0, 3);
+
+const getTagPath = (tag: string) => `/tags/${encodeURIComponent(tag)}`;
 ---
 
 <BaseLayout
@@ -63,7 +65,7 @@ const projects = (await getCollection("projects"))
                 <ul class="tag-list">
                   {post.data.tags.slice(0, 3).map((tag) => (
                     <li>
-                      <a href={`/tags/${tag}`}>{tag}</a>
+                      <a href={getTagPath(tag)}>{tag}</a>
                     </li>
                   ))}
                 </ul>
