@@ -1,12 +1,6 @@
 ---
 import "../styles/global.css";
 import "katex/dist/katex.min.css";
-import {
-  getLocaleFromPath,
-  localizePath,
-  stripLocaleFromPath,
-  ui,
-} from "../lib/i18n";
 
 const {
   title = "jhle0",
@@ -17,32 +11,30 @@ const {
   noindex = false,
   publishedTime,
   modifiedTime,
-  locale: localeProp,
 } = Astro.props;
 const currentPath = Astro.url.pathname;
-const locale = localeProp ?? getLocaleFromPath(currentPath);
-const localeUi = ui[locale];
 const siteOrigin = (Astro.site ?? Astro.url).origin;
 const normalizedCanonicalPath = canonicalPath ?? Astro.url.pathname;
 const canonicalUrl = new URL(normalizedCanonicalPath, siteOrigin).toString();
 const ogImageUrl = new URL(ogImage ?? "/og/site.svg", siteOrigin).toString();
-const basePath = stripLocaleFromPath(currentPath);
-const koreanUrl = new URL(localizePath("ko", basePath), siteOrigin).toString();
-const englishUrl = new URL(localizePath("en", basePath), siteOrigin).toString();
-const themeUi = localeUi.theme;
 
 const navItems = [
-  { href: localizePath(locale, "/"), label: localeUi.nav.home },
-  { href: localizePath(locale, "/about"), label: localeUi.nav.about },
-  { href: localizePath(locale, "/now"), label: localeUi.nav.now },
-  { href: localizePath(locale, "/blog"), label: localeUi.nav.blog },
-  { href: localizePath(locale, "/projects"), label: localeUi.nav.projects },
-  { href: localizePath(locale, "/contact"), label: localeUi.nav.contact },
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/now", label: "Now" },
+  { href: "/blog", label: "Blog" },
+  { href: "/projects", label: "Projects" },
+  { href: "/contact", label: "Contact" },
 ];
+
+const themeUi = {
+  toggleToLight: "라이트 모드로 전환",
+  toggleToDark: "다크 모드로 전환",
+};
 ---
 
 <!doctype html>
-<html lang={locale}>
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -58,7 +50,7 @@ const navItems = [
     />
 
     <meta property="og:site_name" content="jhle0" />
-    <meta property="og:locale" content={locale === "ko" ? "ko_KR" : "en_US"} />
+    <meta property="og:locale" content="ko_KR" />
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -70,9 +62,6 @@ const navItems = [
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
     <meta name="color-scheme" content="light dark" />
-    <link rel="alternate" hreflang="ko" href={koreanUrl} />
-    <link rel="alternate" hreflang="en" href={englishUrl} />
-    <link rel="alternate" hreflang="x-default" href={koreanUrl} />
     <script is:inline>
       (() => {
         const storageKey = "jhle0-theme";
@@ -116,18 +105,18 @@ const navItems = [
     {noindex && <meta name="robots" content="noindex,nofollow" />}
   </head>
   <body>
-    <a class="skip-link" href="#main-content">{localeUi.skipToContent}</a>
+    <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
     <header class="site-header">
       <div class="site-shell">
         <nav class="site-nav" aria-label="Primary">
-          <a class="site-brand" href={localizePath(locale, "/")}>jhle0</a>
+          <a class="site-brand" href="/">jhle0</a>
 
           <div class="site-nav-meta">
             <div class="site-nav-links">
               {
                 navItems.map((item) => {
                   const isActive =
-                    item.href === localizePath(locale, "/")
+                    item.href === "/"
                       ? currentPath === item.href
                       : currentPath === item.href ||
                         currentPath.startsWith(`${item.href}/`);
@@ -146,21 +135,6 @@ const navItems = [
                   );
                 })
               }
-            </div>
-
-            <div class="site-locale-switcher" aria-label="Language switcher">
-              <a
-                href={localizePath("ko", basePath)}
-                class:list={["site-locale-link", locale === "ko" && "is-active"]}
-              >
-                KO
-              </a>
-              <a
-                href={localizePath("en", basePath)}
-                class:list={["site-locale-link", locale === "en" && "is-active"]}
-              >
-                EN
-              </a>
             </div>
 
             <button
@@ -188,7 +162,7 @@ const navItems = [
     <footer class="site-footer site-shell">
       <div class="site-footer-brand">
         <a class="site-footer-logo" href="/">jhle0</a>
-        <p>{localeUi.footer.description}</p>
+        <p>CS와 AI를 공부하며 쌓아가는 개인 개발 블로그.</p>
         <p class="site-footer-copyright">
           © 2026 Lee Jeonghyeon. All rights reserved.
         </p>
@@ -196,8 +170,8 @@ const navItems = [
 
       <div class="site-footer-meta">
         <nav class="site-footer-links" aria-label="Footer">
-          <a href={localizePath(locale, "/blog")}>Blog</a>
-          <a href={localizePath(locale, "/projects")}>Projects</a>
+          <a href="/blog">Blog</a>
+          <a href="/projects">Projects</a>
           <a href="/rss.xml">RSS</a>
           <a href="https://github.com/jhle0" target="_blank" rel="noreferrer">
             GitHub
@@ -205,7 +179,7 @@ const navItems = [
         </nav>
 
         <p class="site-footer-built">
-          {localeUi.footer.builtWith}
+          Astro로 만들고 Vercel에 배포했습니다.
         </p>
       </div>
     </footer>
