@@ -17,6 +17,7 @@ tags:
   - Tanh
 draft: false
 series: Neural Network
+seriesOrder: 3
 featured: false
 ---
 ## 활성화 함수란
