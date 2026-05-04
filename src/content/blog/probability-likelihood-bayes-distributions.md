@@ -8,9 +8,14 @@ updatedDate: ""
 slug: probability-likelihood-bayes-distributions
 topic: study
 tags:
-  - log
+  - Probability
+  - Statistics
+  - Bayes
+  - Likelihood
+  - Distribution
+  - Machine Learning
 draft: false
-heroImage: /images/uploads/propability-1.png
+heroImage: ""
 series: Math
 featured: false
 ---
