@@ -3,33 +3,35 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
-    const posts = await getCollection("blog");
-    const publishedPosts = posts.filter((post) => !post.data.draft);
+  const posts = await getCollection("blog");
+  const publishedPosts = posts.filter((post) => !post.data.draft);
 
-    const allTags = [
-        ...new Set(publishedPosts.flatMap((post) => post.data.tags)),
-    ].sort();
+  const allTags = [
+    ...new Set(publishedPosts.flatMap((post) => post.data.tags)),
+  ].sort();
 
-    return allTags.map((tag) => ({
-        params: { tag },
-        props: {
-            tag,
-            posts: publishedPosts
-                .filter((post) => post.data.tags.includes(tag))
-                .sort(
-                    (a, b) =>
-                        b.data.pubDate.getTime() - a.data.pubDate.getTime(),
-                ),
-        },
-    }));
+  return allTags.map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: publishedPosts
+        .filter((post) => post.data.tags.includes(tag))
+        .sort(
+          (a, b) =>
+            b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+        ),
+    },
+  }));
 }
 
 const { tag, posts } = Astro.props;
+const tagPath = `/tags/${encodeURIComponent(tag)}`;
 ---
 
 <BaseLayout
   title={`Tag: ${tag} | jhle0`}
   description={`Posts tagged with ${tag}`}
+  canonicalPath={tagPath}
 >
   <section class="page-intro">
     <p class="eyebrow">Tag archive</p>
