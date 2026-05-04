@@ -14,6 +14,7 @@ export async function getStaticPaths() {
 }
 
 const { series } = Astro.props;
+const getTagPath = (tag: string) => `/tags/${encodeURIComponent(tag)}`;
 ---
 
 <BaseLayout
@@ -51,7 +52,7 @@ const { series } = Astro.props;
               <ul class="tag-list entry-related-tags">
                 {post.data.tags.slice(0, 4).map((tag) => (
                   <li>
-                    <a href={`/tags/${tag}`}>{tag}</a>
+                    <a href={getTagPath(tag)}>{tag}</a>
                   </li>
                 ))}
               </ul>
