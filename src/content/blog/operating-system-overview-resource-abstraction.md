@@ -15,6 +15,7 @@ tags:
   - Context Switching
 draft: false
 series: Operating System
+seriesOrder: 1
 featured: false
 ---
 > Active recall
