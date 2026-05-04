@@ -29,6 +29,7 @@ const allTags = [...new Set(publishedPosts.flatMap((post) => post.data.tags))]
   .sort((a, b) => b.count - a.count || a.value.localeCompare(b.value));
 
 const initialVisibleTags = 12;
+const getTagPath = (tag: string) => `/tags/${encodeURIComponent(tag)}`;
 ---
 
 <BaseLayout
@@ -191,7 +192,7 @@ const initialVisibleTags = 12;
                 class="blog-post-card"
                 data-title={post.data.title.toLowerCase()}
                 data-description={post.data.description.toLowerCase()}
-                data-tags={post.data.tags.join(" ").toLowerCase()}
+                data-tags={post.data.tags.map((tag) => tag.toLowerCase()).join("|")}
                 data-topic={post.data.topic}
                 data-date={post.data.pubDate.toISOString()}
               >
@@ -226,7 +227,7 @@ const initialVisibleTags = 12;
                       <ul class="tag-list blog-post-tags">
                         {post.data.tags.slice(0, 4).map((tag) => (
                           <li>
-                            <a href={`/tags/${tag}`}>{tag}</a>
+                            <a href={getTagPath(tag)}>{tag}</a>
                           </li>
                         ))}
                       </ul>
@@ -297,6 +298,13 @@ const initialVisibleTags = 12;
         .map((checkbox) => checkbox.value.toLowerCase());
     }
 
+    function getCardTags(card) {
+      return (card.dataset.tags || "")
+        .split("|")
+        .map((tag) => tag.trim())
+        .filter(Boolean);
+    }
+
     function updateActiveFilterStyles() {
       checkboxes.forEach((checkbox) => {
         const label = checkbox.closest(".blog-filter-chip");
@@ -317,7 +325,7 @@ const initialVisibleTags = 12;
       const haystack = [
         card.dataset.title || "",
         card.dataset.description || "",
-        card.dataset.tags || "",
+        getCardTags(card).join(" "),
         card.dataset.topic || "",
       ].join(" ");
 
@@ -331,7 +339,7 @@ const initialVisibleTags = 12;
 
     function matchesTags(card, selectedTags) {
       if (selectedTags.length === 0) return true;
-      const cardTags = (card.dataset.tags || "").split(" ").filter(Boolean);
+      const cardTags = getCardTags(card);
       return selectedTags.every((tag) => cardTags.includes(tag));
     }
 
