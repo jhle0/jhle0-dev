@@ -11,7 +11,7 @@ tags:
   - DeepLearning
   - Neural-Network
   - ANN
-  - preceptron
+  - perceptron
   - MLP
 draft: false
 series: Neural Network
