@@ -150,7 +150,7 @@ Regularization은 loss 함수에 **파라미터 크기에 대한 penalty 항**�
 > 
 > 
 > 
-> [L1 / L2 / Weight Decay 정규화 | jhle0](https://jhle0-dev.vercel.app/blog/l1-l2-weight-decay-regularization#l1-regularization)
+> [L1 / L2 / Weight Decay 정규화 | jhle0](https://jhle0-dev.vercel.app/blog/l1-l2-weight-decay-regularization)
 > 
 
 ### 왜 파라미터의 크기가 중요할까?
