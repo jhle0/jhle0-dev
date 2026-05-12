@@ -65,6 +65,8 @@ PReLU(parametric leaky ReLU)는 $\alpha$를 훈련하는 동안 **파라미터�
 
 파라미터를 추가한 것이므로 약간의 overfitting 위험이 있어 대규모 데이터셋에서 주로 사용된다.
 
+![relu_variants_1.png](/images/uploads/relu_variants_1.png)
+
 ## ELU, SELU
 
 ReLU, LeakyReLU, PReLU 모두 매끄러운 함수가 아니라는 단점이 있다.
@@ -130,6 +132,8 @@ SELU는 신경망의 activation들이 layer를 지나도 평균과 분산이 일
 > - AlphaDropout 사용
 > - 입력 데이터 정규화
 > - Batch Normalization과 함께 쓰는 것은 일반적으로 권장되지 않음
+
+![relu_variants_2.png](/images/uploads/relu_variants_2.png)
 
 ## GELU, Swish, Mish
 
@@ -200,6 +204,8 @@ Mish도 smooth activation이다.
 Mish는 Swish/SiLU, GELU와 비슷하게 부드러운 gating 형태를 가지며, 음수 영역도 완전히 0으로 자르지 않는다.
 
 따라서 위 함수들과 같은 장점이 있다.
+
+![relu_variants_3.png](/images/uploads/relu_variants_3.png)
 
 ## 언제 어떤 Activation Function을 사용하는가
 
