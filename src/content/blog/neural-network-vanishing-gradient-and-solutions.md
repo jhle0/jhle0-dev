@@ -109,12 +109,13 @@ ReLU 함수는 입력이 양수일 때는 그대로, 음수일 때는 0을 출�
 몇몇 뉴런이 죽는 현상을 방지하기 위해,
 
 다양한 ReLU 함수를 변형한 활성화 함수들이 있다.
-
 > 
 > 
 > 
-> <정리 링크>
+> 더 자세한 ReLU 계열 활성화 함수 설명
 > 
+> [https://www.notion.so/ReLU-ReLU-Variants-35cb7af373cb80b48693ee97327dfe25](https://www.notion.so/ReLU-ReLU-Variants-35cb7af373cb80b48693ee97327dfe25?pvs=21)
+>
 
 이런 다양한 활성화 함수를 통해 기울기 소실 문제를 방지할 수 있다.
 
