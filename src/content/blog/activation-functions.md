@@ -7,7 +7,7 @@ updatedDate: ""
 slug: activation-functions
 topic: study
 tags:
-  - DeepLearning
+  - Deep Learning
   - Neural Network
   - Activation Function
   - ReLU
@@ -130,6 +130,12 @@ $$
 - 입력을 부드럽게 통과시키는 비선형 함수이다.
 - ReLU보다 부드러운 activation으로 볼 수 있다.
 - Transformer 계열 모델에서 자주 사용된다.
+
+> 더 자세한 ReLU 계열 활성화 함수 설명
+> 
+> 
+> [https://jhle0-dev.vercel.app/blog/relu-variants](https://jhle0-dev.vercel.app/blog/relu-variants)
+>
 
 ### tanh
 
