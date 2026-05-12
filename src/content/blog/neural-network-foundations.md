@@ -8,7 +8,7 @@ updatedDate: ""
 slug: neural-network-foundations
 topic: study
 tags:
-  - DeepLearning
+  - Deep Learning
   - Neural-Network
   - ANN
   - perceptron
