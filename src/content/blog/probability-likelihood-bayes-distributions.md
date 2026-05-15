@@ -17,6 +17,7 @@ tags:
 draft: false
 heroImage: ""
 series: Math
+seriesOrder: 1
 featured: false
 ---
 ## 확률(Probability)
