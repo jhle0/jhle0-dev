@@ -1,0 +1,1006 @@
+---
+title: 선형대수학 기초 (Linear Algebra Foundations)
+description: 벡터, 내적, norm, 행렬, 선형변환부터 고유값 분해와 SVD까지 선형대수학의 핵심 개념을 정리한 글입니다.
+  머신러닝과 딥러닝에 필요한 선형대수 직관과 기하학적 의미를 중심으로 설명합니다.
+pubDate: 2026-02-16
+updatedDate: ""
+slug: linear-algebra-foundations
+topic: study
+tags:
+  - Linear Algebra
+  - Vector
+  - Matrix
+  - Eigenvalue
+  - Eigenvector
+  - SVD
+draft: false
+series: Math
+seriesOrder: 3
+featured: false
+---
+
+## 1. 벡터 기본
+
+## 1.1 벡터?
+
+벡터는 여러 설명으로 표현된다
+
+- 물리학적 관점 : 공간 상의 화살표
+- 컴퓨터 과학 관점 : 숫자의 나열 (배열)
+
+→ **벡터는 “공간에서의 방향과 크기”를 표현하는 객체이며, 좌표로 표현할 수 있다.**
+
+## 1.2 벡터의 2가지 기본 연산
+
+- **벡터 합**
+    - 의미: 두 화살표를 “이어 붙이는” 결과
+    - 계산: 좌표끼리 더함
+- **스칼라 곱(스케일링)**
+    - 의미: 길이 늘리기/줄이기, 음수면 방향 뒤집기
+    - 계산: 각 좌표에 스칼라를 곱함
+
+→ 이 두 가지 연산이 **선형대수학의 모든 주제의 중심**
+
+## 1.3 기저 벡터, 선형결합, 생성
+
+$\begin{bmatrix}3 \\1\end{bmatrix}$이라는 벡터의 **각 좌표값을 스칼라**로 생각해보면
+
+데카르트 좌표계의 단위벡터인 $\hat{i}$ 과 $\hat{j}$의 스케일링된 값의 합으로 볼수있다
+
+→ 즉, 좌표 쌍이 나타내는 벡터 = 두 스케일링된 벡터의 값
+
+### 선형결합(linear combination)
+
+두 벡터를 스케일링하고 더하여 새 벡터를 얻는 모든 연산
+
+### 생성(Span)
+
+주어진 벡터 집합으로 만들 수 있는 모든 선형결합의 집합
+
+### 기저(Basis)
+
+좌표쌍 벡터에서 각 스칼라(각 좌표값)들이 **스케일 하는 실제 대상**
+
+즉, 벡터 공간의 **기저**는 **공간 전체를 생성하는 선형 독립인 벡터의 집합**
+
+ $\hat{i}$ 과 $\hat{j}$ 은 x,y 좌표계상의 기저(basis)라고 한다
+
+- $\hat i$ - x 축에 있는 단위 벡터
+- $\hat j$ - y 축에 있는 단위 벡터
+
+### 선형 독립, 선형 종속
+
+대부분의 두 벡터쌍의 경우 → 평면 위 모든 점에 다다를 수 있음
+
+즉 **span이 무한대**이다
+
+> span - 두 벡터를 통해 표현할 수 있는 공간
+> 
+
+⇒ 이게 **선형 독립**
+
+두 기저 벡터가 만약 **같은 직선상**이다 → 벡터의 끝점은 항상 한 직선 위이다
+
+⇒ 이게 **선형 종속**
+
+선형 종속이란 즉 벡터 중 하나가 다른 벡터들의 선형결합으로 표현될 때
+
+> 3차원
+> 
+> 
+> 3차원에서 만약 하나의 벡터가 나머지 두 벡터의 선형결합으로 표현될수 있다면 → 이 세 벡터의 결합은 한 **평면 상에있다**
+> 
+
+## 1.4 직교(orthogonality)
+
+- 직교는 “서로 영향을 안 주는 방향”이며 내적값은 0이다
+    - $x\perp y \iff x^Ty = 0$
+- **직관:**
+    - 한 벡터를 다른 벡터 방향으로 정사영했을 때 길이가 0이면(성분이 없으면) 직교다.
+
+---
+
+## 2. 내적(dot product)
+
+## 2.1 내적 정의와 계산
+
+벡터의 내적 계산은 간단하다
+
+$\begin{bmatrix}4\\1\end{bmatrix} \cdot \begin{bmatrix}2\\-1\end{bmatrix} =  4 \times2 + 1\times(-1) = 7$
+
+각 좌표끼리 곱하고 더하면 된다
+
+위 식은 $[4 \space\space\space  1]\begin{bmatrix}2\\-1\end{bmatrix}$ 이므로
+
+→ $a \cdot b = a^{T}b(=b^{T}a)$
+
+기하적으로 보면, 
+
+두 벡터 a, b에 대해 내적은 다음과 같이 해석할 수 있다.
+
+- **“a를 b 방향으로 투영한 길이(스칼라 성분)” × “b의 길이”**
+- 또는 반대로 **“b를 a 방향으로 투영한 길이” × “a의 길이”**
+
+내적은 아래 식으로 정의된다 :
+
+$a^{T}b = ||a||\cdot ||b|| cos\theta$
+
+- $||a||cos\theta$ 가 a를 b 방향으로 정사영 내린 크기이고
+- $||b||cos\theta$ 가 b를 a 방향으로 정사영 내린 크기이다
+
+→ 즉, 내적은 **정사영(projection)** 이다
+
+내적이 의미 하는 것은 두 벡터의 **닮은 정도** 이다
+
+- 두 벡터가 대체로 같은 방향 → 내적 > 0
+- 두 벡터가 수직 → 내적 = 0
+- 두 벡터가 대체로 반대 방향 → 내적 < 0
+
+## 2.2 정사영된 벡터 구하기
+
+벡터 a를 b의 정사영 했을 때 벡터를 구해보자
+
+정사영된 크기는 $||a||cos\theta$ 이다
+
+이 값은 $a^{T}b$를 $||b||$로 나누면 된다
+
+정사영된 크기는 $\frac{a^Tb}{\sqrt {b^Tb}}$ 이다
+
+이 값에 b 방향을 곱해주면 된다
+
+b 방향 : $\frac{b}{\|b\|} = \frac{b}{\sqrt{b^Tb}}$  (normalization)
+
+⇒ 즉, 정사영 내린 벡터는 $\frac{a^Tb}{\sqrt {b^Tb}}b$ 이다
+
+### **다른 방법**
+
+b에 정사영 내린 벡터는 b 벡터에 스칼라 곲을 한 값이다
+
+스칼라 값을 $\hat x$ 라고 하자 → 정사영 내린 벡터는 $b\cdot \hat x$
+
+그다음 $a$ 벡터에서 $b\cdot \hat x$ 를 빼 보면
+
+$a - b\cdot \hat x$ 는 $b\cdot \hat x$ 와 수직하게 된다
+
+따라서 이 둘을 내적하면 = 0 이라는 식으로 풀어 $\hat x$ 를 구해서 정사영된 벡터를 구할 수 있다
+
+→ 이 방법은 least squares 유도하는데 사용됨
+
+> <참고>
+> 
+> 
+> $a^{T}b = ||a||\cdot ||b|| cos\theta$ 이다
+> 
+> 그럼, $a^{T}a = ||a||\cdot ||a|| cos\theta =  ||a||^2$이다
+> 
+> 그래서 $||a|| = \sqrt{a^Ta}$ 라고 할 수 있다
+> 
+> 단위 벡터는 크기가 1인 벡터이다(방향성만 가진)
+> 
+> 단위 벡터를 구하는 방법은 벡터를 벡터의 크기로 나눠주면 된다
+> 
+> - normalize : $\frac{a}{\sqrt {a^Ta}}$
+
+## 2.3 코사인 유사도(cosine similarity)
+
+- **한 줄 요약:** 크기 제거하고 방향만 비교한다.
+- **정의:**
+    - $\cos\theta=\frac{x^Ty}{\|x\|\|y\|}$
+- **직관:**
+    - 길이가 큰 벡터가 유리해지는 문제를 제거하고, 방향 일치 정도만 본다.
+- 범위
+    - -1부터 1사이의 값이다
+    - 1에 가까울수록 두 벡터의 방향이 일치하고 -1이면 정반대 방향
+    - 0이면 직교
+
+---
+
+## 3. norm과 거리(norm & distance)
+
+## 3.1 norm의 정의와 종류
+
+norm 은 “길이”의 일반화이다
+
+벡터의 크기를 구해보자
+
+a 벡터가 $\begin{bmatrix}1 \\2 \\3\end{bmatrix}$일 때, $||a|| = \sqrt{1^2 + 2^2 + 3^2}$ 로 구한다
+
+이 것이 2-norm 이다
+
+### 2-norm($l_2$ norm, euclidean norm)
+
+위 처럼 $||a||_2 = \sqrt{1^2 + 2^2 + 3^2}$ 가 바로 2-norm 이다
+
+두 벡터 사이의 distance를 구해보면
+
+두 벡터 $\begin{bmatrix}1 \\2\end{bmatrix}$와 $\begin{bmatrix}2 \\1\end{bmatrix}$의 거리는 $d = \sqrt{(1-2)^2 + (2-1)^2}$ 이다
+
+### 1-norm ($l_1$ norm, manhatten norm)
+
+1-norm 은
+
+a 벡터가 $\begin{bmatrix}1 \\2 \\3\end{bmatrix}$일 때, $||a||_1 = |1| + |2| + |3|$ 이다
+
+### p-norm
+
+위를 보면 각 원소의 p 승을 p분의 1로 나눈걸로 정규화 시킬 수 있다
+
+→  $||x||_p = \sum_i (|x_i|^p)^\frac{1}{p}$
+
+### infinite-norm($\infty$-norm)
+
+p 를 무한대로 보내면
+
+가장 영향력이 큰 값 빼고는 다 무시된다 
+
+$||x||_\infty = {max}|x_i|$
+
+## 3.2 L2/L1/L $\infty$ 등고선 직관
+
+- 각 norm 이 크기가 1인 점들을 좌표평면에 찍어보면
+    - L2 : 원
+    - L1 : 마름모
+    - L $\infty$ : 정사각형
+
+---
+
+## 4. 행렬 기본
+
+## 4.1 선형 변환과 행렬
+
+### 선형 변환
+
+변환은 함수 $T$이다
+
+$T:\mathbb{R}^n \to \mathbb{R}^m$
+
+**변환 = 함수**이다(입력이 들어가면 출력을 내놓는 구조)
+
+즉, 어떤 벡터를 넣으면 다른 벡터가 나옴
+
+이 변환을 특수한 변환 **‘선형’으로만** 변환해서 선형 변환
+
+**선형(linear)** 이 되려면 아래 두 성질을 만족해야 한다.
+
+1. **덧셈 보존**
+
+$T(u+v)=T(u)+T(v)$
+
+1. **스칼라곱 보존**
+
+$T(cu)=cT(u)$
+
+**선형 변환의 2가지 성질**
+
+- 직선은 직선인 채로 유지
+- 원점 고정 유지
+
+→ 선형 변환은 공간이 움직이는 방식(격자선이 평행하고 균등한채로)
+
+### 선형 변환과 행렬
+
+벡터 $v$ 가 $\begin{bmatrix}-1 \\2\end{bmatrix} = -1 \hat i + 2\hat j$이고, 기저벡터 $\begin{bmatrix}1 \\0\end{bmatrix}$ $\hat{i}$ 와 $\begin{bmatrix}0 \\1\end{bmatrix}$ $\hat{j}$ 가 있다.
+
+이때 **기저벡터를 변환(선형 변환)**시키면 → **벡터도 변함**
+
+**즉, 기저벡터가 움직이는 도달점만 알면 변환 벡터 값**을 알 수 있다
+
+변환된 $\hat i$ 가 $\begin{bmatrix}1 \\-2\end{bmatrix}$이고, 변환된 $\hat j$ 가 $\begin{bmatrix}3 \\0\end{bmatrix}$이면
+
+$new \space v = -1(new \space \hat i) + 2(new \space \hat j)$
+
+$new \space v = -1\begin{bmatrix}1 \\-2\end{bmatrix} + 2\begin{bmatrix}3 \\0\end{bmatrix} = \begin{bmatrix}1 \space\space3 \\-2 \space 0\end{bmatrix}\begin{bmatrix}-1 \\2\end{bmatrix} =\begin{bmatrix}5 \\2\end{bmatrix}$
+
+즉, 선형 변환을 행렬 $\begin{bmatrix}1&3 \\-2 &0\end{bmatrix}$로 기술할 수 있다
+
+> 행렬 $\begin{bmatrix}a& b \\c & d\end{bmatrix}$에서
+> 
+> 
+> 1열의 $\begin{bmatrix}a \\c\end{bmatrix}$는 첫번째 기저 벡터가 도달하는 좌표로 해석
+> 
+> 2열의 $\begin{bmatrix}b \\d\end{bmatrix}$는 두번째 기저 벡터가 도달하는 좌표로 해석할 수 있다
+> 
+> 즉, 행렬의 **각 열(column)** 은 **기저벡터가 어디로 가는지**를 담고 있다.
+> 
+
+### ⇒ **핵심 개념 : 선형 변환은 행렬로 기술된다**
+
+## 4.2 행렬 연산과 shape 감각
+
+### (1) $x^Ty$ : **내적(dot product)**
+
+- **shape**
+    - $x\in\mathbb{R}^{n\times1}$, $y\in\mathbb{R}^{n\times1}$
+    - $x^T\in\mathbb{R}^{1\times n}$
+    - $x^Ty\in\mathbb{R}^{1\times1}$ → **스칼라**
+- **의미**
+    - “두 벡터의 유사도/정렬 정도”
+    - 기하적으로 $\|x\|\|y\|\cos\theta$
+
+### (2) $xy^T$ : **외적(outer product)**
+
+- **shape**
+    - $x\in\mathbb{R}^{n\times1}$, $y^T\in\mathbb{R}^{1\times n}$
+    - $xy^T\in\mathbb{R}^{n\times n}$ → **행렬**
+- **의미**
+    - “ $x$  방향 성분을 $y$ 성분으로 스케일해서 만든 **랭크 1 행렬**”
+    - 모든 열이 $x$의 스칼라배, 모든 행이 $y^T$ 의 스칼라배
+
+## 4.3 선형변환의 합성과 행렬의 곱셈
+
+두 선형 변환을 한 경우를 보자
+
+벡터 $v = \begin{bmatrix}x\\y\end{bmatrix}$에 **회전(rotation) 후 전단(shear)** 을 적용해보자
+
+회전 : $R = \begin{bmatrix}0 & -1 \\1 &  0\end{bmatrix}$
+
+전단 : $S = \begin{bmatrix}1 & 1 \\0 &  1\end{bmatrix}$
+
+그러면 합성 변환은 $R(Sv) = (RS)v$ 이며, **오른쪽 행렬부터 먼저 적용**된다
+
+### 합성 행렬 계산
+
+ $RS = \begin{bmatrix}1 & 1 \\0 &  1\end{bmatrix}\begin{bmatrix}0 & -1 \\1 &  0\end{bmatrix}$ 이다 (변환의 적용은 오른쪽에서 왼쪽으로 적용된다)
+
+기저벡터 관점으로 따라가보면 회전하고 전단을 진행했을 때 $\begin{bmatrix}1 & -1 \\1 &  0\end{bmatrix}$가 된다
+
+결국, $\begin{bmatrix}0 & -1 \\1 &  0\end{bmatrix}\begin{bmatrix}1 & 1 \\0 &  1\end{bmatrix} = \begin{bmatrix}1 & -1 \\1 &  0\end{bmatrix}$이라는 결과가 나온다
+
+**두 행렬의 곱셈**이 **기하학적**으로 나타내는 것은 **한 변환과 다른 변환의 순차적 적용**이다
+
+즉, **행렬 곱** $RS$ 는 **“회전 후 전단”이라는 선형변환의 합성**을 나타내며, 곱의 결과가 곧 **합성 행렬**이다
+
+### 일반형 정리(열 벡터 관점)
+
+$\begin{bmatrix}a & b \\c &  d\end{bmatrix}\begin{bmatrix}e & f \\g &  h\end{bmatrix}$로 다시 한번 보면
+
+먼저 $\hat i$ 의 좌표는 첫번째 선형 변환에 의해 $\begin{bmatrix}e\\g\end{bmatrix}$가 된다 
+
+→ 그리고 이 벡터 $\begin{bmatrix}e\\g\end{bmatrix}$ 에 $\begin{bmatrix}a & b \\c &  d\end{bmatrix}$선형 변환을 적용시키면
+
+$e\begin{bmatrix}a\\c\end{bmatrix}+ g\begin{bmatrix}b\\d\end{bmatrix} = \begin{bmatrix}ae + bg \\ce+  dg\end{bmatrix}$   → 이것이 행렬 곱의 **첫번째 열**이다
+
+다음으로 $\hat j$ 의 좌표는 첫번째 선형 변환에 의해 $\begin{bmatrix}f\\h\end{bmatrix}$가 된다
+
+→ 그 다음 이 벡터 $\begin{bmatrix}f\\h\end{bmatrix}$에  $\begin{bmatrix}a & b \\c &  d\end{bmatrix}$선형 변환을 적용시키면
+
+$f\begin{bmatrix}a\\c\end{bmatrix}+ h\begin{bmatrix}b\\d\end{bmatrix} = \begin{bmatrix}af + bh \\cf+  dh\end{bmatrix}$ → 이것이 행렬 곱의 **두번째 열**이다
+
+⇒ $\begin{bmatrix}a & b \\c &  d\end{bmatrix}\begin{bmatrix}e & f \\g &  h\end{bmatrix} = \begin{bmatrix}ae +bg & af + bh \\ce+dg & cf + dh\end{bmatrix}$가 된다
+
+> 두 선형 변환이 $m1, m2$ 일때
+> 
+> 
+> $m1m2 = m2m1$ 일까?
+> 
+> 답은, 일반적으로 **아니오!**
+> 
+> 왜냐하면 순서가 바뀌면 **최종 결과가 달라지는 경우가 대부분**이다
+> 
+> (예외, 항등행렬, 같은 변환..)
+> 
+
+## 4.4 행렬식(determinant)
+
+선형변환을 이해하는 또 다른 유용한 방법
+
+→ **공간이 넓어지거나 찌그러지는 정도(스케일)를 실제로 재는 값**이다
+
+기저 벡터 $\hat i ,\hat j$ 이 이루는 넗이는 1 x 1 
+
+이때  $\begin{bmatrix}3 & 0 \\0 &  2\end{bmatrix}$인 선형 변환이 일어나면
+
+$\hat i$은 3배, $\hat j$ 은 2배로 → 넓이가 **2 x 3 인 직사각형**이 된다
+
+즉, 넓이가 1 → 6 으로 바뀌므로
+
+⇒ 이 선형 변환은 **모든 넓이를 6배 스케일**했다고 말할 수 있다
+
+선형변환으로 인해 넓이가 어떤 스케일 인자만큼 변할 때,
+
+그 인자를 해당 변환의 **행렬식(determinant)** 이라 한다
+
+$det(\begin{bmatrix}3 & 0 \\0 &  2\end{bmatrix}) = 6$
+
+**<행렬식 계산>**
+
+$det(\begin{bmatrix}a & b \\c &  d\end{bmatrix}) = ad - bc$
+
+### 행렬식이 음수인 경우
+
+$det(\begin{bmatrix}1 & 2 \\3 &  4\end{bmatrix}) = -2$ 는 무슨 의미 일까?
+
+- **부호(sign)** 는 **방향(orientation)** 과 관련 있다
+- 즉, **음수 행렬식은 공간이 뒤집혔다**는 뜻이다
+- (절댓값 은 여전히 넓이가 스케일된 정도를 나타낸다)
+
+### 3차원에서는?
+
+3차원에서의 행렬식은 **평행육면체의 부피를 얼마나 스케일하는지**를 의미한다
+
+$det(\begin{bmatrix}a & b & c \\d & e & f  \\ g&h&i\end{bmatrix}) = a\cdot det(\begin{bmatrix}e & f \\h &  i\end{bmatrix})  -b\cdot det(\begin{bmatrix}d & f \\g &  i\end{bmatrix})+ c\cdot det(\begin{bmatrix}d & e \\g &  h\end{bmatrix})$
+
+### 행렬식이 0인 경우
+
+→ 행렬식이 알려주는 가장 중요한 정보 중 하나는 변환이 **선형 종속(차원 축소)** 인지 여부이다
+
+$det = 0$ 이면
+
+- 모든 공간이 더 작은 차원으로 줄어들었다는 뜻이다
+    - 2차원 → 1차원
+    - 3차원 → 2차원
+
+이런 선형 종속 변환에서는 면적/부피가 **0**이 된다
+
+## 4.5 대각합(trace)
+
+- 정의 : diagonal elements 들을 모두 더한 값
+    
+    $tr(A) = \sum ^n_{i=1}a_{ii}$
+    
+
+### trace 관련 properties
+
+1. $tr(A + B) = tr(A) + tr(B)$
+2. $tr(cA) = c\cdot tr(A)$
+3. $tr(A^T) = tr(A)$
+4. $tr(AB) = tr(BA)$
+5. $tr(A^TB) = tr(BA^T)$
+6. $tr(ABCD) = tr(BCDA) = tr(CDAB) = tr(DABC)$
+7. $tr(A) = \sum ^n_{i=1}\lambda_i$
+
+## 4.6 특수 행렬들
+
+### 정방 행렬(square matrix)
+
+- 행과 열의 수가 같은 행렬
+    - 선형 대수학의 많은 연산에 필수적인 행렬이다
+
+### 항등 행렬(identity matrix, $I$)
+
+- 곱했을 때 그대로 인, 항등원의 역할
+- 대각선의 값이 1이고 다른 값은 모두 0인 행렬
+    - 행렬 $A$에 $A^{-1}$를 곱해주면 항등행렬 $I$가 나온다
+        
+        $\begin{bmatrix}1 & 0& 0 \\0 & 1 & 0  \\ 0&0&1\end{bmatrix}$
+        
+
+### 대각행렬(diagonal matirx, $D$)
+
+- 대각선에만 값이 있고 나머지는 모두 0
+    - 벡터 공간에 적용되는 간단한 스칼라 값을 나타냄
+- $diag( )$
+    - $a= \begin{bmatrix}a1 \\a2  \\ a3\end{bmatrix}, diag(a) =?$
+    - $diag(a) = \begin{bmatrix}a1 & 0 & 0 \\0 & a2 & 0  \\ 0&0&a3\end{bmatrix}$
+    - $diag(\begin{bmatrix}a1 & a2 & a3 \\a4 & a5 & a6  \\ a7&a&a9\end{bmatrix}) = \begin{bmatrix}a1 \\a5  \\ a9\end{bmatrix}$
+
+### 대칭 행렬(symmetric matrix)
+
+- 전치 행렬과 자기 자신이 같은 행렬
+- $A = A^T$
+
+### 직교행렬(orthogonal matrix, $Q$)
+
+- 행렬의 모든 column  들이 서로 서로 직교하는 행렬
+    - 각 column 들이 orthonormal 하다
+        
+        $\begin{bmatrix}1 & 0& 0 \\0 & 1 & 0  \\ 0&0&1\end{bmatrix}$, $\begin{bmatrix}cos\theta & -sin\theta \\sin\theta & cos\theta\end{bmatrix}$
+        
+- 전치 행렬($A^{T}$)이 곧 역행렬($A^{-1}$)인 행렬을 말한다
+    - $Q^{T}Q = I$
+    - $Q^{-1} = Q^T$
+
+---
+
+## 5. 연립방정식, 역행렬, 부분공간
+
+## 5.1 연립 선형 방정식의 기하학적 해석
+
+선형대수의 중요한 쓰임 중 하나는 **연립 선형 방정식**을 푸는 것이다
+
+$2x + 3y = -4$ 
+
+$1x + 3y = -1$
+
+$→  \begin{bmatrix}2 & 3 \\1 &  3\end{bmatrix}\begin{bmatrix}x\\y\end{bmatrix} = \begin{bmatrix}-4 \\-1\end{bmatrix}$
+
+위 식의 선형변환 $\begin{bmatrix}2 & 3 \\1 &  3\end{bmatrix}$ 를 $A$, $\begin{bmatrix}x\\y\end{bmatrix}$벡터를 $x$, $\begin{bmatrix}-4 \\-1\end{bmatrix}$벡터를 $v$ 라고 하면
+
+→즉,  $Ax = v$
+
+이 식의 기하학적 해석:
+
+“선형변환 A를 적용했을 때 결과가 v가 되도록 만드는 입력 벡터 x를 찾는 문제”이다
+
+### 1) det(A) ≠ 0 인 경우 (가역 / invertible)
+
+- 변환 A가 공간을 더 낮은 차원으로 **찌그러뜨리지 않는 경우**이다.
+- 이때는 **모든 v에 대해 해 x가 정확히 하나** 존재한다.
+
+이때 변환을 “되돌리는” 행렬이 존재하며, 그것이 **역행렬** $A^{-1}$ 이다.
+
+### 역행렬의 성질
+
+역행렬이 성질 에는 행렬과 역행렬을 곱하면
+
+$A^{-1} A = I$
+
+- $I$는 **항등행렬(항등변환)**: “아무것도 하지 않는 변환”이다.
+
+따라서 해는
+
+- $x = A^{-1}v$
+
+### 2) det(A) = 0 인 경우 (비가역 / non-invertible)
+
+- 변환 A가 공간을 **하위 차원으로 압축**하는 경우이다
+- 이때는 일반적으로 **역행렬이 존재하지 않는다**
+    
+    (직선으로 눌린 걸 다시 평면으로 복구할 수 없기 때문)
+    
+
+하지만 **det(A)=0이어도 해가 존재할 수는 있다**
+
+핵심:
+
+- 해가 존재 ⇔ $v$가 **A가 만들 수 있는 출력의 집합** 안에 있을 때
+
+이 “가능한 출력의 집합”이 바로 **열공간(Column Space)** 이다
+
+## 5.2 열공간(Column Space), 행공간(row space)
+
+- 정의: $Ax$ 로 만들 수 있는 **모든 출력 벡터들의 집합**
+- 동치: $A$의 **열벡터들의 span(생성 공간)**
+
+즉,
+
+- 열공간 = “A가 도달 가능한 공간”
+- $Ax=v$ 가 풀리려면 $v$가 열공간 안에 있어야 한다
+
+- 행공간은 열공간과 마찬가지로 **A의 행 벡터**들이 span하는 공간이다
+
+## 5.3 랭크(Rank)
+
+행렬이 가지는 independent 한 column의 수
+
+**= column space의 dimension 이다**
+
+**independent 한 column의 수 = independent 한 row의 수 이다**
+
+따라서, 랭크 = **row space의 dimension** 도 된다
+
+$rank(A) = rank(A^T)$
+
+$rank(A) = dim(Row(A)) = dim(Col(A))$
+
+행렬 $\begin{bmatrix}1 & 2 & 3 \\0 &  0 & 0\end{bmatrix}$의 rank 는 1이다
+
+- independent 한 열이 1개이다 → rank = 1
+
+행렬 $\begin{bmatrix}1 & 0 & 1 \\0 &  1 & 1\end{bmatrix}$의 rank = 2
+
+- $\begin{bmatrix}1\\0\end{bmatrix}, \begin{bmatrix}0 \\1\end{bmatrix}$로 $\begin{bmatrix}1 \\1\end{bmatrix}$를 만들수 있으므로
+- independent 한 열은 2개 → rank = 2
+- 이 행렬은 row 개수만큰 rank 가 꽉차므로 → **full row rank** 라고 한다
+
+위 $\begin{bmatrix}1 & 2 & 3 \\0 &  0 & 0\end{bmatrix}$ 행렬은 row = 2 인데 rank = 1 이므로 → **rank-deficient** 라고 한다
+
+3x2 행렬이 rank = 2 이면 → **full column rank** 이고
+
+3x3 행렬이 rank = 3 이면 → **full rank** 라고 한다
+
+## 5.4 영공간(Null Space)
+
+- 정의: $Ax=0$을 만족하는 **모든 입력 벡터** $x$**의 집합**
+- 즉, “A를 적용했더니 원점(0)으로 가버리는 방향들”
+
+### **ex 1)**
+
+행렬 $\begin{bmatrix}1 & 0 & 1 \\0 &  1 & 1\end{bmatrix}$는 $Ax = x_1\begin{bmatrix}1 \\0\end{bmatrix} + x_2\begin{bmatrix}0 \\1\end{bmatrix} + x_3\begin{bmatrix}1 \\1\end{bmatrix} =\begin{bmatrix}0 \\0\end{bmatrix}$ 을 만족하려면
+
+1. $x = \begin{bmatrix}0 \\0 \\0 \end{bmatrix}$이면 된다 → 이 값은 **null space 에 항상 포함**된
+2. 아니면, $x$ 가 $\begin{bmatrix}1 \\1 \\-1 \end{bmatrix}. \begin{bmatrix}2 \\2 \\-2 \end{bmatrix}, ...$ 이어도 된다
+    
+    → $x_n = c\begin{bmatrix}1 \\1 \\-1 \end{bmatrix}$이다 
+    
+
+즉, x 의 null space 는 3차원 공간 안에서 1차원을 span 한다
+
+### **ex 2)**
+
+행렬 $\begin{bmatrix}1 & 2 & 3 \\0 &  0 & 0\end{bmatrix}$의 null space 를 찾아보면
+
+$x = \begin{bmatrix}-2 \\1 \\0 \end{bmatrix}$또는 $x = \begin{bmatrix}-3 \\0 \\1 \end{bmatrix}$일 때 이다
+
+이들을 모두 상수배 하고 더하면
+
+$A(c_1x_1) = 0, A(c_2x_2) =0$ 이므로 → $A(c_1x_1 + c_2x_2) =0$ 이다
+
+→ $x_n = c_1\begin{bmatrix}-2 \\1 \\0 \end{bmatrix} + c_2\begin{bmatrix}-3 \\0 \\1 \end{bmatrix}$ 
+
+따라서 null space 의 차원은 $x_1, x_2$가 span 하는 2차원이다
+
+ex1과 ex2 를 보면
+
+ex 1 에서는 행렬의 rank = 2, null space의 dimension = 1
+
+ex 2 에서는 rank = 1,  null space의 dimension = 2 이다
+
+보면, rank 와 null space의 dimension을 합하면 column 의 수가 나온다
+
+### → 즉, A 가 mxn 행렬 일 때, $dim(N(A)) = n - r$ 이다
+
+## 5.5 부분공간의 관계
+
+행렬 A가 $m \times n$이라고 하자
+
+- 입력공간: $R^n$
+- 출력공간: $R^m$
+
+**null space와 row space 는 수직한 space 이다!**
+
+$Ax = 0$ 을 보면 A의 row 벡터와 x의 null space 를 곱하면 0이 나와야 한다
+
+즉, A의 row 들이 span 하는 row space 전체와 x의 null space 는 수직해야 한다
+
+→ $N(A) ⟂ Row(A)$
+
+**<입력 공간>**
+
+$dim(N(A)) = n - r$ 이 식을 보면
+
+r 은 row space의 dimension 으로도 볼 수 있으므로
+
+→ $n = dim(N(A)) + dim(R(A))$ 이다
+
+즉, 실수 n 차원 공간은 row space의 dimension 과 null space의 dimension의 합이다
+
+**<left null space, 출력 공간>**
+left null space는 **출력공간 쪽 벡터**를 다룬다
+
+Ax를 column space 처럼 해석한 것처럼
+
+$x^TA$를 row space 로 바라보면
+
+$x^TA = 0$ 으로 만드는 x 의 집합을 left null space 라고 한다
+
+$x^T A= 0$이려면, x^T 의 모든 행들이 A의 열과 수직해야한다
+
+$dim_L(N(A)) = m - r$ 이고, r 이 column space 의 dimension 이므로
+
+→ $m = dim(N_L(A))+dim(C(A))$ 
+
+그리고 $x^TA =0$ ↔ $(x^TA)^T = 0$ ↔ $A^Tx = 0$ 이다
+
+즉, $N_L(A) = Null(A^T)$
+
+따라서 → $m = dim(N(A^T)) + dim(C(A))$
+
+![foursubspaces.jpg](public/images/uploads/linear-algebra-foundations-1.jpg)
+
+## 5.6 Rank-Nullity 정리
+
+- **한 줄 요약:** 입력 차원은 “살아남는 차원(rank) + 사라지는 차원(nullity)”로 분해된다
+    - $n =rank(A)+ nullity(A)$
+
+---
+
+## 6. 최소 자승법(Least Squares) & Projection matrix
+
+### Least squares 가 풀려는 것
+
+10x3 인 행렬 A 가 있고, full column rank 일 때,
+
+$col(A)$ 는 10차원에서 3차원을 span 한다
+
+이때, 10차원 안에 있는 어떤 벡터 b 가
+
+A가 span 하는 공간이 아닌 다른 공간에 존재 할 때
+
+A의 column space Ax 로는 b 가 될 수 없다
+
+→ 그럼 최대한 b 와 가깝게 만드는 x 를 찾자
+
+즉, Ax와 b 벡터를 빼서 그 길이가 가장 작은게 가까운거다
+
+- $b-Ax$를 에러 벡터 $e$ 라고 하자
+
+그 다음 2-norm 으로 $e$의 거리를 나타내면 된다
+
+2-norm 은 루트가 있으므로 이걸 제곱해주면
+
+결국, 최소 자승법에 목표는
+
+⇒ $||e||^2_2$ 을 줄이려는 것이다
+
+### 내적으로 풀기
+
+e가 가장 작으려면
+
+e와 Ax가 수직이면 된다
+
+따라서, b-Ax 와 Ax 를 내적하면 0 이되는 $\hat x$ 을 찾자
+
+⇒ $(b-A\hat x)^TA\hat x = 0$
+
+전개 해보면
+
+$(b^TA -\hat x^TA^TA)\hat x = 0$
+
+$\hat x$이 0인 것은 답이  아니므로
+
+ $b^TA -\hat x^TA^TA = 0$
+
+ $b^TA =\hat x^TA^TA$
+
+양변에 transpose 취해주면
+
+$A^Tb = A^TA\hat x$    →  이 식이 **normal equation**
+
+이제 $\hat x$ 를 구하기 위해 양변에 $A^TA$의 inverse 를 곱해주면
+
+⇒ $\hat x = (A^TA)^{-1}A^Tb$
+
+### Projection matrix
+
+위에서 구한 $\hat x$ 를 원래 식에 넣어보면
+
+$A\hat x = A(A^TA)^{-1}A^Tb$
+
+여기서 $A(A^TA)^{-1}A^T$ 를 b 벡터에 곱합으로써 정사영된 벡터를 얻은것이므로
+
+$A(A^TA)^{-1}A^T$ 를 proection matrix 라고 하고 $P_A$ 라고 한다
+
+---
+
+## 7. 고유값 고유 벡터(eigenvalue, eigenvetor)
+
+## 7.1 고유값/고유벡터 정의와 직관
+
+대부분의 벡터는 선형변환 A를 거치면 **방향이 바뀌어** 원래 자기 스팬($span\{v\}$)을 벗어난다
+
+하지만 어떤 특별한 벡터들은 변환 후에도 **같은 직선 위(자기 스팬)** 에 남는다
+
+이런 벡터를 **고유벡터**라고 한다
+
+고유벡터 v와 고유값 λ는 다음을 만족한다
+
+$A\overrightarrow{v} = \lambda \overrightarrow{v}$
+
+- A : 선형변환(행렬)
+- v : 고유벡터 (단, v ≠ 0)
+- λ : 고유값(스칼라)
+
+위 식의 기하학적 의미 : 
+
+- **방향은 그대로**(또는 반대로) 유지되고
+- **크기만 λ배**로 바뀐다.
+
+## 7.2 고유값 구하기
+
+위 식을 한쪽으로 모으면
+
+$(A -\lambda I) v = 0$  이다
+
+만약 $A-\lambda I$ 가 invertible 하면
+
+양변에 $(A-\lambda I)^{-1}$ 를 곱해서 v =  0 밖에 못나온다
+
+따라서, $A-\lambda I$ 는 **non-invertible 해야한다**
+
+즉, $det(A - \lambda I)= 0$ 이어야 한다
+
+⇒ $det(A - \lambda I)= 0$ 를 만족하는 $\lambda$ 들이 고유값
+
+### 고유 벡터 구하기
+
+고유 벡터는 없거나 무한하다
+
+$(A -\lambda I) v = 0$ 를 만족해야 하므로 
+
+이식에서 고유 벡터는 $nullspace(A-\lambda I)$ 이다
+
+고유 벡터는 무한하므로
+
+nullspace의 basis를 고유벡터로 삼는다
+
+## 7.3 고유값 분해(Eigendecomposition)
+
+2x2 인 행렬 A가
+
+eigen value 2개, eigen vector 2개를 가진다고 할 때
+
+$Av_1 = \lambda _1v_1$,  $Av_2 = \lambda v_2$ 이 두 식을 합쳐보면
+
+→ $A\begin{bmatrix}v_1 &v_2\end{bmatrix}= \begin{bmatrix}\lambda _1v_1 & \lambda _2v_2\end{bmatrix} = \begin{bmatrix}v_1 &v_2\end{bmatrix}\begin{bmatrix}\lambda _1 & 0 \\ 0&\lambda _2 \end{bmatrix}$ 
+
+- $\begin{bmatrix}v_1 &v_2\end{bmatrix}$ 를 $V$ 라고 하고, $\begin{bmatrix}\lambda _1 & 0 \\ 0&\lambda _2 \end{bmatrix}$를 $\Lambda$ 라고 하자
+
+그 다음 양변에 $V^{-1}$ 을 곱해주면
+
+⇒ $A = V\Lambda V^{-1}$ 라고 할 수 있다
+
+### 고유값 분해 활용
+
+1. $A^k$ 을 구하기 쉽다
+    
+    $A^k = V\Lambda V^{-1} \cdot V \Lambda V^{-1} \cdot V \Lambda V^{-1} ... = V\Lambda ^k V^{-1}$ 
+    
+    (식 가운데 $V^{-1}$와 $V$가 없어지고 $\Lambda$만 남음)
+    
+2. 역행렬 구하기 더 쉽다
+    
+    $A^{-1} = (V\Lambda V^{-1})^{-1} = V\Lambda ^{-1}V^{-1}$
+    
+3. det 계산이 쉽다
+    
+    $det(A) = det(V\Lambda V^{-1}) = det(V)det(\Lambda)det(V^{-1}) = \lambda_1 \cdot \lambda_2 \cdot \lambda_3 \cdot ... = \Pi^n_i\lambda_i$
+    
+    - ( $det(V^{-1}) = 1 / det(V)$) 이므로
+4. trace 계산
+    
+    $tr(A) = tr(V\Lambda V^{-1}) = tr(\Lambda V^{-1}V) = tr(\Lambda) = \sum^n_i\lambda_i$
+    
+5. 행렬이 rank-dificient 하면 det(A) = 0 이다
+    
+    ⇒ 따라서 rank-dificient 한 행렬은 0인 eigen value 가 하나 이상 존재한다
+    
+
+### 알아두면 좋은 것
+
+1. $A^T$의 eigen value = $A$의 eigen value 이다
+2. $A$ 가 orthogonal matrix 이면 $\lambda$ 는 1 아니면 -1 이다
+3. $A$가 positive semi-definite(P.S.D) 이면 $\lambda_i >= 0$ 과 동치
+4. **중요** : Diagonalizable matrix A 의 non-zero eigen value 의 수는 rank(A) 와 같다
+
+> Diagonalizable = 고유값, 고유벡터로 ‘대각화’ 하는 분해가 가능하다는 뜻
+> 
+
+## 7.4 대칭행렬의 고유값 분해
+
+**대칭 행렬(symmetric matrix)는 무조건 Diagonalizable 하다**
+
+대칭 행렬 이므로 $A = A^T$
+
+Diagonalizable 하므로 
+
+- $A = V\Lambda V^{-1}$
+- $A^T = V^{-T}\Lambda V^T$
+
+두 식이 같으므로 $V^{-1} = V^T$가 만족되도록(orthogonal matrix 이도록) V 를 잡을 수 있다
+
+V를 orthogonal matrix로 보므로 Q라고 표기 하면
+
+→ $A = Q\Lambda Q^T$ 라고 할 수 있다
+
+따라서, 대칭행렬은 diagonlizable 이며 $A = Q\Lambda Q^T$ 된다
+
+이로 인해 재밌는 해석들이 많이 나온다
+
+Q가 가지는 컬럼들을 q1, q2, q3라고 하고 이들은 모두 직교한다(orthogonal 하므로)
+
+따라서 A 를 다시 표기해보면
+
+$A = \begin{bmatrix}q_1 &q_2&q_3\end{bmatrix}\begin{bmatrix}\lambda_1 &0 &0 \\ 0&\lambda_2 &0\\0&0&\lambda_3\end{bmatrix}\begin{bmatrix}q_1^T \\q_2^T\\q_3^T\end{bmatrix}$
+
+⇒ $A = \lambda_1q_1q_1^T + \lambda_2q_1q_2^T + \lambda_3q_3q_3^T$
+
+$q_1q_1^T, q_2q_2^T, q_3q_3^T$ 들은 모두 rank-1 행렬 들이다
+
+즉, A 를 3개의  rank-1 행렬들로 쪼갠다음에 각각의 람다 값을 곱해준 것이다
+
+### $Ax$ 해석
+
+$A = A^T$면, $A = \lambda_1q_1q_1^T + \lambda_2q_1q_2^T + \lambda_3q_3q_3^T$ (A : 3x3 행렬) (q들은 서로 수직)
+
+그 다음 A를 통과하는 행위를 다시 보면
+
+$Ax = \lambda_1q_1q_1^Tx + \lambda_2q_1q_2^Tx + \lambda_3q_3q_3^Tx$ 이다
+
+여기서! $q_1^Tx$는 x와 q1 을 내적한 값이고 그 값에 $q_1$을 곱해줬으므로 
+
+$x$를 $q_1$  방향으로 projection 내린 벡터로 볼수 있다
+
+→ 변환 A를 =  $x$를 $q_1, q_2, q_3$ 방향으로 각각 정사영 한다음에 그 조합에 각각 $\lambda$를 곱해준 걸로 볼 수 있다
+
+다시 정리해보면
+
+선형 변환 A는
+
+A가 가진 orthogonal한 eigen vector들로 x를 정사영한 다음
+
+$\lambda$들로 조절해서 재조합 한다이다
+
+---
+
+## 8. SVD(특이값 분해, Singular value Decomposition)
+
+eigen decomposition 에는 한계가 있다
+
+1. nxn 행렬에서만 된다
+2. symmetric이면 잘 된다
+
+### SVD 정의
+
+SVD는 임의의 mxn 차원의 행렬 A를 다음과 같이 분해할 수 있다
+
+$A = U\Sigma V^T$
+
+- $A$  : $m\times n$ 행렬
+- $U$ : $m\times m$ orthogonal matrix → $U^TU =I$
+- $\Sigma$ : $m\times n$ diagonal 형태 matrix
+    - 대각선에 특이값(singular values)
+- $V$ : $n\times n$ orthogonal matrix
+
+### 특이값, 특이벡터
+
+- $V$의 열벡터 $v_i$: **오른쪽 특이벡터** (입력공간 $R^n$의 특별한 직교축)
+- $U$의 열벡터 $u_i$: **왼쪽 특이벡터** (출력공간 $R^m$의 특별한 직교축)
+- $σ_i$: 그 축이 변환될 때의 **스케일(늘림/줄임)**
+
+핵심 관계 → $Av_i = \sigma_i u_i$
+
+즉,
+
+- 입력공간의 직교축 $v_i$로 넣으면
+- 출력공간의 직교축 $u_i$ 방향으로
+- 크기만 $σ_i$배가 된다
+
+### 기하학적 의미
+
+SVD는 임의의 선형변환 $A$를 다음 3단계로 이해하게 해준다.
+
+1. $V^T$ : 입력공간을 **회전/반사**해서 “특별한 직교축” $v_i$ 기준으로 정렬
+2. $Σ$ : 각 축을 $σ_i$**만큼 스케일** (축마다 늘림/줄임)
+3. $U$ : 출력공간에서 다시 **회전/반사**해서 최종 위치로 보냄
+
+즉,
+
+- **회전/반사 → 축별 스케일 → 회전/반사**
+    
+    로 모든 행렬이 표현된다
+    
+
+## SVD와 eigen decomposition
+
+SVD 는 $Av_i = \sigma_i u_i$ 라고 했다
+
+### 1. $A^TA$
+
+위 식에 A^T를 곱하면
+
+→ $A^T(Av_i) = A^T(\sigma_i u_i)$
+
+→ $(A^TA)v_i = \sigma_i A^Tu_i$ 
+
+$A^Tu_i$ 는 = $\sigma_i v_i$ 이므로 대입하면
+
+→ $(A^TA)v_i = \sigma^2_iv_i$
+
+따라서, $v_i$는 $A^TA$의 고유벡터
+
+고유값은 $\sigma^2_i$
+
+### 2. $AA^T$
+
+이번에는 식에 A를 곱하면
+
+→ $A(A^Tu_i​)=A(σ_i​v_i​)$
+
+→ $(A A^T) u_i = σ_i (A v_i)$
+
+$A v_i = σ_i u_i$ 이므로 대입하면
+
+→ $A A^T u_i = σ_i^2 u_i$
+
+‘
+
+따라서, $u_i$는 $AA^T$의 고유벡터
+
+고유값은 $\sigma^2_i$
+
+### 정리
+
+- $A^T A$의 고유벡터 = **V** (오른쪽 특이벡터)
+- $A A^T$의 고유벡터 = **U** (왼쪽 특이벡터)
+- 고유값 = $σ^2$ (특이값 제곱)
