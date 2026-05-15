@@ -676,7 +676,7 @@ $dim_L(N(A)) = m - r$ 이고, r 이 column space 의 dimension 이므로
 
 따라서 → $m = dim(N(A^T)) + dim(C(A))$
 
-![foursubspaces.jpg](images/uploads/linear-algebra-foundations-1.jpg)
+![linear-algebra-foundations-1.jpg](images/uploads/linear-algebra-foundations-1.jpg)
 
 ## 5.6 Rank-Nullity 정리
 
