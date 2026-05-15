@@ -15,7 +15,7 @@ tags:
   - SVD
 draft: false
 series: Math
-seriesOrder: 3
+seriesOrder: 5
 featured: false
 ---
 
