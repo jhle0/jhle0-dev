@@ -498,7 +498,7 @@ pooling이나 global average pooling 같은 연산을 거치면서 작은 위치
 - Convolution은 주로 translation equivariance를 만든다.
 - Pooling과 GAP는 작은 위치 변화에 대한 invariance를 높이는 데 도움을 준다.
 
-# CNN 구조
+## CNN 구조
 
 전형적인 CNN 구조는 convolution layer와 pooling layer를 반복해서 쌓은 뒤,
 
