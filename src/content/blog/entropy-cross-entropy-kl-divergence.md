@@ -4,7 +4,7 @@ description: Entropy, Cross-Entropy, KL Divergence의 개념과 관계를 정리
   불확실성과 분포 간 차이를 어떻게 측정하는지, 그리고 왜 Cross-Entropy minimization이 KL Divergence
   minimization과 연결되는지를 설명합니다.
 pubDate: 2026-03-17
-updatedDate: ""
+updatedDate: 2026-05-27
 slug: entropy-cross-entropy-kl-divergence
 topic: study
 tags:
