@@ -424,7 +424,7 @@ GoogLeNet은 성능과 효율성 면에서 강했지만, 구조가 복잡하다.
 - VGG보다 훨씬 적은 parameter 수로 높은 성능을 냈다.
 - 이후 Inception 계열 모델은 더 효율적인 convolution factorization과 residual connection 방향으로 발전한다.
 
-# InceptionNet v2 / v3
+## InceptionNet v2 / v3
 
 > 
 > 
@@ -567,7 +567,7 @@ Inception v2/v3의 한계는 다음이다.
 - feature map의 크기를 줄일 때 pooling만 사용하는 대신, stride=2 convolution과 pooling을 함께 사용해 정보 손실을 줄이는 grid size reduction 구조를 사용했다.
 - 목적은 단순히 깊게 만드는 것이 아니라, **연산량 대비 성능을 높이는 것**이다.
 
-# ResNet
+## ResNet
 
 > Title : Deep Residual Learning for Image Recognition
 > 
@@ -742,7 +742,7 @@ ResNet은 매우 강력하지만 한계도 있다.
 - ResNet은 degradation problem을 해결해 매우 깊은 CNN 학습을 가능하게 했다.
 - ResNet 이후의 많은 CNN 모델은 residual connection을 기본 설계 원리로 사용한다.
 
-# Inception-v4 / Inception-ResNet
+## Inception-v4 / Inception-ResNet
 
 > Title : Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning
 > 
@@ -872,7 +872,7 @@ Inception-v4 / Inception-ResNet의 한계는 다음이다.
 - residual connection은 Inception network의 학습 속도를 크게 높인다.
 - 매우 넓은 Inception-ResNet에서는 residual branch를 그대로 더하면 학습이 불안정할 수 있어 **residual scaling**을 사용한다.
 
-# WideResNet
+## WideResNet
 
 > Title : Wide Residual Networks
 > 
@@ -1000,7 +1000,7 @@ WideResNet의 한계는 다음이다.
 - `WRN-28-10`에서 `28`은 depth, `10`은 widening factor이다.
 - WideResNet은 depth만 늘리는 방식의 한계를 지적했다.
 
-# ResNeXt
+## ResNeXt
 
 > Title : Aggregated Residual Transformations for Deep Neural Networks
 > 
@@ -1149,7 +1149,7 @@ ResNeXt의 한계는 다음이다.
 - `ResNeXt-50 32×4d`에서 `32`는 group 개수, `4d`는 각 group의 width를 의미한다.
 - ResNeXt는 depth와 width 외에 **cardinality도 CNN 성능을 높이는 중요한 설계 축**임을 보여줬다.
 
-# DenseNet
+## DenseNet
 
 > Title : Densely Connected Convolutional Networks
 > 
@@ -1295,7 +1295,7 @@ DenseNet의 한계는 다음이다.
 - Growth rate는 각 layer가 새롭게 추가하는 channel 수를 의미한다.
 - DenseNet은 적은 parameter로도 강한 성능을 낼 수 있는 parameter-efficient CNN이다.
 
-# SENet
+## SENet
 
 > Title : Squeeze-and-Excitation Networks
 > 
@@ -1448,7 +1448,7 @@ SENet의 한계는 다음이다.
 - Recalibration은 계산된 channel weight를 원래 feature map에 곱해 중요한 channel을 강조하는 과정이다.
 - SENet은 기존 CNN에 쉽게 붙일 수 있는 **channel attention module**이다.
 
-# MobileNet V1
+## MobileNet V1
 
 > Title : MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications
 > 
@@ -1574,7 +1574,7 @@ MobileNet V1의 한계는 다음이다.
 
 ---
 
-# MobileNet V2
+## MobileNet V2
 
 > Title : MobileNetV2: Inverted Residuals and Linear Bottlenecks
 > 
@@ -1706,7 +1706,7 @@ MobileNet V2의 한계는 다음이다.
 
 ---
 
-# MobileNet V3
+## MobileNet V3
 
 > Title : Searching for MobileNetV3
 > 
@@ -1831,7 +1831,7 @@ MobileNet V3의 한계는 다음이다.
 - MobileNet V3는 FLOPs만 줄이는 것이 아니라, **실제 모바일 기기에서 빠르고 정확한 모델**을 만드는 데 초점을 둔다.
 - MobileNet 계열은 CNN architecture 흐름에서 `accuracy 중심 → efficiency 중심 → hardware-aware optimization`으로 발전한 대표 사례이다.
 
-# EfficientNet
+## EfficientNet
 
 > Title : EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks
 > 
