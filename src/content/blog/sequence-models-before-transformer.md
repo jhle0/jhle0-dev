@@ -36,7 +36,7 @@ Transformer 이전의 sequence model들은 대부분 **순차 처리(sequential 
 
 ## RNN(Recurrent Neural Network)
 
-![cnn-foundations-1.png](public/images/uploads/cnn-foundations-1.png)
+![sequence-models-before-transformer-1.png](public/images/uploads/sequence-models-before-transformer-1.png)
 
 
 RNN(Recurrent Neural Network)은 시간 순서가 있는 , 순서가 있는 데이터(sequential data)를 처리하도록 설계된 신경망 구조이다.
