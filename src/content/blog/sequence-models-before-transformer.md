@@ -596,35 +596,3 @@ RNN-based Seq2Seq는 입력 sequence를 출력 sequence로 바꿀 수 있다는 
 
 하지만 기본 Seq2Seq에서는 decoder가 매번 입력 sequence 전체를 직접 보는 것이 아니라, 하나의 context vector만 보고 출력한다.
 
-### Attention의 필요성
-
-지금까지의 흐름을 보면 문제는 점점 명확해진다.
-
-RNN은 sequence를 순서대로 처리할 수 있었다.
-
-LSTM과 GRU는 긴 문맥 문제를 어느 정도 완화했다.
-
-Seq2Seq는 입력 sequence를 출력 sequence로 변환할 수 있었다.
-
-하지만 여전히 다음 한계가 남아 있었다.
-
-1. 긴 sequence에서는 앞쪽 정보가 약해질 수 있다.
-2. Loss와 멀리 있는 입력 토근이 gradient에 미치는 영향력이 작아진다.
-3. RNN 계열 모델은 순차 계산 구조를 가진다.
-4. Seq2Seq는 입력 전체를 하나의 context vector에 압축해야 한다.
-5. Decoder가 출력할 때 입력의 필요한 부분을 직접 참고하기 어렵다.
-
-그래서 다음 질문이 등장한다.
-
-```
-출력 token을 생성할 때마다
-입력 sequence의 필요한 부분을 직접 참고할 수는 없을까?
-```
-
-이 질문에서 Attention이 등장한다.
-
-즉, Attention은 기본 Seq2Seq의 한계에서 자연스럽게 나온 아이디어이다.
-
-하나의 context vector에 모든 정보를 압축하는 대신,
-
-decoder가 매 출력 step마다 입력 sequence의 필요한 부분을 참고하도록 만드는 것이다.
