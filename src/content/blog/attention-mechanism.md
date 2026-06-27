@@ -4,8 +4,10 @@ description: >-
   NN-based Seq2Seq의 context vector bottleneck에서 Attention이 왜 필요한지 정리한 글입니다.
 
   Decoder가 각 출력 시점마다 입력 sequence의 필요한 부분을 참고하는 방식과 Query, Key, Value 개념으로 이어지는 흐름을 설명한 내용입니다.
+
+  그리고 Transformer 구조에서 사용하는 self-attention에 대해 다룹니다.
 pubDate: 2026-06-19
-updatedDate: ""
+updatedDate: 2026-06-27
 slug: attention-mechanism
 topic: study
 tags:
@@ -19,6 +21,7 @@ tags:
   - Query
   - Key
   - Value
+  - self-attention
 draft: false
 series: Transformer & LLM Foundations
 seriesOrder: 4
@@ -233,3 +236,117 @@ $h_7$이 ‘돈을’이라는 의미가 뭉개진 채 넘어와  ‘쓰다’�
 이는 self-attention이라는 혁신적인 mechanism이 사용된다.
 
 이를 통해 문장 내 모든 단어 간의 관계를 직접적으로 고려하고 위와 같은 RNN 구조적 한계를 극복하게 된다.
+
+## Self-Attention
+
+transformer 구조에서는 RNN의 핵심이었던
+
+time step별로 이전 정보를 연결하는 과정을 없애
+
+RNN이 가지는 구조적 한계를 극복한다.
+
+앞에서 본 RNN + attention의 한계는 RNN의 연결 구조에서 비롯된다.
+
+transformer에서는 이러한 연결을 모두 없애고, 각 word embedding vector가 다른 token을 찬조하지 않고 독립적으로 생성되도록 한다.
+
+이런 초기 embedding vector는 context 정보를 담을 수 없다.
+
+따라서 self-attention mechanism을 도입한다.
+
+self-attention은 encoder와 decoder 각각이 가진 embedding vector들 각각에 대해 attention을 수행하는 과정이다.
+
+> 
+> 
+> 
+> 다만 RNN을 제거하면 token의 순서 정보가 자연스럽게 들어오지 않는다.
+> 
+> RNN은 $x_1 \rightarrow x_2 \rightarrow x_3$처럼 순서대로 처리하기 때문에 순서 정보가 구조 안에 들어있다.
+> 
+> 하지만 Transformer는 모든 token을 한 번에 처리하므로,
+> 
+> 각 token이 문장 안에서 몇 번째 위치에 있는지 따로 알려줘야 한다.
+> 
+> 이를 위해 token embedding에 positional encoding을 더해준다.
+> 
+
+### Encoder self-attention
+
+encoder에서 보면, h1, h2, h3가 최초에는 각 token들 만을 보고 embedding vector가 생성된다.
+
+이후 self-attention을 수행해 새로운 embedding vector $h^{\text{new}}$를 얻는다.
+
+$h^{\text{new}}_2$를 예시로 보면,
+
+$$
+h^{\text{new}}_2 = <h_2, h_1>h_1 + <h_2, h_2>h_2 + <h_2, h_3>h_3
+$$
+
+여기서 $h_2$는 Query vector가 되고, h1, h2, h3는 key, value vecotr가 된다.
+
+→ 이 과정을 통해 문장의 문맥(context)를 파악하여 해당 token의 의미를 더 정확하게 이해할 수 있게 된다. 
+
+또한, RNN과 달리 모든 위치의 token들을 동시에 처리할 수 있어 병렬 연산이 가능하고, 거리에 관계없이 모든 token간의 관계를 고려할 수 있다.
+
+### Decoder self-attention (Masked self-attention)
+
+decoder 역시 같은 방법으로 self-attention을 수행한다.
+
+예를 들어 $s^{\text{new}}_4$는 아래와 같다.
+
+$$
+s^{\text{new}}_4 = <s_4,s_1>s_1 + <s_4,s_2>s_2 + <s_4,s_3>s_3 + <s_4,s_4>s_4 + <s_4,s_5>s_5  
+$$
+
+여기서 주의할 점이 있다.
+
+decoder에서는 학습 시 teacher forcing 방식이 사용된다.
+
+이는 정답 문장을 입력으로 제공하는 방식이다.
+
+하지만, test 시에는 이전 token의 출력 만을 활용한다.
+
+이렇게 되면 학습 시에는 예측 해야 하는 token인 s5를 주고 학습시킨 후,
+
+test 시에는 s5 정보 없이 $s_4^{\text{new}}$를 생성하게 되어 성능이 크게 떨어진다.
+
+이는 마치 ‘줬다 뺏는’것과 같다.
+
+이런 문제를 해결하기 위해
+
+decoder의 self-attention에서는 masking 기법을 사용한다.
+
+따라서, $s_4^{\text{new}}$는 다음과 같아진다.
+
+$$
+s^{\text{new}}_4 = <s_4,s_1>s_1 + <s_4,s_2>s_2 + <s_4,s_3>s_3 + <s_4,s_4>s_4 
+$$
+
+이처럼 학습 시 미래 time step은 참조하지 못하게 해준다.
+
+구현은 미래 time step의 token들에 대한 내적 값을 -무한대 로 바꾸어 softmax 통과 후 0이 되도록 해준다.
+
+이로 인해, 미래 time step의 가중치를 0으로 만든다.
+
+이를 Masked self-attention이라고 한다.
+
+### context vector
+
+decoder에서는 이 방식으로 $s^{\text{new}}$를 구하고 나서 context vector도 갱신해준다.
+
+$c_4^{\text{new}}$를 예시로 보면
+
+$$
+c_4^{\text{new}} = <s_4^{\text{new}}, h_1^{\text{new}}>h_1^{\text{new}} + <s_4^{\text{new}}, h_2^{\text{new}}>h_2^{\text{new}} +<s_4^{\text{new}}, h_3^{\text{new}}>h_3^{\text{new}}
+$$
+
+여기서, query vector인 $s_4^{\text{new}}$는 각 layer 마다 갱신되는 embedding vector를 사용한다.
+
+$h_1^{\text{new}}, h_2^{\text{new}}, h_3^{\text{new}}$인 key, value vector는 encoder layer를 여러 번 통과한 후 마지막 최종 embedding vector를 사용한다.
+
+이렇게 decoder의 query vector와 encoder의 key, value vector를 사용하여 context vector를 생성하는 과정을 encoder-decoder attention이라고 한다.
+
+정리해보면,
+
+1. ‘갈수록 뭉개지는’ 현상으로 인해 decoder가 입력 문장의 마지막 token에만 집중하는 문제를 ‘Encoder-decoder attention’으로 완화했다.
+2. ‘멀수록 잊혀지는’ 현상으로 인한 decoder parameter 학습의 어려움은 ‘decoder의 self-attention’으로 해결한다.
+3. ‘embedding vector 자체가 의미를 제대로 담지 못한다는 문제’는 ‘encoder의 self-attention’으로 완화했다.
