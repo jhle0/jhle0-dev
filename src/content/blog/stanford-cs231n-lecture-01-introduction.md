@@ -34,7 +34,7 @@ featured: false
     - 생물의 시각 기관(Eyes)이 발달하면서 환경을 더 잘 인식할 수 있게 되었고, 이를 처리하기 위한 신경계와 행동 능력의 발달에도 영향을 주었을 것이라는 가설
     - Vision은 생물학적 지능의 발달의 primary 요소
 
-![stanford-cs231n-lecture-01-introduction.png](/images/uploads/stanford-cs231n-lecture-01-introduction.png)
+![stanford-cs231n-lecture-01-introduction-1.png](/images/uploads/stanford-cs231n-lecture-01-introduction-1.png)
 
 - Hubel and Wiesel (1959)
     - Neuron은 각각 특정 영역을 담당하는 Receptive Field 가지고
