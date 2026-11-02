@@ -19,15 +19,13 @@ featured: false
 ---
 ## **Stanford CS231N Deep Learning for Computer Vision | Spring 2025 |** Lecture 3 : Regularization and Optimization
 
-> **Lecture:** Stanford CS231n Spring 2025 — Lecture 3 : Regularization and Optimization
-> 
-> 
+> **Lecture:** [Stanford CS231n Spring 2025 — Lecture 3: Regularization and Optimization](https://www.youtube.com/watch?v=dyNGd06MWn4)
+>
 > **Lecturer:** Zane Durante
-> 
+>
 > **Sources:**
-> 
-> - Lecture Slides
-> - CS231n Official Course Website
+> - [Lecture Slides](https://cs231n.stanford.edu/slides/2025/lecture_3.pdf)
+> - [CS231n Official Course Website](https://cs231n.stanford.edu/2025/)
 
 ## Regularization
 
