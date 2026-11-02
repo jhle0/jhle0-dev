@@ -15,7 +15,7 @@ tags:
   - Chain Rule
   - Jacobian
 draft: false
-series: Learning for Computer Vision | Spring 2025
+series: Stanford CS231N Deep Learning for Computer Vision | Spring 2025
 seriesOrder: 4
 featured: false
 ---
